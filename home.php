@@ -1,0 +1,894 @@
+<?php
+require "system/connect.php";
+
+session_start();
+if (isset($_SESSION['user_login'])) {
+	$username = $_SESSION['user_login'];
+}
+else{
+	$username = "";
+}
+
+if ($_SESSION['user_login']){
+	$username = $_SESSION['user_login'];
+	$adminCheck = $conn->query("SELECT admin FROM users WHERE username='$username'");
+	$find = $adminCheck->fetch_assoc();
+	$found = $find['admin'];
+	if($found == '1'){
+		$admin = true;
+	}
+	else{
+		$admin = false;
+	}
+}else{
+
+}
+?>
+<?php
+
+if($username == ""){
+	echo "<meta http-equiv=\"refresh\" content=\"0; url=profile.php?u=$username\">";
+}
+//check user exists
+$check = $conn->query("SELECT * FROM users WHERE username='$username'");
+if ($check->num_rows == 1) {
+
+	$get = $check->fetch_assoc();
+	$activatedornot = $get['activated'];
+	if($activatedornot == '0'){
+		exit("ERROR 5718 No User exits. <a href = 'profile.php?u=$username'>Your profile</a>");
+	}
+	$adminornot = $get['admin'];
+	if($adminornot == '1'){
+		$adminProfile = true;
+	}
+	else{
+		$adminProfile = false;
+	}
+	if(($adminProfile) && ($username != "ssdf")){
+		$staff = true;
+	}
+	else{
+		$staff = false;
+	}
+	$firstname = $get['first_name'];
+	$grade = $get['grade'];
+	if($grade == 9){
+		$grade = "Freshman";
+	}else if($grade == 10){
+		$grade = "Sophomore";
+	}else if($grade == 11){
+		$grade = "Junior";
+	}else if($grade == 12){
+		$grade = "Senior";
+	}
+	$lastname = $get['last_name'];
+	$signupdate= $get['sign_up_date'];
+	$profilepic = $get['profile_pic'];
+	$bannerimg = $get['bannerimg'];
+	$es = $get['es'];
+	$ms = $get['ms'];
+	$bio = $get['bio'];
+	$sex = $get['sex'];
+	$interests = $get['interests'];
+	$relationship = $get['relationship'];
+	if($relationship == 1){
+		$relationship = "In a relationship";
+	}
+	else{
+		$relationship = "Single";
+	}
+	$dob = $get['dob'];
+	$followings = $get['following'];
+	$followers = $get['followers'];
+
+	$followingArray = explode(",", $followings);
+	$followersArray = explode(",", $followers);
+
+	$followingCount = count($followingArray);
+	$followersCount = count($followersArray);
+
+	if($followings == ""){
+		$followingCount = 0;
+	}
+	if($followers == ""){
+		$followersCount = 0;
+	}
+
+
+	$last_online_date = $get['last_online_date'];
+	$last_online_time = $get['last_online_time'];
+
+	$sql = "SELECT id from posts ORDER BY id DESC LIMIT 1";
+	$result = $conn->query($sql);
+	if ($result->num_rows==1) {
+		$getid = $result->fetch_assoc();
+
+		$maxid = $getid['id'] + 1;
+	}
+
+	if($bannerimg == "" || $bannerimg == NULL){
+		$bannerimg = "https://upload.wikimedia.org/wikipedia/commons/1/19/Salt_Lake_City_skyline_banner.jpg";
+	}
+	if($profilepic == "" || $profilepic == NULL){
+		if($sex == "1"){
+			$profilepic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
+		}
+		else{
+			$profilepic = "http://ieeemjcet.org/wp-content/uploads/2014/11/default-girl.jpg";
+		}
+	}
+
+
+} else {
+	//echo "<meta http-equiv=\"refresh\" content=\"0; url=/bruinskave/index.php\">";
+	exit();
+}
+
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>bruincave</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="/bkd/img/bearpic.png">
+
+	<!--other resourses, external source(help)-->
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=IM+Fell+English+SC" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Carter+One" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alice" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Serif+Caption" />
+	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Creepster+Caps" />
+
+	<!--jquery 2.2.0-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+
+	<!--angularjs 1.4.8-->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+	<!--bootstrap 3.3.6-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<style type="text/css">
+		*{
+			font-family: 'PT Serif Caption';
+		}
+		body{
+			overflow-x: hidden;
+			background-color: #e6e6e6;
+		}
+		.top-bar{
+			display: inline-block;
+			position: fixed;
+			top:0px;
+			z-index: 9;
+			padding: 15px;
+			width: 100vw;
+			height: 60px;
+			background-color: #1d2d4a;
+		}
+		.searchbar-wrapper{
+			display: inline-block;
+		}
+		.search-tool-wrapper{
+			display: inline-block;
+			border-bottom: 1px solid white;
+			color: white;
+			width: 29px;
+			padding-left: 4px;
+			font-size: 17px;
+			position: relative;
+			top: 3px;
+			left: -2px;
+		}
+		.settings-searchbar{
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/settings.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			position: fixed;
+			left: calc(100vw - 45px);
+		}
+		.search{
+			background: transparent;
+			border: 0;
+			border-bottom: 1px solid #fff;
+			position: relative;
+			left: -6px;
+			top: 3px;
+			font-size: 16px;
+			outline: 0;
+			color: white;
+			width: 70vw;
+		}
+		.options-tabs{
+			position: fixed;
+			top: 60px;
+			height: 49px;
+			border-bottom: 1px solid #c4c4c4;
+			z-index: 6;
+			background-color: white;
+		}
+		.tabs{
+			position: relative;
+			display: inline-block;
+			width: calc((100vw / 4) + 1px);
+			height: 50px;
+			text-align: center;
+			line-height: 40px;
+			font-size: 15px;
+			margin-bottom: 15px;
+			padding-top: 10px;
+		}
+		.crush-tab{
+			margin-left: -5px;
+		}
+		.notifications-tab{
+			margin-left: -5px;
+		}
+		.messages-tab{
+			margin-left: -5px;
+			width: calc((100vw / 4) + 0px);
+		}
+		.home-img{
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/home-blue.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+
+		}
+		.crush-img{
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/heart-grey.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+
+		}
+		.notifications-img{
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/notification-bell-grey.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+
+		}
+		.messages-img{
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/message-grey.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+
+		}
+		.profile-post{
+			background-color: white;
+			position: relative;
+
+			width: 100vw;
+			margin-bottom: 15px;
+
+			border-top: 1px solid #bbb;
+		}
+		.crush-post{
+			background-color: white;
+			position: relative;
+
+			width: 100vw;
+			margin-bottom: 15px;
+
+			border-top: 1px solid #bbb;
+		}
+
+		.posted-by-img{
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			border-radius: 45px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: relative;
+			top: 10px;
+			left: 15px;
+		}
+		.posted-pic {
+			width: 100%;
+		}
+		.samepostedby {
+			margin: 10px;
+			font-size: 16px;
+			text-decoration: none !important;
+			color: black;
+			font-family: 'PT Serif Caption';
+			position: relative;
+			top: -11px;
+			left: 10px;
+		}
+		.posted-by-name{
+			margin: 10px;
+			font-size: 16px;
+			text-decoration: none !important;
+			color: black;
+			font-family: 'PT Serif Caption';
+			position: relative;
+			top: -11px;
+			left: 10px;
+		}
+		.posted-to-name{
+			display: none;
+			/*margin: 10px;
+			font-size: 16px;
+			text-decoration: none !important;
+			color: black;
+			font-family: 'PT Serif Caption';*/
+		}
+		.topNameCrush{
+			position: relative;
+			left: 30px;
+			top: 10px;
+		}
+		.timeCrush{
+
+		}
+		.msg-body-crush{
+			font-size: 20px;
+			color: black;
+			padding-left: 10px;
+			margin-left: 15px;
+			margin-top: 17px;
+			padding-bottom: 10px;
+		}
+		.crush_pic{
+			width:100vw;
+		}
+		.arrow{
+			display: none;
+			/*
+			margin: 5px;
+			font-size: 16px;
+			*/
+		}
+
+		.post-options{
+			font-size: 20px;
+			color: #9ba0a3;
+			float: right;
+			position: relative;
+			top: 27px;
+			right: 15px;
+
+		}
+		.time{
+			font-family: 'Alice';
+			position: relative;
+			top: -13px;
+			left: 70px;
+		}
+		.msg-body{
+			font-size: 15px;
+			color: black;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.comment-inputs{
+			position: absolute;
+			left: 58px;
+			top: -73px;
+			width: calc(100vw - 58px);
+			height: 58px;
+			border: 0;
+			padding-left: 15px;
+			font-size: 15px;
+			background-color: #fff;
+			outline-width: 0;
+			font-family: Verdana;
+			border-bottom: 1px solid #bbb;
+		}
+		.like-btn-div{
+			position: absolute;
+			display: inline-block;
+			width: 58px;
+			height: 58px;
+			background-color: white;
+			position: relative;
+			top: -15px;
+			border-bottom: 1px solid #bbb;
+		}	
+		.notliked{
+			display: inline-block;
+			height: 38px;
+			width: 38px;
+			margin-top: 5px;
+			margin-left: 10px;
+			background-image: url(img/notliked-paw.png);
+			position: relative;
+			top: 4px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			cursor: pointer;
+		}
+		.liked{
+			display: inline-block;
+			height: 38px;
+			width: 38px;
+			margin: 5px;
+			margin-left: 10px;
+			background-image: url(img/liked-paw.png);
+			z-index: 2;
+			background-repeat: no-repeat;
+			background-size: cover;
+			cursor: pointer;
+		}
+		.comment-body{
+			background-color: #f9f9f9;
+			width: 100vw;
+			margin-top: -4px;
+		}
+		.comments-img{
+			width:35px;
+			height: 35px;
+			padding: 5px;
+			background-repeat: no-repeat;
+			background-size: cover;
+			border-radius: 45px;
+			display:inline-block;
+
+		}
+		.commentPosted{
+			padding-left: 0px;
+			font-size: 14px;
+			margin-top: -30px;
+			position: relative;
+			font-family: 'PT Serif Caption';
+			top: -7px;
+			left: 11px;
+		}
+		.comment-area{
+			width: 90vw;
+		}
+		#last_post{
+			padding: 20px;
+			border-top: 1px solid #bbb;
+			border-left: 1px solid #bbb;
+		}
+		.youtube-link-iframe{
+			width: 100vw;
+			height: 300px;
+			position: relative;
+			margin-top:-6px;
+			top: 6px;
+		}
+		.posted-video{
+			width: 100vw;
+			margin-left: -20px;
+			position: relative;
+			margin-top:-6px;
+			top: 6px;
+		}
+		.count-likes{
+			font-size: 13px;
+
+			font-family: 'PT Serif Caption';
+			float: right;
+			position: relative;
+			right: 25px;
+			top: -23px;
+
+		}
+		.comments-box {
+			position: relative;
+			top: -11px;
+		}
+		.top-pusher{
+			position: relative;
+			height:125px;
+		} 
+		#last_crush{
+			padding: 20px;
+			border-top: 1px solid #bbb;
+			border-left: 1px solid #bbb;
+		}
+		.bottom-message-wrapper{
+			position: fixed;
+			height: 50px;
+			width: 400px;
+			top: calc(100vh - 50px);
+			background-color: #222;
+		}
+		input#sendingText {
+		    width: 90vw;
+		    height: 30px;
+		    position: relative;
+		    left: 5vw;
+		    top: calc(50% - 15px);
+		    border-radius: 45px;
+		    border: 0;
+		    padding-left: 15px;
+		    outline: 0;
+		}
+		input#search-users {
+		    width: 90vw;
+		    height: 30px;
+		    border-radius: 45px;
+		    border: 0;
+		    outline: 0;
+		    padding-left: 33px;
+		    margin-bottom: 10px;
+		}
+		span.usersearch-tool {
+		    position: relative;
+		    left: 30px;
+		    top: 3px;
+		    color: #b0b0b0;
+		}
+		.each-user {
+		    width: 100vw;
+		    height: 50px;
+		    background: #d7d7d7;
+		    padding: 13px;
+		}
+		.chat-user-img {
+		    display: inline-block;
+		    width: 40px;
+		    height: 40px;
+		    background-size: cover;
+		    background-repeat: no-repeat;
+		    position: relative;
+		    top: -8px;
+		    border-radius: 45px;
+		}
+		.each-user-name {
+		    display: inline-block;
+		    position: relative;
+		    top: -20px;
+		    margin-left: 10px;
+		    font-size: 15px;
+		}
+		#messenger-pic{
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			border-radius: 45px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			position: relative;
+			left: 0px;
+			top: 7px;
+		}
+		#messenger-name{
+			position: relative;
+			left: 3px;
+			top: -8px;
+			font-size: 20px;
+			font-family: 'PT Serif Caption';
+		}
+		.arrow-back{
+			font-size: 27px;
+			position: relative;
+			left: 20px;
+			top: 30px;
+			cursor: pointer;
+			z-index: 12;
+		}
+		.messenger-info{
+			display: inline-block;
+			text-align: center;
+			height: 27px;
+			width: 100vw;
+			position: relative;
+			top: -20px;
+		}
+		.your-message{
+			background-color: white;
+			color: black;
+			display: inline-block;
+			padding-left: 10px;
+			padding-right: 10px;
+			max-width: 70%;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			border-radius: 5px;
+			margin-top:5px;
+			margin-right: 10px;
+			float: right;
+		}
+		.your-message-box{
+			float: right;
+			width: 100%;
+			font-size: 14px;
+			font-family: 'PT Serif Caption';
+		}
+		.their-message-box{
+			float: left;
+			width: 100%;
+			font-size: 14px;
+			font-family: 'PT Serif Caption';
+			padding-left: 10px;
+		}
+		.their-message{
+			background-color: white;
+			color: black;
+			display: inline-block;
+			padding-left: 10px;
+			padding-right: 10px;
+			max-width: 70%;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			border-radius: 5px;
+			margin-top:5px;
+		}
+		.toPic{
+			display: inline-block;
+			width: 35px;
+			height: 35px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			float: left;
+			margin-right: 10px;
+			border-radius: 45px;
+			margin-top:5px;	
+		}
+		.sendingText::-webkit-input-placeholder{
+			color: grey;
+		}
+		.sendingText{
+			width: 360px;
+			height: 29px;
+			position: relative;
+			left: 20px;
+			top: 11px;
+			border-radius: 30px;
+			border: 0;
+			padding-left: 16px;
+			color:black;
+			outline: 0;
+			font-family: 'PT Serif Caption';
+			font-size: 15px;
+		}
+		.message-box-close{
+			color: white;
+			font-size: 25px;
+			position: relative;
+			top: 7px;
+			left: 7px;
+			cursor: pointer;
+		}
+		.messages-wrapper {
+		    width: 100vw;
+		    position: absolute;
+		    top: 0;
+		    background: rgba(0,0,0,0.9);
+		    z-index: 9;
+		    color: white;
+		}
+		#messages{
+			height: calc(100vh - 100px);
+			overflow: scroll;
+		}
+	</style>
+</head>
+<body>
+	<div class="top-pusher"></div>
+	<div class="top-bar">
+
+		<div class="searchbar-wrapper">
+			<div class="search-tool-wrapper">
+				<span class="search-tool glyphicon glyphicon-search"></span>
+			</div>
+			<input class="search" type="text" placeholder="Search..." name="search" autocomplete="off" value="<?php echo $firstname . " " . $lastname; ?>">
+		</div>
+		<div class="settings-searchbar"></div>
+	</div>
+	<div class="options-tabs">
+		<div class="tabs home-tab"><div class="home-img"></div></div>
+		<div class="tabs crush-tab"><div class="crush-img"></div></div>
+		<div class="tabs notifications-tab"><div class="notifications-img"></div></div>
+		<div class="tabs messages-tab"><div class="messages-img"></div></div>
+	</div>
+	<div class="body-content">
+		<div class="content" id="content">
+
+		</div>
+		<div id = "end">
+			<div id="loading-img" style = "position: relative;">
+				<img  src = "http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style = "position: absolute;left: calc(50vw - 144px);" />
+			</div>
+		</div>
+	</div>
+	<div style="display:none" id="post_offset">0</div>
+</div>
+<script type="text/javascript">
+	var all_posts_loaded = false;
+	var loading_currently = false;
+	function load_more_post() {
+		if (!all_posts_loaded && !loading_currently)  {
+			loading_currently = true;
+			offset = Number($("#post_offset").text());
+			posturl = "action/bringposts.php?o="+offset;
+			$.ajax({url: posturl, success: function(result){
+				$("#content").before(result);
+				$("#post_offset").text(20+offset);
+				loading_currently = false;
+				if ($("#last_post").length > 0) {
+					all_posts_loaded = true;
+				}
+			}});
+		}
+	}
+	$(function() {
+		$("#loading-img").hide();
+		load_more_post();
+		$("#loading-img").show();
+		//alert('end reached');
+
+		$(window).bind('scroll', function() {
+			if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+				//alert('end reached');
+				load_more_post();
+				$("#loading-img").show();
+			}
+		});
+	});
+	$(".home-tab").click(function(){
+		$(".home-img").css("background-image", "url(img/home-blue.png)");
+		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+		$(".body-content").load("homepage.php", function(){
+			var all_posts_loaded = false;
+	var loading_currently = false;
+	function load_more_post() {
+		if (!all_posts_loaded && !loading_currently)  {
+			loading_currently = true;
+			offset = Number($("#post_offset").text());
+			posturl = "action/bringposts.php?o="+offset;
+			$.ajax({url: posturl, success: function(result){
+				$("#content").before(result);
+				$("#post_offset").text(20+offset);
+				loading_currently = false;
+				if ($("#last_post").length > 0) {
+					all_posts_loaded = true;
+				}
+			}});
+		}
+	}
+	$(function() {
+		$("#loading-img").hide();
+		load_more_post();
+		$("#loading-img").show();
+		//alert('end reached');
+
+		$(window).bind('scroll', function() {
+			if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+				//alert('end reached');
+				load_more_post();
+				$("#loading-img").show();
+			}
+		});
+	});
+		});
+	});
+	$(".crush-tab").click(function(){
+
+		$(".home-img").css("background-image", "url(img/home-grey.png)");
+		$(".crush-img").css("background-image", "url(img/heart-red.png");
+		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+		$(".body-content").load("crushpage.php", function(){
+			var all_posts_loaded = false;
+			var loading_currently = false;
+			function load_more_post() {
+				if (!all_posts_loaded && !loading_currently)  {
+					loading_currently = true;
+					offset = Number($("#crush_offset").text());
+					posturl = "action/bringcrush.php?o="+offset;
+					$.ajax({url: posturl, success: function(result){
+						$("#crushcontent").before(result);
+						$("#crush_offset").text(20+offset);
+						loading_currently = false;
+						if ($("#last_post").length > 0) {
+							all_posts_loaded = true;
+						}
+					}});
+				}
+			}
+			$(function() {
+				$("#loading-img").hide();
+				load_more_post();
+				$("#loading-img").show();
+				//alert('end reached');
+
+				$(window).bind('scroll', function() {
+					if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+						//alert('end reached');
+						load_more_post();
+						$("#loading-img").show();
+					}
+				});
+			});		
+		});
+	});
+	$(".messages-tab").click(function(){
+		$(".home-img").css("background-image", "url(img/home-grey.png)");
+		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".messages-img").css("background-image", "url(img/message-blue.png)");
+
+		$(".body-content").load("messagespage.php", function(){
+			$(".messages-wrapper").hide();
+			$(".arrow-back").click(function(){
+				$(".messages-wrapper").hide();
+			});
+			var disable_msg_update = false;
+			$('#users').load('action/users.php', function() {
+				$('.each-user').click(function(){
+					var pic = $(this).children().first().css("background-image");
+					var name = $(this).children().first().next().text();
+
+					$(".messages-wrapper").show("slide", { direction: "left" }, 500);
+					$("#messenger-pic").css("background-image", pic);
+					$("#messenger-name").html(name);
+					$(this).children().first().css("background-image");
+					var lastid = 0;
+					toId = $(this).attr('uid');
+					$("#sendingText").attr("sending-to", toId);
+					$("#msg-id").val(toId);
+					url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew=0';
+
+					$('#messages').load(url, function() {
+						var objDiv = document.getElementById("messages");
+						objDiv.scrollTop = objDiv.scrollHeight;
+						setTimeout(insertNewMsg,1000);
+					});
+	        	});
+			});  
+			$("#sendingText").keyup(function(event){
+				if(event.keyCode == 13){
+					disable_msg_update = true;
+					var msgText = $("#sendingText").val();
+					var sendingToId = $("#sendingText").attr("sending-to");	
+					$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function() {disable_msg_update = false;});	
+					$("#sendingText").val("");    	
+				}
+			});
+			function insertNewMsg(){
+				if (disable_msg_update) {
+					setTimeout(insertNewMsg,1000);
+					return;
+				}
+				lastid = $(".last_text").last().text();	
+				if(lastid == ""){
+					lastid = 0;
+				}
+				url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew='+lastid;	
+
+				fromUser = "<?php echo $username; ?>";
+				$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
+					var info = newMsgs;
+					if(info != ""){			
+						$('#messages').append(newMsgs);
+						var objDiv = document.getElementById("messages");
+						objDiv.scrollTop = objDiv.scrollHeight;
+					}
+					setTimeout(insertNewMsg,1000);		
+				});
+			}     
+		});
+	});
+</script>
+</body>
+</html>
