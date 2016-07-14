@@ -21,13 +21,13 @@ $getposts = $conn->query($sql) or die(mysql_error());
     if($getposts->num_rows > 0) {
         while ($row = $getposts->fetch_assoc()) {
             $id = $row['id'];
-            $type = $row['type'];
             $fromUser = $row['fromUser']; 
+            $time_added = $row['time_added'];
+            $date_added = $row['date_added'];
+            $type = $row['type'];
             $toUser = $row['toUser'];
             $commentId = $row['comment_id'];
             $postId = $row['post_id'];
-            $time_added = $row['time_added'];
-            $date_added = $row['date_added'];
 
             $getFrom = $conn->query("SELECT * FROM users WHERE username='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
