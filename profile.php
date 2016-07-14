@@ -242,7 +242,7 @@ if ($yourcheck->num_rows == 1) {
 			background-repeat: no-repeat;
 			background-position: center;
 
-			position: fixed;
+			position: absolute;
 			top: calc(162px - 20vw - 10px);
 			left: calc(50% - 20vw);
 
@@ -250,7 +250,7 @@ if ($yourcheck->num_rows == 1) {
 			z-index: 2;
 		}
 		.profile-name{
-			position: fixed;
+			position: absolute;
 			width: 100%;
 			top: calc(162px + 70px);
 			text-align: center;
@@ -264,7 +264,7 @@ if ($yourcheck->num_rows == 1) {
 			border-radius: 360px;
 			border: 0;
 			z-index: 2;
-			position: fixed;
+			position: absolute;
 			top: calc(162px + 108px);
 			left: calc(50% - 30vw);
 			font-size: 15px;

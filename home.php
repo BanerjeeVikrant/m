@@ -382,9 +382,9 @@ if ($check->num_rows == 1) {
 		.comment-inputs{
 			position: absolute;
 			left: 58px;
-			top: -73px;
+			top: -71px;
 			width: calc(100vw - 58px);
-			height: 58px;
+			height: 56px;
 			border: 0;
 			padding-left: 15px;
 			font-size: 15px;
@@ -407,7 +407,7 @@ if ($check->num_rows == 1) {
 			display: inline-block;
 			height: 38px;
 			width: 38px;
-			margin-top: 5px;
+			margin-top: 10px;
 			margin-left: 10px;
 			background-image: url(img/notliked-paw.png);
 			position: relative;
@@ -420,7 +420,7 @@ if ($check->num_rows == 1) {
 			display: inline-block;
 			height: 38px;
 			width: 38px;
-			margin: 5px;
+			margin-top:10px;
 			margin-left: 10px;
 			background-image: url(img/liked-paw.png);
 			z-index: 2;
@@ -500,7 +500,7 @@ if ($check->num_rows == 1) {
 		.bottom-message-wrapper{
 			position: fixed;
 			height: 50px;
-			width: 400px;
+			width: 100vw;
 			top: calc(100vh - 50px);
 			background-color: #222;
 		}
@@ -674,6 +674,39 @@ if ($check->num_rows == 1) {
 			height: calc(100vh - 100px);
 			overflow: scroll;
 		}
+		.notification-post {
+		    background: white;
+		    min-height: 45px;
+		    margin-bottom: 1px;
+		}
+		.notificationBox {
+		    display: inline-block;
+		    width: calc(100vw - 60px);
+		    position: relative;
+		    top: -5px;
+		    left: 5px;
+		}
+		.fromPicNotification {
+		    height: 35px;
+		    width: 35px;
+		    display: inline-block;
+		    background-size: cover;
+		    background-repeat: no-repeat;
+		    border-radius: 45px;
+		    position: relative;
+		    left: 3px;
+		    top: 5px;
+		}
+		span.notifier {
+		    font-weight: bold;
+		    font-size: 13px;
+		}
+		span.notificationInfo {
+		    color: #414040;
+		}
+		span.notifier-time {
+		    color: #939393;
+		}
 	</style>
 </head>
 <body>
@@ -718,6 +751,10 @@ if ($check->num_rows == 1) {
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
 				loading_currently = false;
+				var home_id = Number($("#post_offset").text());
+				if(home_id == 20){
+					load_more_post();
+				}
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
@@ -757,6 +794,10 @@ if ($check->num_rows == 1) {
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
 				loading_currently = false;
+				var home_id = Number($("#post_offset").text());
+				if(home_id == 20){
+					load_more_post();
+				}
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
@@ -799,6 +840,55 @@ if ($check->num_rows == 1) {
 						$("#crushcontent").before(result);
 						$("#crush_offset").text(20+offset);
 						loading_currently = false;
+						var crush_id = Number($("#crush_offset").text());
+						if(crush_id == 20){
+							load_more_post();
+						}
+						if ($("#last_post").length > 0) {
+							all_posts_loaded = true;
+						}
+					}});
+				}
+			}
+			$(function() {
+				$("#loading-img").hide();
+				load_more_post();
+				$("#loading-img").show();
+				//alert('end reached');
+
+				$(window).bind('scroll', function() {
+					if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+						//alert('end reached');
+						load_more_post();
+						$("#loading-img").show();
+					}
+				});
+			});		
+		});
+	});
+	$(".notifications-tab").click(function(){
+		$(".home-img").css("background-image", "url(img/home-grey.png)");
+		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
+		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+		$(".body-content").load("notificationspage.php", function(){
+			var all_posts_loaded = false;
+			var loading_currently = false;
+			function load_more_post() {
+				if (!all_posts_loaded && !loading_currently)  {
+					loading_currently = true;
+					offset = Number($("#notifications_offset").text());
+					posturl = "action/bringnotifications.php?o="+offset;
+					$.ajax({url: posturl, success: function(result){
+						$("#notificationscontent").before(result);
+						$("#notifications_offset").text(20+offset);
+						loading_currently = false;
+						var noti_id = Number($("#notifications_offset").text());
+						if(noti_id == 20){
+							load_more_post();
+						}
 						if ($("#last_post").length > 0) {
 							all_posts_loaded = true;
 						}
@@ -889,6 +979,84 @@ if ($check->num_rows == 1) {
 			}     
 		});
 	});
+
+
+	function likePost(id) {
+		var addurl = "action/likepost.php?id="+id;
+		var postid = "#like-btn-"+id;
+		$.ajax({url: addurl, 
+			success: function(){
+				$(postid).attr('class', 'liked');
+				$(postid).attr('onclick', 'unlikePost(' + id + ')');
+			},
+			error: function(){
+				alert("failed");
+			}
+		});
+	}
+	function unlikePost(id) {
+		var addurl = "action/unlikepost.php?id="+id;
+		var postid = "#like-btn-"+id;
+		$.ajax({url: addurl, 
+			success: function(){
+				$(postid).attr('class', 'notliked');
+				$(postid).attr('onclick', 'likePost(' + id + ')');
+			},
+			error: function(){
+				alert("failed");
+			}
+		});
+	}
+
+	function postcomment(curr_position) {
+		var url="action/post-comment.php";
+		var comment = $(curr_position).children().first().val();
+		comment = comment.replace('\'','');
+		var id    = $(curr_position).children().first().next().val();
+		var  data = "comment="+comment+"&id="+id;
+		var comment_html1 =
+		"<div style = 'position: relative;'>"+
+		"	<div class = 'comment-body' style='position: relative;top: -70px;'>"+
+		"    <div class = 'comments-img'></div>" +
+		"    <div class = 'comment-area'>"+
+		"      <div style = 'position: relative;'>";
+		var comment_html2 =
+		"      </div>"+
+		"    </div>"+
+		"  </div>"+
+		"</div>";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:data, 
+			success:function(commentText){
+				if(commentText == ""){
+					return;
+				}
+				var commenttxt =
+				"          <div class = 'commentPosted'>"+
+				"            <a style='position: relative;' href = 'profile.php?u=<?php echo $username; ?>'><?php echo $username; ?></a>&nbsp;&nbsp;&nbsp;" + commentText +
+				"          </div>";
+				var paw = curr_position.parent().prev().children().first();
+				curr_position.parent().before(comment_html1+commenttxt+comment_html2);
+
+				var btn_num = paw.closest(".like-btn-div").css("top");
+				var arr = btn_num.split("p");
+				var num = Number(arr[0]) + 26;
+				var x = num + "px";
+
+				paw.closest(".like-btn-div").css("top", x);
+				$("body").closest(".comment-input").next().children().first().css("top", x);
+				$(".comment-inputs").val("");
+	            //stopCommentPosting = false;
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	        	alert("failed");
+	        }
+	    });
+	}
+
 </script>
 </body>
 </html>

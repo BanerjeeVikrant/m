@@ -272,9 +272,7 @@ $tags = array();
     				</div>
     				<textarea style = 'display: none;' id = 'comments-send'></textarea>
     				<div class = 'comments-input'>
-    					<div style = 'position: relative;'>
     						$userliked
-    					</div>
     					<div style = 'position: relative;'>
     						<form method = 'POST' class='post-comment'>
     							<input type = 'text' name = 'comment' placeholder = 'Write a Comment&hellip;' class = 'comment-inputs' autocomplete = 'off' />
