@@ -20,21 +20,30 @@
     $torow = $toresults->fetch_assoc();
     $toPic = $torow['profile_pic'];
     
-    $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id > $getNew)) ORDER BY id ASC";
+    if (! isset( $_GET['getold'])) {
+        $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id > $getNew)) ORDER BY id DESC LIMIT 15";
+    } else {
+        $getOld = $_GET['getold'];
+        $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id < $getOld)) ORDER BY id DESC LIMIT 15";
+    }
 
     $results = $conn->query($sql);
+    $htmlMsg = "";
     for($i=0; $i<$results->num_rows; $i++) {
         $row = $results->fetch_assoc();
         $message = $row['message'];
-        $id = $row['id'];
-        echo "<div class='each-message-wrapper'> ";
+        $first_id = $row['id'];
+        if ($i == 0) {
+            $id = $row['id'];
+        }
+        $newHtmlMsg = "<div class='each-message-wrapper'> ";
         if ($row['fromUser'] == $fromId) {
-            echo "
+            $newHtmlMsg .= "
             <div class='your-message-box'>
                     <div class='your-message'>$message</div>
             </div>";
         } else {
-            echo "  
+            $newHtmlMsg .= "  
 
                 <div class='their-message-box'>
                     <div class = 'toPic' style = 'background-image:url($toPic);'></div>
@@ -42,9 +51,16 @@
                 </div>
                 ";
         }
-        echo "</div>";
+        $newHtmlMsg .= "</div>";
+        $htmlMsg = $newHtmlMsg . $htmlMsg;
     }
     if ($results->num_rows > 0) {
-    	echo "<div style = 'display: none;' class = 'last_text'>$id</div>";
+        if (isset( $_GET['getold']) || $getNew == 0) {
+            echo "<div style = 'display: none;' class = 'first_text'>$first_id</div>";
+        }
+        echo $htmlMsg;
+        if (!isset( $_GET['getold'])) {
+            echo "<div style = 'display: none;' class = 'last_text'>$id</div>";
+        }
     }
 ?>

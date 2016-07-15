@@ -673,6 +673,7 @@ if ($check->num_rows == 1) {
 		#messages{
 			height: calc(100vh - 100px);
 			overflow: scroll;
+			padding-bottom:50px;
 		}
 		.notification-post {
 		    background: white;
@@ -912,6 +913,7 @@ if ($check->num_rows == 1) {
 			});		
 		});
 	});
+	var insertMsgCall;
 	$(".messages-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
 		$(".crush-img").css("background-image", "url(img/heart-grey.png");
@@ -922,6 +924,7 @@ if ($check->num_rows == 1) {
 			$(".messages-wrapper").hide();
 			$(".arrow-back").click(function(){
 				$(".messages-wrapper").hide();
+				clearTimeout(insertMsgCall);
 			});
 			var disable_msg_update = false;
 			$('#users').load('action/users.php', function() {
@@ -940,12 +943,14 @@ if ($check->num_rows == 1) {
 					url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew=0';
 
 					$('#messages').load(url, function() {
-						var objDiv = document.getElementById("messages");
-						objDiv.scrollTop = objDiv.scrollHeight;
-						setTimeout(insertNewMsg,1000);
+						insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
 					});
 	        	});
-			});  
+			});
+			function scrollAndInsertNewMsg() {
+				$("#messages").scrollTop($("#messages")[0].scrollHeight);
+				insertMsgCall = setTimeout(insertNewMsg,1000);
+			}
 			$("#sendingText").keyup(function(event){
 				if(event.keyCode == 13){
 					disable_msg_update = true;
@@ -957,25 +962,40 @@ if ($check->num_rows == 1) {
 			});
 			function insertNewMsg(){
 				if (disable_msg_update) {
-					setTimeout(insertNewMsg,1000);
+					insertMsgCall = setTimeout(insertNewMsg,1000);
 					return;
 				}
-				lastid = $(".last_text").last().text();	
-				if(lastid == ""){
-					lastid = 0;
-				}
-				url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew='+lastid;	
-
 				fromUser = "<?php echo $username; ?>";
-				$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
-					var info = newMsgs;
-					if(info != ""){			
-						$('#messages').append(newMsgs);
-						var objDiv = document.getElementById("messages");
-						objDiv.scrollTop = objDiv.scrollHeight;
+				if ($("#messages").scrollTop() == 0) {36
+					alert("Reached top");
+					$("#messages").scrollTop(2);
+					firstid = $(".first_text").first().text();
+					if(firstid == ""){
+						firstid = 99999999;
 					}
-					setTimeout(insertNewMsg,1000);		
-				});
+					$.get("action/messages.php",{from : fromUser, toid : toId, getold: firstid}, function(newMsgs) {
+						var info = newMsgs;
+						if(info != ""){
+							$('#messages').prepend(newMsgs);
+							insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+						}
+						insertMsgCall = setTimeout(insertNewMsg,1500);
+					});
+				} else {
+					lastid = $(".last_text").last().text();
+					if(lastid == ""){
+						lastid = 0;
+					}
+					$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
+						var info = newMsgs;
+						if(info != ""){			
+							$('#messages').append(newMsgs);
+							insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+						} else {
+							insertMsgCall = setTimeout(insertNewMsg,1500);
+						}
+					});
+				}
 			}     
 		});
 	});
