@@ -947,9 +947,15 @@ if ($check->num_rows == 1) {
 					});
 	        	});
 			});
+			var scrollTopAlign_g = -1;
 			function scrollAndInsertNewMsg() {
-				$("#messages").scrollTop($("#messages")[0].scrollHeight);
+				var scrollTopAlign = scrollTopAlign_g;
+				if (scrollTopAlign == -1) { // go to bottom
+					scrollTopAlign = $("#messages")[0].scrollHeight;
+				}
+				$("#messages").scrollTop(scrollTopAlign);
 				insertMsgCall = setTimeout(insertNewMsg,1000);
+				scrollTopAlign_g = -1;
 			}
 			$("#sendingText").keyup(function(event){
 				if(event.keyCode == 13){
@@ -966,36 +972,41 @@ if ($check->num_rows == 1) {
 					return;
 				}
 				fromUser = "<?php echo $username; ?>";
-				if ($("#messages").scrollTop() == 0) {36
-					alert("Reached top");
+				if ($("#messages").scrollTop() == 0) {
+					//alert("Reached top");
 					$("#messages").scrollTop(2);
 					firstid = $(".first_text").first().text();
 					if(firstid == ""){
 						firstid = 99999999;
 					}
-					$.get("action/messages.php",{from : fromUser, toid : toId, getold: firstid}, function(newMsgs) {
-						var info = newMsgs;
-						if(info != ""){
-							$('#messages').prepend(newMsgs);
-							insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
-						}
-						insertMsgCall = setTimeout(insertNewMsg,1500);
-					});
-				} else {
-					lastid = $(".last_text").last().text();
-					if(lastid == ""){
-						lastid = 0;
-					}
-					$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
-						var info = newMsgs;
-						if(info != ""){			
-							$('#messages').append(newMsgs);
-							insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
-						} else {
-							insertMsgCall = setTimeout(insertNewMsg,1500);
-						}
-					});
+					if (firstid != 0) { // more comments remaining
+						$.get("action/messages.php",{from : fromUser, toid : toId, getold: firstid}, function(newMsgs) {
+							var info = newMsgs;
+							if(info != "") {
+								var scrollHeightOld = $('#messages')[0].scrollHeight;
+								$('#messages').prepend(newMsgs);
+								scrollTopAlign_g = 2;
+								insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+							} else {
+								insertMsgCall = setTimeout(insertNewMsg,1500);
+							}
+						});
+						return;
+					} // else look for new messages
 				}
+				lastid = $(".last_text").last().text();
+				if(lastid == ""){
+					lastid = 0;
+				}
+				$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
+					var info = newMsgs;
+					if(info != ""){			
+						$('#messages').append(newMsgs);
+						insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+					} else {
+						insertMsgCall = setTimeout(insertNewMsg,1500);
+					}
+				});
 			}     
 		});
 	});
