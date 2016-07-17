@@ -227,11 +227,11 @@ if ($yourcheck->num_rows == 1) {
 			background-repeat: no-repeat;
 			background-position: center;
 
-			-webkit-filter: blur(5px);
-			-moz-filter: blur(5px);
-			-o-filter: blur(5px);
-			-ms-filter: blur(5px);
-			filter: blur(5px);
+			-webkit-filter: blur(4px);
+			-moz-filter: blur(4px);
+			-o-filter: blur(4px);
+			-ms-filter: blur(4px);
+			filter: blur(4px);
 
 			z-index: 1;
 		}

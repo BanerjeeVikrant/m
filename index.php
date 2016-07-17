@@ -35,7 +35,7 @@ if (isset($_POST["user_login"]) && isset($_POST["password_login"])) {
 }
 if ($user_login != "") {
 
-	echo "\n<script>window.location.assign('profile.php?u=$user_login'); </script>\n";
+	echo "\n<script>window.location.assign('home.php'); </script>\n";
 } 
 ?>
 <!DOCTYPE html>

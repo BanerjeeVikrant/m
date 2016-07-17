@@ -145,6 +145,9 @@ if ($check->num_rows == 1) {
 	<!--jquery 2.2.0-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="https://hammerjs.github.io/dist/hammer.js"></script>
 
 	<!--angularjs 1.4.8-->
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -725,6 +728,7 @@ if ($check->num_rows == 1) {
 			top: 0px;
 			z-index: 20;
 			background: #e6e6e6;
+			border-right: 1px solid #b5b5b5;
 		}
 		.banner-sidebody{
 			background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(<?php echo $bannerimg; ?>);
@@ -762,10 +766,14 @@ if ($check->num_rows == 1) {
 		    padding-left: 17px;
 		    border-top: 1px solid #e6e6e6;
 		    border-right: 1px solid #e6e6e6;
+		    color: black;		
+		}
+		a{
+			text-decoration: none !important;
 		}
 	</style>
 </head>
-<body>
+<body id="element">
 	<div class="top-pusher"></div>
 	<div class="top-bar">
 		<div class="homepic-searchbar"></div>
@@ -801,20 +809,357 @@ if ($check->num_rows == 1) {
 				<div class="username-sidebody">@<?php echo $username; ?></div>
 			</div>
 		</div>
-		<div class="sidebody-profiletab sidebody-tab">Profile</div>
+		<a href="profile.php?u=<?php echo $username;?>"><div class="sidebody-profiletab sidebody-tab">Profile</div></a>
 		<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 		<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 		<div class="sidebody-helptab sidebody-tab">Help</div>
-		<div class="sidebody-logouttab sidebody-tab">Logout</div>
+		<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	</div>
 </div>
 <div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
 <script type="text/javascript">
-	//window.scrollTo(0, 1);
+	var insertMsgCall;
+	var myElement = document.getElementById('element');
+
+	// create a simple instance
+	// by default, it only adds horizontal recognizers
+	var mc = new Hammer(myElement);
+	mc.get('swipe').set({ velocity: 0.60});
+	// listen to events...
+	mc.on("swiperight", function(ev) {
+	    var elem = $(".body-content").children().attr("class");
+	    if(elem == "notification-post"){
+	    	$(".home-img").css("background-image", "url(img/home-grey.png)");
+	    	$(".crush-img").css("background-image", "url(img/heart-red.png");
+	    	$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+	    	$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+	    	$(".body-content").load("crushpage.php", function(){
+	    		var all_posts_loaded = false;
+	    		var loading_currently = false;
+	    		function load_more_post() {
+	    			if (!all_posts_loaded && !loading_currently)  {
+	    				loading_currently = true;
+	    				offset = Number($("#crush_offset").text());
+	    				posturl = "action/bringcrush.php?o="+offset;
+	    				$.ajax({url: posturl, success: function(result){
+	    					$("#crushcontent").before(result);
+	    					$("#crush_offset").text(20+offset);
+	    					loading_currently = false;
+	    					var crush_id = Number($("#crush_offset").text());
+	    					if(crush_id == 20){
+	    						load_more_post();
+	    					}
+	    					if ($("#last_post").length > 0) {
+	    						all_posts_loaded = true;
+	    					}
+	    				}});
+	    			}
+	    		}
+	    		$(function() {
+	    			$("#loading-img").hide();
+	    			load_more_post();
+	    			$("#loading-img").show();
+	    			//alert('end reached');
+
+	    			$(window).bind('scroll', function() {
+	    				if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+	    					//alert('end reached');
+	    					load_more_post();
+	    					$("#loading-img").show();
+	    				}
+	    			});
+	    		});		
+	    	});
+	    }
+	    else if(elem == "users-searchbox"){
+	    	$(".home-img").css("background-image", "url(img/home-grey.png)");
+	    	$(".crush-img").css("background-image", "url(img/heart-grey.png");
+	    	$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
+	    	$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+	    	$(".body-content").load("notificationspage.php", function(){
+	    		var all_posts_loaded = false;
+	    		var loading_currently = false;
+	    		function load_more_post() {
+	    			if (!all_posts_loaded && !loading_currently)  {
+	    				loading_currently = true;
+	    				offset = Number($("#notifications_offset").text());
+	    				posturl = "action/bringnotifications.php?o="+offset;
+	    				$.ajax({url: posturl, success: function(result){
+	    					$("#notificationscontent").before(result);
+	    					$("#notifications_offset").text(20+offset);
+	    					loading_currently = false;
+	    					var noti_id = Number($("#notifications_offset").text());
+	    					if(noti_id == 20){
+	    						load_more_post();
+	    					}
+	    					if ($("#last_post").length > 0) {
+	    						all_posts_loaded = true;
+	    					}
+	    				}});
+	    			}
+	    		}
+	    		$(function() {
+	    			$("#loading-img").hide();
+	    			load_more_post();
+	    			$("#loading-img").show();
+	    			//alert('end reached');
+
+	    			$(window).bind('scroll', function() {
+	    				if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+	    					//alert('end reached');
+	    					load_more_post();
+	    					$("#loading-img").show();
+	    				}
+	    			});
+	    		});		
+	    	});
+	    }
+	    else if(elem == "crush-post"){
+	    				$(".home-img").css("background-image", "url(img/home-blue.png)");
+		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+		$(".body-content").load("homepage.php", function(){
+			var all_posts_loaded = false;
+	var loading_currently = false;
+	function load_more_post() {
+		if (!all_posts_loaded && !loading_currently)  {
+			loading_currently = true;
+			offset = Number($("#post_offset").text());
+			posturl = "action/bringposts.php?o="+offset;
+			$.ajax({url: posturl, success: function(result){
+				$("#content").before(result);
+				$("#post_offset").text(20+offset);
+				loading_currently = false;
+				var home_id = Number($("#post_offset").text());
+				if(home_id == 20){
+					load_more_post();
+				}
+				if ($("#last_post").length > 0) {
+					all_posts_loaded = true;
+				}
+			}});
+		}
+	}
+	$(function() {
+		$("#loading-img").hide();
+		load_more_post();
+		$("#loading-img").show();
+		//alert('end reached');
+
+		$(window).bind('scroll', function() {
+			if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+				//alert('end reached');
+				load_more_post();
+				$("#loading-img").show();
+			}
+		});
+	});
+		});
+	    }
+	});
+	mc.on("swipeleft", function(ev) {
+	    var elem = $(".body-content").children().attr("class");
+	    if(elem == "profile-post"){
+	    	$(".home-img").css("background-image", "url(img/home-grey.png)");
+	    	$(".crush-img").css("background-image", "url(img/heart-red.png");
+	    	$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+	    	$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+	    	$(".body-content").load("crushpage.php", function(){
+	    		var all_posts_loaded = false;
+	    		var loading_currently = false;
+	    		function load_more_post() {
+	    			if (!all_posts_loaded && !loading_currently)  {
+	    				loading_currently = true;
+	    				offset = Number($("#crush_offset").text());
+	    				posturl = "action/bringcrush.php?o="+offset;
+	    				$.ajax({url: posturl, success: function(result){
+	    					$("#crushcontent").before(result);
+	    					$("#crush_offset").text(20+offset);
+	    					loading_currently = false;
+	    					var crush_id = Number($("#crush_offset").text());
+	    					if(crush_id == 20){
+	    						load_more_post();
+	    					}
+	    					if ($("#last_post").length > 0) {
+	    						all_posts_loaded = true;
+	    					}
+	    				}});
+	    			}
+	    		}
+	    		$(function() {
+	    			$("#loading-img").hide();
+	    			load_more_post();
+	    			$("#loading-img").show();
+	    			//alert('end reached');
+
+	    			$(window).bind('scroll', function() {
+	    				if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+	    					//alert('end reached');
+	    					load_more_post();
+	    					$("#loading-img").show();
+	    				}
+	    			});
+	    		});		
+	    	});
+	    }
+	    else if(elem == "crush-post"){
+	    	$(".home-img").css("background-image", "url(img/home-grey.png)");
+	    	$(".crush-img").css("background-image", "url(img/heart-grey.png");
+	    	$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
+	    	$(".messages-img").css("background-image", "url(img/message-grey.png)");
+
+	    	$(".body-content").load("notificationspage.php", function(){
+	    		var all_posts_loaded = false;
+	    		var loading_currently = false;
+	    		function load_more_post() {
+	    			if (!all_posts_loaded && !loading_currently)  {
+	    				loading_currently = true;
+	    				offset = Number($("#notifications_offset").text());
+	    				posturl = "action/bringnotifications.php?o="+offset;
+	    				$.ajax({url: posturl, success: function(result){
+	    					$("#notificationscontent").before(result);
+	    					$("#notifications_offset").text(20+offset);
+	    					loading_currently = false;
+	    					var noti_id = Number($("#notifications_offset").text());
+	    					if(noti_id == 20){
+	    						load_more_post();
+	    					}
+	    					if ($("#last_post").length > 0) {
+	    						all_posts_loaded = true;
+	    					}
+	    				}});
+	    			}
+	    		}
+	    		$(function() {
+	    			$("#loading-img").hide();
+	    			load_more_post();
+	    			$("#loading-img").show();
+	    			//alert('end reached');
+
+	    			$(window).bind('scroll', function() {
+	    				if($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) {
+
+	    					//alert('end reached');
+	    					load_more_post();
+	    					$("#loading-img").show();
+	    				}
+	    			});
+	    		});		
+	    	});
+	    }
+	    else if(elem == "notification-post"){
+	    		$(".home-img").css("background-image", "url(img/home-grey.png)");
+	    		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+	    		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+	    		$(".messages-img").css("background-image", "url(img/message-blue.png)");
+
+	    		$(".body-content").load("messagespage.php", function(){
+	    			$(".messages-wrapper").hide();
+	    			$(".arrow-back").click(function(){
+	    				$(".messages-wrapper").hide();
+	    				clearTimeout(insertMsgCall);
+	    			});
+	    			var disable_msg_update = false;
+	    			$('#users').load('action/users.php', function() {
+	    				$('.each-user').click(function(){
+	    					var pic = $(this).children().first().css("background-image");
+	    					var name = $(this).children().first().next().text();
+
+	    					$(".messages-wrapper").show("slide", { direction: "left" }, 500);
+	    					$("#messenger-pic").css("background-image", pic);
+	    					$("#messenger-name").html(name);
+	    					$(this).children().first().css("background-image");
+	    					var lastid = 0;
+	    					toId = $(this).attr('uid');
+	    					$("#sendingText").attr("sending-to", toId);
+	    					$("#msg-id").val(toId);
+	    					url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew=0';
+
+	    					$('#messages').load(url, function() {
+	    						insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+	    					});
+	    	        	});
+	    			});
+	    			var scrollTopAlign_g = -1;
+	    			function scrollAndInsertNewMsg() {
+	    				var scrollTopAlign = scrollTopAlign_g;
+	    				if (scrollTopAlign == -1) { // go to bottom
+	    					scrollTopAlign = $("#messages")[0].scrollHeight;
+	    				}
+	    				$("#messages").scrollTop(scrollTopAlign);
+	    				insertMsgCall = setTimeout(insertNewMsg,1000);
+	    				scrollTopAlign_g = -1;
+	    			}
+	    			$("#sendingText").keyup(function(event){
+	    				if(event.keyCode == 13){
+	    					disable_msg_update = true;
+	    					var msgText = $("#sendingText").val();
+	    					var sendingToId = $("#sendingText").attr("sending-to");	
+	    					$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function() {disable_msg_update = false;});	
+	    					$("#sendingText").val("");    	
+	    				}
+	    			});
+	    			function insertNewMsg(){
+	    				if (disable_msg_update) {
+	    					insertMsgCall = setTimeout(insertNewMsg,1000);
+	    					return;
+	    				}
+	    				fromUser = "<?php echo $username; ?>";
+
+	    				if ($("#messages").scrollTop() == 0) {
+	    					//alert("Reached top");
+	    					$("#messages").scrollTop(2);
+	    					firstid = $(".first_text").first().text();
+	    					if(firstid == ""){
+	    						firstid = 99999999;
+	    					}
+	    					if (firstid != 0) { // more comments remaining
+	    						$.get("action/messages.php",{from : fromUser, toid : toId, getold: firstid}, function(newMsgs) {
+	    							var info = newMsgs;
+	    							if(info != "") {
+	    								var scrollHeightOld = $('#messages')[0].scrollHeight;
+	    								$('#messages').prepend(newMsgs);
+	    								scrollTopAlign_g = 2;
+	    								insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+	    							} else {
+	    								insertMsgCall = setTimeout(insertNewMsg,1500);
+	    							}
+	    						});
+	    						return;
+	    					} // else look for new messages
+	    				}
+	    				lastid = $(".last_text").last().text();
+	    				if(lastid == ""){
+	    					lastid = 0;
+	    				}
+	    				$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
+	    					var info = newMsgs;
+	    					if(info != ""){			
+	    						$('#messages').append(newMsgs);
+	    						insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+	    					} else {
+	    						insertMsgCall = setTimeout(insertNewMsg,1500);
+	    					}
+	    				});
+	    			}     
+	    		});
+	    }
+	});
+
+
 	$(".like-bearpic").hide();
 	$(".home-sidebody").hide();
 	$(".homepic-searchbar").click(function(){
-		$(".home-sidebody").show("slide", { direction: "left" }, 500);
+		$(".home-sidebody").show("slide", { direction: "left" }, 300);
 		$("body").css("overflow", "hidden");
 	});
 	$(document).mouseup(function (e)
@@ -1001,7 +1346,6 @@ if ($check->num_rows == 1) {
 			});		
 		});
 	});
-	var insertMsgCall;
 	$(".messages-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
 		$(".crush-img").css("background-image", "url(img/heart-grey.png");
@@ -1114,7 +1458,7 @@ if ($check->num_rows == 1) {
 				  function() 
 				  {
 				    $(".like-bearpic").hide();
-				  }, 1000);
+				  }, 500);
 			},
 			error: function(){
 				alert("failed");
