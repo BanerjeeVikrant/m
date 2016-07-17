@@ -191,6 +191,7 @@ if ($yourcheck->num_rows == 1) {
 <head>
 	<title>bruincave</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="#1d2d4a" />
 	<link rel="shortcut icon" href="/bkd/img/bearpic.png">
 
 	<!--other resourses, external source(help)-->
@@ -388,6 +389,15 @@ if ($yourcheck->num_rows == 1) {
 			margin-bottom: 15px;
 
 			border-top: 1px solid #bbb;
+		}
+		.post-breaker{
+			margin: 0;
+			margin-bottom: 2px;
+			position: relative;
+			top: -5px;
+			border-color: #dad4d4;
+			margin-left: 15px;
+			margin-right: 15px;
 		}
 		.posted-by-img{
 			display: inline-block;

@@ -132,6 +132,7 @@ if ($check->num_rows == 1) {
 <head>
 	<title>bruincave</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="#1d2d4a" />
 	<link rel="shortcut icon" href="/bkd/img/bearpic.png">
 
 	<!--other resourses, external source(help)-->
@@ -172,38 +173,39 @@ if ($check->num_rows == 1) {
 		.searchbar-wrapper{
 			display: inline-block;
 		}
-		.search-tool-wrapper{
-			display: inline-block;
-			border-bottom: 1px solid white;
-			color: white;
-			width: 29px;
-			padding-left: 4px;
-			font-size: 17px;
-			position: relative;
-			top: 3px;
-			left: -2px;
+		.search-tool-wrapper {
+		    display: inline-block;
+		    color: #e0dfdf;
+		    width: 29px;
+		    padding-left: 4px;
+		    font-size: 15px;
+		    position: relative;
+		    top: 3px;
+		    left: 56px;
 		}
-		.settings-searchbar{
+		.homepic-searchbar{
 			display: inline-block;
-			height: 32px;
-			width: 32px;
-			background-image: url(img/settings.png);
+			height: 40px;
+			width: 40px;
+			background-image: url(<?php echo $profilepic;?>);
 			background-size: cover;
 			background-repeat: no-repeat;
 			position: fixed;
-			left: calc(100vw - 45px);
+			top: 11px;
+			border-radius: 45px;
 		}
 		.search{
 			background: transparent;
 			border: 0;
 			border-bottom: 1px solid #fff;
 			position: relative;
-			left: -6px;
+			left: 20px;
 			top: 3px;
 			font-size: 16px;
 			outline: 0;
 			color: white;
 			width: 70vw;
+			padding-left: 30px;
 		}
 		.options-tabs{
 			position: fixed;
@@ -278,6 +280,15 @@ if ($check->num_rows == 1) {
 			margin-bottom: 15px;
 
 			border-top: 1px solid #bbb;
+		}
+		.post-breaker{
+			margin: 0;
+			margin-bottom: 2px;
+			position: relative;
+			top: -5px;
+			border-color: #dad4d4;
+			margin-left: 15px;
+			margin-right: 15px;
 		}
 		.crush-post{
 			background-color: white;
@@ -397,7 +408,7 @@ if ($check->num_rows == 1) {
 			position: absolute;
 			display: inline-block;
 			width: 58px;
-			height: 58px;
+			height: 57px;
 			background-color: white;
 			position: relative;
 			top: -15px;
@@ -407,11 +418,10 @@ if ($check->num_rows == 1) {
 			display: inline-block;
 			height: 38px;
 			width: 38px;
-			margin-top: 10px;
+			margin-top:10px;
 			margin-left: 10px;
 			background-image: url(img/notliked-paw.png);
-			position: relative;
-			top: 4px;
+			z-index: 2;
 			background-repeat: no-repeat;
 			background-size: cover;
 			cursor: pointer;
@@ -708,19 +718,63 @@ if ($check->num_rows == 1) {
 		span.notifier-time {
 		    color: #939393;
 		}
+		.home-sidebody{
+			position: fixed;
+			width: 85vw;
+			height: 100vh;
+			top: 0px;
+			z-index: 20;
+			background: #e6e6e6;
+		}
+		.banner-sidebody{
+			background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(<?php echo $bannerimg; ?>);
+			width: 100%;
+			height: 200px;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		.profilepic-sidebody{
+			background-image: url(<?php echo $profilepic; ?>);
+			width: 55px;
+			height: 55px;
+			background-size: cover;
+			background-repeat: no-repeat;
+			position: relative;
+			left: calc(50% - 35vw);
+			top: calc(100px - 55px);
+			display: inline-block;
+			border-radius: 45px;
+		}
+		.info-sidebody {
+		    color: white;
+		    font-size: 16px;
+		    position: relative;
+		    width: 70vw;
+		    top: 50px;
+		    left: calc(50% - 35vw);
+		}
+		.sidebody-tab {
+		    width: 100%;
+		    height: 40px;
+		    vertical-align: middle;
+		    background: #fff;
+		    line-height: 40px;
+		    padding-left: 17px;
+		    border-top: 1px solid #e6e6e6;
+		    border-right: 1px solid #e6e6e6;
+		}
 	</style>
 </head>
 <body>
 	<div class="top-pusher"></div>
 	<div class="top-bar">
-
+		<div class="homepic-searchbar"></div>
 		<div class="searchbar-wrapper">
 			<div class="search-tool-wrapper">
 				<span class="search-tool glyphicon glyphicon-search"></span>
 			</div>
-			<input class="search" type="text" placeholder="Search..." name="search" autocomplete="off" value="<?php echo $firstname . " " . $lastname; ?>">
+			<input class="search" type="text" placeholder="Search..." name="search" autocomplete="off">
 		</div>
-		<div class="settings-searchbar"></div>
 	</div>
 	<div class="options-tabs">
 		<div class="tabs home-tab"><div class="home-img"></div></div>
@@ -737,10 +791,44 @@ if ($check->num_rows == 1) {
 				<img  src = "http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style = "position: absolute;left: calc(50vw - 144px);" />
 			</div>
 		</div>
+		<div style="display:none" id="post_offset">0</div>
 	</div>
-	<div style="display:none" id="post_offset">0</div>
+	<div class="home-sidebody">
+		<div class="banner-sidebody">
+			<div class="profilepic-sidebody"></div>
+			<div class="info-sidebody">
+				<div class="name-sidebody"><?php echo $firstname ." ". $lastname; ?></div>
+				<div class="username-sidebody">@<?php echo $username; ?></div>
+			</div>
+		</div>
+		<div class="sidebody-profiletab sidebody-tab">Profile</div>
+		<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
+		<div class="sidebody-faqtab sidebody-tab">FAQ</div>
+		<div class="sidebody-helptab sidebody-tab">Help</div>
+		<div class="sidebody-logouttab sidebody-tab">Logout</div>
+	</div>
 </div>
+<div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
 <script type="text/javascript">
+	//window.scrollTo(0, 1);
+	$(".like-bearpic").hide();
+	$(".home-sidebody").hide();
+	$(".homepic-searchbar").click(function(){
+		$(".home-sidebody").show("slide", { direction: "left" }, 500);
+		$("body").css("overflow", "hidden");
+	});
+	$(document).mouseup(function (e)
+	{
+	    var container = $(".home-sidebody");
+
+	    if (!container.is(e.target) // if the target of the click isn't the container...
+	        && container.has(e.target).length === 0) // ... nor a descendant of the container
+	    {
+	        container.hide("slide", { direction: "left" }, 500);
+	        $("body").css("overflow-x", "hidden");
+	        $("body").css("overflow-y", "scroll");
+	    }
+	});
 	var all_posts_loaded = false;
 	var loading_currently = false;
 	function load_more_post() {
@@ -967,7 +1055,6 @@ if ($check->num_rows == 1) {
 				}
 				fromUser = "<?php echo $username; ?>";
 				if ($("#messages").scrollTop() == 0) {36
-					alert("Reached top");
 					$("#messages").scrollTop(2);
 					firstid = $(".first_text").first().text();
 					if(firstid == ""){
@@ -1008,6 +1095,13 @@ if ($check->num_rows == 1) {
 			success: function(){
 				$(postid).attr('class', 'liked');
 				$(postid).attr('onclick', 'unlikePost(' + id + ')');
+				$(".like-bearpic").show();
+				$(".like-bearpic").effect("shake", 3000);
+				setTimeout(
+				  function() 
+				  {
+				    $(".like-bearpic").hide();
+				  }, 1000);
 			},
 			error: function(){
 				alert("failed");

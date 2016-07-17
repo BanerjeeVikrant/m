@@ -218,6 +218,29 @@ $tags = array();
     				if ($commentsid != "") {
     					$commentsArray = explode(",",$commentsid);
     				}
+                    $commentsCount = count($commentsArray);
+                    $commentsCountShow = 0;
+                    if($commentsCount > 3){
+                        $commentsCountShow = $commentsCount - 3;
+                    }
+                    if($commentsCountShow != 0){
+                    $commentShownBox = "<div style = 'position: relative;' class='view-more'>                        
+                            <div class = 'comment-body'>
+                                <div class = 'comments-img'></div>
+                                <div class = 'comment-area'>
+                                    <div style = 'position: relative;'>
+                                        <div class = 'commentPosted'>
+                                            &nbsp;&nbsp;&nbsp;View $commentsCountShow more comments
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+                    }
+                    else{
+                        $commentShownBox = "";
+                    }
+                    $defaultCommentsCount = 3;
     				echo "
     				<div class = 'profile-post'>
     					<div style = 'position: relative;'>
@@ -235,15 +258,19 @@ $tags = array();
     						$topName<br>
     						<span class = 'time'>$time_added<span>, </span>$date_added</span>
     					</span>
-
+                        <hr class='post-breaker'>
     					<p class = 'msg-body'>$body</p>
     					$pic
     					$vid
     					$youtube
     				</div>
-    				<div class = 'comments-box'>";
 
-    					foreach ($commentsArray as $value) {
+    				<div class = 'comments-box'>
+                        $commentShownBox
+                        <div class = 'old-comment-box'>";
+
+    					for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
+                            $value = $commentsArray[$i];
     						$getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
     						$getCommentRow = $getCommentQuery->fetch_assoc();
     						$commentPost = $getCommentRow['comment'];
@@ -267,6 +294,34 @@ $tags = array();
 
     						";
     					}
+                        echo "
+                        </div>
+                        ";
+                        for ($i = max(0,$commentsCount - $defaultCommentsCount); $i < $commentsCount; $i++) {
+                            $value = $commentsArray[$i];
+                            $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
+                            $getCommentRow = $getCommentQuery->fetch_assoc();
+                            $commentPost = $getCommentRow['comment'];
+                            $commentpostedby =  $getCommentRow['from'];
+                            $getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
+                            $getfetch = $getUser->fetch_assoc();
+                            $userpic = $getfetch['profile_pic'];
+                            echo "                
+                            <div style = 'position: relative;'>                        
+                                <div class = 'comment-body'>
+                                    <div class = 'comments-img'></div>
+                                    <div class = 'comment-area'>
+                                        <div style = 'position: relative;'>
+                                            <div class = 'commentPosted'>
+                                                <a style='position: relative;' href = 'profile.php?u=$commentpostedby'>$commentpostedby</a>&nbsp;&nbsp;&nbsp;$commentPost
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            ";
+                        }
 
     					echo "        
     				</div>
@@ -316,4 +371,10 @@ $tags = array();
     				}
     			});
 
+                $(".old-comment-box").hide();
+
+                $(".view-more").click(function(){
+                    $(this).next().show();
+                    $(this).hide();
+                });
     		</script>

@@ -44,7 +44,7 @@ if ($user_login != "") {
 	<title>bruincave</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="shortcut icon" href="/bkd/img/bearpic.png">
-
+	<meta name="theme-color" content="#1d2d4a" />
 	<!--other resourses, external source(help)-->
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=IM+Fell+English+SC" />
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Carter+One" />
@@ -70,7 +70,7 @@ if ($user_login != "") {
 			display: inline-block;
 			width: 100vw;
 			height: 100vh;
-			background: linear-gradient(rgb(1, 37, 86), rgb(0, 53, 124));
+			background: linear-gradient(#1d2d4a, rgb(0, 53, 124));
 			overflow: hidden;
 		}
 		.logo-img{
