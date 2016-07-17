@@ -24,7 +24,7 @@
         $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id > $getNew)) ORDER BY id DESC LIMIT 15";
     } else {
         $getOld = $_GET['getold'];
-        $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id < $getOld)) ORDER BY id DESC LIMIT 15";
+        $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id < $getOld)) ORDER BY id DESC LIMIT 5";
     }
 
     $results = $conn->query($sql);
@@ -54,10 +54,11 @@
         $newHtmlMsg .= "</div>";
         $htmlMsg = $newHtmlMsg . $htmlMsg;
     }
+    if (isset( $_GET['getold']) || $getNew == 0) {
+        if ($results->num_rows == 0) { $first_id = 0; }
+        echo "<div style = 'display: none;' class = 'first_text'>$first_id</div>";
+    }
     if ($results->num_rows > 0) {
-        if (isset( $_GET['getold']) || $getNew == 0) {
-            echo "<div style = 'display: none;' class = 'first_text'>$first_id</div>";
-        }
         echo $htmlMsg;
         if (!isset( $_GET['getold'])) {
             echo "<div style = 'display: none;' class = 'last_text'>$id</div>";
