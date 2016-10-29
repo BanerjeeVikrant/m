@@ -1,0 +1,1 @@
+<textarea class="posttext" placeholder="What's on your mind?" name="post"></textarea>

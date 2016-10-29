@@ -92,7 +92,8 @@ if ($checkme->num_rows == 1) {
 if (!isset($_GET['u'])) {
 	$yourfollowing_arr =  explode(',',$yourfollowing);
 	$yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
-	$sql = "SELECT * FROM posts WHERE (added_by IN ($yourfollowing_quoted) AND posted_to = '0') ORDER BY id DESC LIMIT $offset,20";
+	$sql = "SELECT * FROM posts WHERE (added_by IN ($yourfollowing_quoted) AND posted_to = '0' OR added_by = '$username' AND posted_to = '0') ORDER BY id DESC LIMIT $offset,20";
+   
 } else {
 	$sql =  "SELECT * FROM posts WHERE (added_by = '$profileUser' AND posted_to = '1') OR (user_posted_to = '$profileUser') ORDER BY id DESC LIMIT $offset,20";
 
@@ -210,7 +211,7 @@ $tags = array();
     				}
     				
 
-    				$topName = "<a href = '/bruinskave/php/profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname</a>";
+    				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname</a>";
     				
 
     				$commentsArray = [];
@@ -244,14 +245,7 @@ $tags = array();
     				echo "
     				<div class = 'profile-post'>
     					<div style = 'position: relative;'>
-    						<div class = 'glyphicon glyphicon-option-vertical post-options'>
-    							<div class = 'postoptions-div' style = 'display: none; position: absolute;top: 19px;left:-113px;background-color: #F3F3F3;width: 126px;height: 90px;'>
-
-    								<div class = 'hide-post post-work' style = ''> <span class = 'glyphicon glyphicon-lock'></span> Hide</div>
-    								<div class = 'delete-post post-work' style = ''> <span class = 'glyphicon glyphicon-remove'></span> Delete</div>
-    								<div class = 'report-post post-work' style = ''> <span class = 'glyphicon glyphicon-flag'></span> Report</div>
-    							</div>
-    						</div>
+    						<div class = 'glyphicon glyphicon-flag post-options' id='$id'></div>
     					</div>
     					<div class = 'posted-by-img' style = 'background-image: url($userpic);'></div>
     					<span class = 'topName'>
@@ -264,7 +258,17 @@ $tags = array();
     					$vid
     					$youtube
     				</div>
-
+                    <textarea style = 'display: none;' id = 'comments-send'></textarea>
+                    <div class = 'comments-input'>
+                            $userliked
+                        <div style = 'position: relative;'>
+                            <form method = 'POST' class='post-comment'>
+                                <input type = 'text' name = 'comment' placeholder = 'Write a Comment&hellip;' class = 'comment-inputs' autocomplete = 'off' />
+                                <input type = 'text' name = 'id' value = '$id' style = 'display: none;' />
+                                <input type = 'submit' id = 'commentid' name = 'commentid' style = 'display: none;'/>        
+                            </form>        
+                        </div>        
+                    </div>
     				<div class = 'comments-box'>
                         $commentShownBox
                         <div class = 'old-comment-box'>";
@@ -325,17 +329,7 @@ $tags = array();
 
     					echo "        
     				</div>
-    				<textarea style = 'display: none;' id = 'comments-send'></textarea>
-    				<div class = 'comments-input'>
-    						$userliked
-    					<div style = 'position: relative;'>
-    						<form method = 'POST' class='post-comment'>
-    							<input type = 'text' name = 'comment' placeholder = 'Write a Comment&hellip;' class = 'comment-inputs' autocomplete = 'off' />
-    							<input type = 'text' name = 'id' value = '$id' style = 'display: none;' />
-    							<input type = 'submit' id = 'commentid' name = 'commentid' style = 'display: none;'/>        
-    						</form>        
-    					</div>        
-    				</div>";
+    				";
 
 		}        
 	} else {
@@ -361,14 +355,21 @@ $tags = array();
     			var postoptionOpen = false;
 
     			$(".post-options").click(function() {
-    				if(postoptionOpen == false){
-    					$(this).find(".postoptions-div").css("display", "block");
-    					postoptionOpen = true;
-    				}
-    				else if (postoptionOpen == true){
-    					$(this).find(".postoptions-div").css("display", "none");
-    					postoptionOpen = false;
-    				}
+                    var postid = $(this).attr("id");
+                    var id = "#"+postid;
+                    var url = "action/flagpost.php?id="+postid;
+                    $.ajax({url: url, success: function(result){
+                        $(id).css("color", "black");
+                        $(".reported").show();
+                        setTimeout(
+                          function() 
+                          {
+                            $(".reported").hide();
+                          }, 1000);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert("Connection Error");
+                    }});
     			});
 
                 $(".old-comment-box").hide();
