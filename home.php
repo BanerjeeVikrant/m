@@ -496,7 +496,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			display: inline-block;
 			height: 32px;
 			width: 32px;
-			background-image: url(img/heart-grey.png);
+			background-image: url(img/anonymous-logo-white.png);
 			background-size: cover;
 			background-repeat: no-repeat;
 
@@ -794,17 +794,17 @@ else if (isset($_FILES['pictureUpload'])) {
 			color: #b0b0b0;
 		}
 		.each-user {
-			position: relative;
-			width: 100vw;
-			height: 53px;
-			background: #d7d7d7;
-			padding: 13px;
+		    position: relative;
+		    width: 100vw;
+		    height: 53px;
+		    padding: 13px;
+		    border-bottom: 1px solid #d7d7d7;
 		}
 		.each-user-text {
 		    position: absolute;
 		    display: inline-block;
-		    top: 28px;
-		    left: 66px;
+		    top: 30px;
+		    left: 68px;
 		    font-size: 13px;
 		}
 		.chat-user-img {
@@ -815,7 +815,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			background-repeat: no-repeat;
 			background-position: center;
 			position: relative;
-			top: -8px;
+			top: -6px;
 			border-radius: 45px;
 		}
 		.each-user-name {
@@ -977,6 +977,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		span.notifier {
 			font-weight: bold;
 			font-size: 13px;
+			color: black;
 		}
 		span.notificationInfo {
 			color: #414040;
@@ -1129,7 +1130,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			display: inline-block;
 			height: 30px;
 			width: 30px;
-			background-image: url(img/heart-red.png);
+			background-image: url(img/anonymous-logo-blue.png);
 			background-size: cover;
 			background-repeat: no-repeat;
 			position: relative;
@@ -1243,7 +1244,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		.userimages-name {
 		    color: white;
 		    font-size: 15px;
-		    position: absolute;
+		    position: fixed;
 		    top: 19px;
 		    left: 59px;
 		}
@@ -1799,7 +1800,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 		if(homedisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/heart-red.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -1809,7 +1810,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		else if(crushdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/heart-grey.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -1818,7 +1819,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		else if(notificationsdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/heart-grey.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 			$(".messages-img").css("background-image", "url(img/message-blue.png)");
 
@@ -1835,7 +1836,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 		if(messagedisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/heart-grey.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -1844,7 +1845,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		else if(notificationsdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/heart-red.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -1853,7 +1854,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		else if(crushdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-blue.png)");
-			$(".crush-img").css("background-image", "url(img/heart-grey.png");
+			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -2099,7 +2100,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 	$(".home-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-blue.png)");
-		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 		$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -2127,7 +2128,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 	$(".crush-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
-		$(".crush-img").css("background-image", "url(img/heart-red.png");
+		$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 		$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -2155,7 +2156,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 	$(".notifications-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
-		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
 		$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
@@ -2183,7 +2184,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 	$(".messages-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
-		$(".crush-img").css("background-image", "url(img/heart-grey.png");
+		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
 		$(".messages-img").css("background-image", "url(img/message-blue.png)");
 

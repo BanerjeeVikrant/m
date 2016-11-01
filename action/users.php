@@ -66,13 +66,18 @@ $username = $_SESSION['user_login'];
                 $lastPostid2 = $get['id'];
 
                 if($lastPostid > $lastPostid2){
-                    $lasttext = $lastPost;
+                    $lasttext = "<b>".$lastPost."</b>";
+                    $chat_first_name = "<b>".$chat_first_name;
+                    $chat_last_name = $chat_last_name."</b>";
+                    $backgroundColorUpdate = "style='background-color:white;'";
                 }
                 else{
                     $lasttext = "You:" . $lastPost2;
+                    $backgroundColorUpdate = "";
                 }
+
                 echo "
-    <div class='each-user' uid='$chat_userid' >
+    <div class='each-user' uid='$chat_userid' $backgroundColorUpdate>
     
                <div style='background-image:url($chat_profile_pic)' class='chat-user-img'></div>
                <div class='each-user-name'>$chat_first_name $chat_last_name</div>

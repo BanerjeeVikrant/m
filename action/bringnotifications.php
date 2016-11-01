@@ -33,7 +33,8 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $getInfo = $getFrom->fetch_assoc();
 
             $fromPic = $getInfo['profile_pic'];
-            $fromFirst = $getInfo['first_name'];;
+            $fromFirst = $getInfo['first_name'];
+            $fromsex = $getInfo['sex'];
 
             $getFrom = $conn->query("SELECT * FROM comments WHERE id='$commentId'");
             $getInfo = $getFrom->fetch_assoc();
@@ -51,14 +52,21 @@ $getposts = $conn->query($sql) or die(mysql_error());
             else if($type == '3'){
                 $message =  "commented: $comment";
             }
-
+            if($fromPic == "" || $fromPic == NULL){
+                if($fromsex == "1"){
+                    $fromPic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
+                }
+                else{
+                    $fromPic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
+                }
+            }
             echo "
             <div class = 'notification-post' postid='$postId'>
                 <div style='position: relative;'>
                 <div class='fromPicNotification' style='background-image:url($fromPic);'></div>
                 </div>
                 <div class='notificationBox'>
-                    <span class='notifier'>$fromFirst</span>
+                    <a href='profile.php?u=$fromUser'><span class='notifier'>$fromFirst</span></a>
                     
                     <span class='notificationInfo'>$message</span>
                     <span class='notifier-time'>$notifierTime</span>

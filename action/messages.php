@@ -19,6 +19,15 @@
     $torows = $toresults->num_rows;
     $torow = $toresults->fetch_assoc();
     $toPic = $torow['profile_pic'];
+    $tosex = $torow['sex'];
+    if($toPic == "" || $toPic == NULL){
+        if($tosex == "1"){
+            $toPic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
+        }
+        else{
+            $toPic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
+        }
+    }
     
     if (! isset( $_GET['getold'])) {
         $sql = "SELECT * FROM messages WHERE (((fromUser = $fromId AND toUser = $toId) OR (fromUser = $toId AND toUser = $fromId)) AND (id > $getNew)) ORDER BY id DESC LIMIT 15";
@@ -36,6 +45,7 @@
         if ($i == 0) {
             $id = $row['id'];
         }
+
         $newHtmlMsg = "<div class='each-message-wrapper'> ";
         if ($row['fromUser'] == $fromId) {
             $newHtmlMsg .= "
