@@ -1421,6 +1421,18 @@ else if (isset($_FILES['pictureUpload'])) {
 		    background: #e6e6e6;
 		    top: 45px;
 		}
+		.add-people-tip {
+		    position: fixed;
+		    top: calc(100vh - 59px);
+		    left: calc(100vw - 193px);
+		    background: #1d2d4a;
+		    color: white;
+		    padding: 7px;
+		    padding-left: 15px;
+		    padding-right: 25px;
+		    border-top-right-radius: 50px;
+		    border-bottom-right-radius: 50px;
+		}
 	</style>
 </head>
 <body id="element">
@@ -1534,7 +1546,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 </div>
 <div class="message-content">
-	
+	<div class="add-people-tip">Add People</div>
 	<div class="add-people" id="add-people">
 		<div class="add-people-plus glyphicon glyphicon-plus"></div>
 	</div>
