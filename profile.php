@@ -1187,6 +1187,11 @@ else if (isset($_FILES['pictureUpload'])) {
 				#changeprofile{
 				    display:none;
 				}
+				span.likedby-names {
+				    position: relative;
+				    top: 3px;
+				    left: 5px;
+				}
 	</style>
 
 </head>

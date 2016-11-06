@@ -182,7 +182,7 @@ $tags = array();
 
             //Creates "liked by" text
 
-            $likedbyFull = "<img src='img/liked-paw.png' width=18> Liked by ";
+            $likedbyFull = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Liked by ";
             for ($i=0;$i<count($likedbyArray);$i++) {
                 $u = $likedbyArray[$i];
                 $likedbyFull = $likedbyFull . "<a style='color:black;font-style: italic' href='profile.php?u=$u'>" . $u . "</a>, ";
@@ -190,7 +190,7 @@ $tags = array();
             $likedbyFull = rtrim($likedbyFull, ", ");  //Trim ", " from end of string
 
             if ($likedby == "") {
-                $likedbyStr = "<img src='img/liked-paw.png' width=18> Be the first to like";
+                $likedbyStr = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Be the first to like";
             }
             else if (count($likedbyArray) > 5) {
                 $likes = count($likedbyArray);
@@ -201,12 +201,13 @@ $tags = array();
                     $('#likers_$id').html($toreplace)
                 }
                 </script>
-                <img src='img/liked-paw.png' width=18> $likes likes";
+                <img src='img/liked-paw.png' width=18> <span class='likedby-names'>$likes likes";
             }
             else {
                 //http://localhost/bkm/profile.php?u=test
                 $likedbyStr = $likedbyFull;
             }
+            echo "</span>";
 
     		$picture_added = $row['picture'];
     		$video_link = $row['youtubevideo'];

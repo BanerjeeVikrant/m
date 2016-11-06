@@ -172,6 +172,11 @@ if (isset($_POST['feedback'])) {
 	
 	fclose($fp);
 }
+if (isset($_POST['groupname'])) {
+	$name = @$_POST['groupname'];
+	$sqlcommand = "INSERT INTO groups VALUES ('$name', '$username', '',  '')";
+	$query = $conn->query($sqlcommand);
+}
 if (isset($_POST['crushpost'])) {
 	$post = @$_POST['crushpost'];
 	$post = str_replace("'","&apos;",$post);
@@ -499,7 +504,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			position: fixed;
 			top: 60px;
 			height: 50px;
-			border-bottom: 1px solid #c4c4c4;
+			border-bottom: 1px solid #e6e6e6;
 			z-index: 6;
 			background-color: white;
 		}
@@ -834,6 +839,23 @@ else if (isset($_FILES['pictureUpload'])) {
 			top: 3px;
 			color: #b0b0b0;
 		}
+		input#search-users-g {
+		    width: 85vw;
+		    height: 30px;
+		    border: 0;
+		    outline: 0;
+		    padding-left: 33px;
+		    margin-bottom: 10px;
+		    position: relative;
+		}
+
+		span.usersearch-tool-g {
+		    position: relative;
+		    left: 13px;
+		    top: 27px;
+		    color: #b0b0b0;
+		    z-index: 2;
+		}
 		.each-user {
 		    position: relative;
 		    width: 100vw;
@@ -1034,6 +1056,9 @@ else if (isset($_FILES['pictureUpload'])) {
 			z-index: 20;
 			background: #e6e6e6;
 			border-right: 1px solid #b5b5b5;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			padding-bottom: 15px;
 		}
 		.banner-sidebody{
 			background:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(<?php echo $bannerimg; ?>);
@@ -1199,6 +1224,15 @@ else if (isset($_FILES['pictureUpload'])) {
 			overflow-x: hidden;
 		}
 		.feedbackhome {
+			position: fixed;
+			top: 0;
+			height: 100vh;
+			width: 100vw;
+			background-color: #1d2d4a;
+			z-index: 30;
+			overflow: hidden;
+		}
+		.newgrouphome {
 			position: fixed;
 			top: 0;
 			height: 100vh;
@@ -1474,9 +1508,26 @@ else if (isset($_FILES['pictureUpload'])) {
 		    border-top-right-radius: 50px;
 		    border-bottom-right-radius: 50px;
 		}
+		span.likedby-names {
+		    position: relative;
+		    top: 3px;
+		    left: 5px;
+		}
+		.add-group {
+		    float: right;
+		}
 	</style>
 </head>
 <body id="element">
+	<div class="newgrouphome">
+		<form action="home.php" method="POST" enctype="multipart/form-data">
+			<div class="back-img" id="back-newgroup"></div>
+			<input type="submit" name="submitpost" class="submitpost" value="Save">
+			<div id="feedbacktype">
+				<textarea class="feedbacktext" placeholder="Group Name?" name="groupname"></textarea>
+			</div>
+		</form>
+	</div>
 	<div class="feedbackhome">
 		<form action="home.php" method="POST" enctype="multipart/form-data">
 			<div class="back-img" id="back-feedback"></div>
@@ -1533,7 +1584,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 </div>
 <div class="body-content">
-	<h4 style="padding:20px">Now browsing <?php echo $view_group_name; ?></h4>
+	<h4 style="text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;">Now browsing <?php echo $view_group_name; ?></h4>
 	<div class="content" id="content">
 
 	</div>
@@ -1632,19 +1683,29 @@ else if (isset($_FILES['pictureUpload'])) {
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<br/>
 
-	<p style="margin:10px"><b>Groups</b></p>
+	<p style="margin: 10px;"><b>Branham Trends</b><span class="glyphicon glyphicon-plus add-group"></span></p>
+
 	<a href='?g=0'><div class='sidebody-tab'>Main Feed</div></a>
 
 <?php
-$groups = $conn->query("SELECT groups FROM users WHERE username='$username'");
-$g = $groups->fetch_assoc();
-$g = implode("", $g);
-$g = explode(",", $g);
-for ($i=0;$i<count($g);$i++) {
-	$gid = $g[$i];
-	$gname = get_group_name($gid);
-	echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
+$groups = $conn->query("SELECT * FROM groups WHERE 1");
+if($groups->num_rows > 0) {
+	while ($g = $groups->fetch_assoc()) {
+		$gname = $g['name'];
+		$gid = $g['id'];
+		echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
+	}
 }
+/*if($g_ids != ""){
+	$g = implode("", $g);
+	$g = explode(",", $g);
+	for ($i=0;$i<count($g);$i++) {
+		$gid = $g[$i];
+		$gname = get_group_name($gid);
+		echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
+	}
+}*/
+
 ?>
 
 </div>
@@ -1669,7 +1730,13 @@ for ($i=0;$i<count($g);$i++) {
 	
 </div>
 <script type="text/javascript">
-
+	$(".newgrouphome").hide();
+	$(".add-group").click(function(){
+		$(".newgrouphome").show();
+	});
+	$("#back-newgroup").click(function(){
+		$(".newgrouphome").hide();
+	});
 	$("#fullscreen-img-wrapper").hide();
 
 	$(".feedbackhome").hide();
@@ -1936,7 +2003,7 @@ for ($i=0;$i<count($g);$i++) {
 	});
 
 	$(".homepic-searchbar").click(function(){
-		$(".home-sidebody").show("slide", { direction: "left" }, 500);
+		$(".home-sidebody").show();
 		$("body").css("overflow", "hidden");
 	});
 	$(document).mouseup(function (e)
@@ -1946,7 +2013,7 @@ for ($i=0;$i<count($g);$i++) {
 	    if (!container.is(e.target) // if the target of the click isn't the container...
 	        && container.has(e.target).length === 0) // ... nor a descendant of the container
 	    {
-	    	container.hide("slide", { direction: "left" }, 500);
+	    	container.hide();
 	    	$("body").css("overflow-x", "hidden");
 	    	$("body").css("overflow-y", "scroll");
 	    }
