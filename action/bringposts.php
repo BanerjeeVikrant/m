@@ -18,7 +18,7 @@ if (isset($_GET['u'])) {
 	$profileUser = $_GET['u'];
 
          //check user exists
-	$check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
+    $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
 	if ($check->num_rows == 1) {
 
 		$get = $check->fetch_assoc();
@@ -85,8 +85,8 @@ if ($checkme->num_rows == 1) {
 	$yoursex = $getuser['sex'];
 	$yourinterests = $getuser['interests'];
 	$yourdob = $getuser['dob'];
-	$yourfollowers = $getuser['followers'];        
-	$yourfollowing = $getuser['following'];        
+	$yourfollowers = $getuser['followers'];
+	$yourfollowing = $getuser['following'];
 }
 
 if (!isset($_GET['u'])) {
@@ -139,6 +139,7 @@ $tags = array();
     if($getposts->num_rows > 0) {
     	while ($row = $getposts->fetch_assoc()) {
     		$id = $row['id'];
+
     		$hidden = $row['hidden'];
     		if($hidden == '1'){
     			continue;
@@ -167,6 +168,35 @@ $tags = array();
     		else{
     			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'notliked' onclick = 'likePost($id);'></div></div>";
     		}
+
+            //Creates "liked by" text
+
+            $likedbyFull = "<img src='img/liked-paw.png' width=18> Liked by ";
+            for ($i=0;$i<count($likedbyArray);$i++) {
+                $u = $likedbyArray[$i];
+                $likedbyFull = $likedbyFull . "<a style='color:black;font-style: italic' href='profile.php?u=$u'>" . $u . "</a>, ";
+            }
+            $likedbyFull = rtrim($likedbyFull, ", ");  //Trim ", " from end of string
+
+            if ($likedby == "") {
+                $likedbyStr = "<img src='img/liked-paw.png' width=18> Be the first to like";
+            }
+            else if (count($likedbyArray) > 5) {
+                $likes = count($likedbyArray);
+                $toreplace = '"' . $likedbyFull . '"';
+                $likedbyStr = "
+                <script>
+                function show_likers_$id() {
+                    $('#likers_$id').html($toreplace)
+                }
+                </script>
+                <img src='img/liked-paw.png' width=18> $likes likes";
+            }
+            else {
+                //http://localhost/bkm/profile.php?u=test
+                $likedbyStr = $likedbyFull;
+            }
+
     		$picture_added = $row['picture'];
     		$video_link = $row['youtubevideo'];
     		$video_added = $row['video'];
@@ -225,7 +255,7 @@ $tags = array();
                         $commentsCountShow = $commentsCount - 3;
                     }
                     if($commentsCountShow != 0){
-                    $commentShownBox = "<div style = 'position: relative;' class='view-more'>                        
+                    $commentShownBox = "<div style = 'position: relative;' class='view-more'>                      
                             <div class = 'comment-body'>
                                 <div class = 'comments-img'></div>
                                 <div class = 'comment-area'>
@@ -270,6 +300,14 @@ $tags = array();
                         </div>        
                     </div>
     				<div class = 'comments-box'>
+
+
+                        <!--PEOPLE WHO LIKED-->
+
+
+                        <div class = 'comment-body' id='likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'>$likedbyStr</div>
+
+
                         $commentShownBox
                         <div class = 'old-comment-box'>";
 
