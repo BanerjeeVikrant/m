@@ -152,6 +152,7 @@ if (isset($_POST['crushpost'])) {
 		$sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$added_by', '', '$time_added', '$date_added')";
 		$query = $conn->query($sqlcommand);
 	}
+	header("Location: home.php?tab=c");
 }
 else if (isset($_FILES['crushpictureUpload'])) {
 	$post = '';
@@ -230,6 +231,7 @@ if (isset($_POST['post'])) {
 		}
 
 	}
+	header("Location: home.php");
 }
 //post picture :: ln 603 :: postmethods/post.html
 else if (isset($_FILES['pictureUpload'])) {
@@ -2231,7 +2233,9 @@ else if (isset($_FILES['pictureUpload'])) {
 				$(postid).attr('class', 'liked');
 				$(postid).attr('onclick', 'unlikePost(' + id + ')');
 				$(".like-bearpic").show();
-				$(".like-bearpic").effect("shake", 3000);
+				if (!$(".like-bearpic").is(':animated')) {
+					$(".like-bearpic").effect("shake", 3000);
+				}
 				setTimeout(
 					function() 
 					{
