@@ -14,6 +14,8 @@ else{
 	$username = "";
 }
 
+
+
 if ($_SESSION['user_login']){
 	$username = $_SESSION['user_login'];
 	$adminCheck = $conn->query("SELECT admin FROM users WHERE username='$username'");
@@ -122,6 +124,24 @@ if ($check->num_rows == 1) {
 	//echo "<meta http-equiv=\"refresh\" content=\"0; url=/bruinskave/index.php\">";
 	exit();
 }
+
+function get_group_name($id) {
+//	$s = $conn->query("SELECT name FROM groups WHERE id ='$id'");
+	if ($id) {
+		return "Group $id";
+	}
+	else {
+		return "Main Feed";
+	}
+}
+
+$view_group_id = 0;
+$view_group_name = get_group_name($view_group_id);
+if (isset($_GET['g'])) {
+	$view_group_id = $_GET['g'];
+	$view_group_name = get_group_name($view_group_id);
+}
+
 if (isset($_POST['feedback'])) {
 	$post = @$_POST['feedback'];
 	$post = str_replace("'","&apos;",$post);
@@ -1499,6 +1519,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 </div>
 <div class="body-content">
+	<h4 style="padding:20px">Now browsing <?php echo $view_group_name; ?></h4>
 	<div class="content" id="content">
 
 	</div>
@@ -1595,6 +1616,23 @@ else if (isset($_FILES['pictureUpload'])) {
 	<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
+	<br/>
+
+	<p style="margin:10px"><b>Groups</b></p>
+	<a href='?g=0'><div class='sidebody-tab'>Main Feed</div></a>
+
+<?php
+$groups = $conn->query("SELECT groups FROM users WHERE username='$username'");
+$g = $groups->fetch_assoc();
+$g = implode("", $g);
+$g = explode(",", $g);
+for ($i=0;$i<count($g);$i++) {
+	$gid = $g[$i];
+	$gname = get_group_name($gid);
+	echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
+}
+?>
+
 </div>
 </div>
 <div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
@@ -1907,7 +1945,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		if (!all_posts_loaded && !loading_currently)  {
 			loading_currently = true;
 			offset = Number($("#post_offset").text());
-			posturl = "action/bringposts.php?o="+offset;
+			posturl = "action/bringposts.php?o="+offset+"&g="+<?php echo $view_group_id;?>;
 			$.ajax({url: posturl, success: function(result){
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
