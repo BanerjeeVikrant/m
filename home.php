@@ -198,6 +198,8 @@ else if (isset($_FILES['crushpictureUpload'])) {
 if (isset($_POST['post'])) {
 	$post = @$_POST['post'];
 	$post = str_replace("'","&apos;",$post);
+	$post = str_replace("<","&lt;",$post);
+	$post = str_replace(">","&gt;",$post);
 	if($post != ""){
 		date_default_timezone_set("America/Los_Angeles");
 		$date_added = date("Y/m/d");
@@ -238,6 +240,8 @@ else if (isset($_FILES['pictureUpload'])) {
 	$post = '';
 	$post = $_POST['photopost'];
 	$post = str_replace("'","&apos;",$post);
+	$post = str_replace("<","&lt;",$post);
+	$post = str_replace(">","&gt;",$post);
 	date_default_timezone_set("America/Los_Angeles");
 	$date_added = date("Y/m/d");
 	$added_by = $username;
