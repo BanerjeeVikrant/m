@@ -126,9 +126,17 @@ if ($check->num_rows == 1) {
 }
 
 function get_group_name($id) {
-//	$s = $conn->query("SELECT name FROM groups WHERE id ='$id'");
+	global $conn;
 	if ($id) {
-		return "Group $id";
+		$check = $conn->query("SELECT name FROM groups WHERE id = '$id'");
+		if ($check->num_rows == 1) {
+			$get = $check->fetch_assoc();
+			$name = $get['name'];
+			return $name;
+		}
+		else {
+			return "ERROR";
+		}
 	}
 	else {
 		return "Main Feed";
@@ -139,6 +147,11 @@ $view_group_id = 0;
 $view_group_name = get_group_name($view_group_id);
 if (isset($_GET['g'])) {
 	$view_group_id = $_GET['g'];
+	$view_group_name = get_group_name($view_group_id);
+}
+
+if (isset($_POST['g'])) {
+	$view_group_id = $_POST['g'];
 	$view_group_name = get_group_name($view_group_id);
 }
 
@@ -228,8 +241,8 @@ if (isset($_POST['post'])) {
 		$time_added = date("h:i:sa"); 
 		$added_by = $username;
 		
-
-		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', '', '', '', '0', '', '')";
+		//(`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`)
+		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', '', '', '', '0', '', '', '$view_group_id')";
 		if ($conn->query($sqlcommand) === TRUE) {
 			$last_id = $conn->insert_id;
 			$words_array = explode(" ", $post);
@@ -255,7 +268,7 @@ if (isset($_POST['post'])) {
 		}
 
 	}
-	header("Location: home.php");
+	header("Location: home.php?g=$view_group_id");
 }
 //post picture :: ln 603 :: postmethods/post.html
 else if (isset($_FILES['pictureUpload'])) {
@@ -281,7 +294,7 @@ else if (isset($_FILES['pictureUpload'])) {
 //echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
 			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
 
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '')";
+			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '$view_group_id')";
 			if ($conn->query($sql) === TRUE) {
 				$last_id = $conn->insert_id;
 				$words_array = explode(" ", $post);
@@ -351,7 +364,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 
 	}
-	header("Location: home.php");
+	header("Location: home.php?g=$view_group_id");
 } /* else if (isset($_FILES['videoUpload'])) {
 	$post = '';
 	$post = $_POST['videopost'];
@@ -1481,8 +1494,9 @@ else if (isset($_FILES['pictureUpload'])) {
 		<form action="home.php" method="POST" enctype="multipart/form-data">
 			<div class="back-img" id="back-post"></div>
 			<input type="submit" name="submitpost" class="submitpost" value="Roar">
+			<input type="hidden" name="g" value="<?php echo $view_group_id ?>">
 			<div id="posttype">
-				<textarea class="posttext" placeholder="What's on your mind?" name="post"></textarea>
+				<textarea class="posttext" placeholder="Post to <?php echo $view_group_name; ?>" name="post"></textarea>
 			</div>
 			<div class="postoptions-cover">
 				<div class="post-write-tabs text-tab-post">Text</div>
