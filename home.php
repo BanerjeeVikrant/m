@@ -142,6 +142,8 @@ if (isset($_POST['feedback'])) {
 if (isset($_POST['crushpost'])) {
 	$post = @$_POST['crushpost'];
 	$post = str_replace("'","&apos;",$post);
+	$post = str_replace("<","&lt;",$post);
+	$post = str_replace(">","&gt;",$post);
 	if($post != ""){
 		date_default_timezone_set("America/Los_Angeles");
 		$date_added = date("Y/m/d");

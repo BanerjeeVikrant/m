@@ -10,6 +10,9 @@ else{
 }
 
 $comment = $_POST['comment'];
+$comment = str_replace("<","&lt;",$comment);
+$comment = str_replace(">","&gt;",$comment);
+
 $sql = "INSERT INTO comments VALUES ('', '$comment', '$username')";
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
