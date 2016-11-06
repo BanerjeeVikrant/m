@@ -412,7 +412,7 @@ $('#register').submit(function(e){
 		type:'post',
 		data:data, 
 		success:function(){
-			$(".key-register").hide();
+			location.reload();
         },
         error: function(jqXHR, textStatus, errorThrown) {
         	alert("failed");
