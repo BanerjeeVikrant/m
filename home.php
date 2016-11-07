@@ -1551,7 +1551,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			<input type="submit" name="submitpost" class="submitpost" value="Roar">
 			<input type="hidden" name="g" value="<?php echo $view_group_id ?>">
 			<div id="posttype">
-				<textarea class="posttext" placeholder="Post to <?php if ($view_group_id) {echo $view_group_name;} else {echo 'feed';} ?>" name="post"></textarea>
+				<textarea class="posttext" placeholder="<?php if ($view_group_id) {echo  'Talk about ' . $view_group_name;} else {echo 'Post to feed';} ?>" name="post"></textarea>
 			</div>
 			<div class="postoptions-cover">
 				<div class="post-write-tabs text-tab-post">Text</div>
@@ -1590,8 +1590,8 @@ else if (isset($_FILES['pictureUpload'])) {
 <div class="body-content">
 	<?php if ($view_group_id) { echo "
 		<h4 style='text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;'>
-			<!--<a href='?g=0'><img src='img/back-black.png' width='20'></a>-->
-			Now browsing $view_group_name
+			<a href='?g=0'><img src='img/back-blue.png' width='20' style='float:left'></a>
+			<span>Now browsing $view_group_name</span>
 		</h4>";}
 		?>
 	<div class="content" id="content">
