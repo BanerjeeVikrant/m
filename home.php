@@ -1551,7 +1551,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			<input type="submit" name="submitpost" class="submitpost" value="Roar">
 			<input type="hidden" name="g" value="<?php echo $view_group_id ?>">
 			<div id="posttype">
-				<textarea class="posttext" placeholder="Post to <?php echo $view_group_name; ?>" name="post"></textarea>
+				<textarea class="posttext" placeholder="Post to <?php if ($view_group_id) {echo $view_group_name;} else {echo 'feed';} ?>" name="post"></textarea>
 			</div>
 			<div class="postoptions-cover">
 				<div class="post-write-tabs text-tab-post">Text</div>
@@ -1588,7 +1588,12 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 </div>
 <div class="body-content">
-	<h4 style="text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;">Now browsing <?php echo $view_group_name; ?></h4>
+	<?php if ($view_group_id) { echo "
+		<h4 style='text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;'>
+			<!--<a href='?g=0'><img src='img/back-black.png' width='20'></a>-->
+			Now browsing $view_group_name
+		</h4>";}
+		?>
 	<div class="content" id="content">
 
 	</div>
@@ -1689,7 +1694,7 @@ else if (isset($_FILES['pictureUpload'])) {
 
 	<p style="margin: 10px;"><b>Branham Trends</b><?php if ($admin) {echo '<span class="glyphicon glyphicon-plus add-group"></span>';} ?></p>
 
-	<a href='?g=0'><div class='sidebody-tab'>Main Feed</div></a>
+	<!-- <a href='?g=0'><div class='sidebody-tab'>Main Feed</div></a> -->
 
 <?php
 $groups = $conn->query("SELECT * FROM groups WHERE 1");
