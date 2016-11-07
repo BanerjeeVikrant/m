@@ -173,9 +173,13 @@ if (isset($_POST['feedback'])) {
 	fclose($fp);
 }
 if (isset($_POST['groupname'])) {
-	$name = @$_POST['groupname'];
-	$sqlcommand = "INSERT INTO groups VALUES ('$name', '$username', '',  '')";
-	$query = $conn->query($sqlcommand);
+	if ($admin) {
+		$name = @$_POST['groupname'];
+		$sqlcommand = "INSERT INTO groups VALUES ('$name', '$username', '',  '')";
+		$query = $conn->query($sqlcommand);
+	} else {
+		echo "Permission denied";
+	}
 }
 if (isset($_POST['crushpost'])) {
 	$post = @$_POST['crushpost'];
@@ -1683,7 +1687,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<br/>
 
-	<p style="margin: 10px;"><b>Branham Trends</b><span class="glyphicon glyphicon-plus add-group"></span></p>
+	<p style="margin: 10px;"><b>Branham Trends</b><?php if ($admin) {echo '<span class="glyphicon glyphicon-plus add-group"></span>';} ?></p>
 
 	<a href='?g=0'><div class='sidebody-tab'>Main Feed</div></a>
 
