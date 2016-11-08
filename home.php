@@ -1589,10 +1589,12 @@ else if (isset($_FILES['pictureUpload'])) {
 </div>
 <div class="body-content">
 	<?php if ($view_group_id) { echo "
+		<div style = 'position:relative;'>
 		<h4 style='text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;'>
-			<a href='?g=0'><img src='img/back-blue.png' width='20' style='float:left'></a>
+			<a href='?g=0'><img src='img/back-blue.png' width='20' style='float:left;position: relative;left: 10px;'></a>
 			<span>Now browsing $view_group_name</span>
-		</h4>";}
+		</h4>
+		</div>";}
 		?>
 	<div class="content" id="content">
 
