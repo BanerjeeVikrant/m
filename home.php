@@ -9,6 +9,9 @@ session_set_cookie_params($lifetime);
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$time = time();
+	$sql = "UPDATE users SET last_online_time = $time WHERE username = '$username'";
+	$update = $conn->query($sql);
 }
 else{
 	$username = "";
@@ -1467,9 +1470,10 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		.reported{
 			position: fixed;
-			background-color: white;
+			background-color: lightgray;
 			height: 50px;
 			width: 80vw;
+			border-radius: 5px;
 			z-index: 25;
 			top: calc(50vh - 25px);
 			left: 10vw;
@@ -2364,10 +2368,23 @@ if($groups->num_rows > 0) {
 	function likePost(id) {
 		var addurl = "action/likepost.php?id="+id;
 		var postid = "#like-btn-"+id;
+		var likeid = "#likers_"+id;
 		$.ajax({url: addurl, 
 			success: function(){
 				$(postid).attr('class', 'liked');
 				$(postid).attr('onclick', 'unlikePost(' + id + ')');
+
+
+	            posturl = 'action/getlikers.php?id='+id;
+	            $.ajax({url: posturl, success: function(result){
+	                    $('#likers_'+id).html(result);
+	                }
+	            });
+
+
+
+
+				$
 				$(".like-bearpic").show();
 				if (!$(".like-bearpic").is(':animated')) {
 					$(".like-bearpic").effect("shake", 3000);
@@ -2390,6 +2407,12 @@ if($groups->num_rows > 0) {
 			success: function(){
 				$(postid).attr('class', 'notliked');
 				$(postid).attr('onclick', 'likePost(' + id + ')');
+	            posturl = 'action/getlikers.php?id='+id;
+	            $.ajax({url: posturl, success: function(result){
+	                    $('#likers_'+id).html(result);
+	                }
+	            });
+
 			},
 			error: function(){
 				alert("failed");

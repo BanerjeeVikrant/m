@@ -180,34 +180,33 @@ $tags = array();
     			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'notliked' onclick = 'likePost($id);'></div></div>";
     		}
 
-            //Creates "liked by" text
 
-            $likedbyFull = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Liked by ";
-            for ($i=0;$i<count($likedbyArray);$i++) {
-                $u = $likedbyArray[$i];
-                $likedbyFull = $likedbyFull . "<a style='color:black;font-style: italic' href='profile.php?u=$u'>" . $u . "</a>, ";
-            }
-            $likedbyFull = rtrim($likedbyFull, ", ");  //Trim ", " from end of string
+            // $likedbyFull = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Liked by ";
+            // for ($i=0;$i<count($likedbyArray);$i++) {
+            //     $u = $likedbyArray[$i];
+            //     $likedbyFull = $likedbyFull . "<a style='color:black;font-style: italic' href='profile.php?u=$u'>" . $u . "</a>, ";
+            // }
+            // $likedbyFull = rtrim($likedbyFull, ", ");  //Trim ", " from end of string
 
-            if ($likedby == "") {
-                $likedbyStr = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Be the first to like";
-            }
-            else if (count($likedbyArray) > 5) {
-                $likes = count($likedbyArray);
-                $toreplace = '"' . $likedbyFull . '"';
-                $likedbyStr = "
-                <script>
-                function show_likers_$id() {
-                    $('#likers_$id').html($toreplace)
-                }
-                </script>
-                <img src='img/liked-paw.png' width=18> <span class='likedby-names'>$likes likes";
-            }
-            else {
-                //http://localhost/bkm/profile.php?u=test
-                $likedbyStr = $likedbyFull;
-            }
-            echo "</span>";
+            // if ($likedby == "") {
+            //     $likedbyStr = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Be the first to like</span>";
+            // }
+            // else if (count($likedbyArray) > 5) {
+            //     $likes = count($likedbyArray);
+            //     $toreplace = '"' . $likedbyFull . '"';
+            //     $likedbyStr = "
+            //     <script>
+            //     function show_likers_$id() {
+            //         $('#likers_$id').html($toreplace)
+            //     }
+            //     </script>
+            //     <img src='img/liked-paw.png' width=18> <span class='likedby-names'>$likes likes";
+            // }
+            // else {
+            //     //http://localhost/bkm/profile.php?u=test
+            //     $likedbyStr = $likedbyFull;
+            // }
+//            echo "</span>";
 
     		$picture_added = $row['picture'];
     		$video_link = $row['youtubevideo'];
@@ -235,6 +234,8 @@ $tags = array();
     				$pic_row  = $result->fetch_assoc();
     				$userpic =  $pic_row['profile_pic'];
     				$usersex = $pic_row['sex'];
+                    $admin = $pic_row['admin'];
+
     				if($userpic == "" || $userpic == NULL){
     					if($usersex == "1"){
     						$userpic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
@@ -252,8 +253,12 @@ $tags = array();
     					}
     				}
     				
+                    $admincode = "";
+                    if ($admin) {
+                        $admincode = "<font color='red' style='font-size:10px'>(admin)</font>";
+                    }
 
-    				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname</a>";
+    				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
     				
 
     				$commentsArray = [];
@@ -317,7 +322,15 @@ $tags = array();
                         <!--PEOPLE WHO LIKED-->
 
 
-                        <div class = 'comment-body' id='likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'>$likedbyStr</div>
+                        <div class = 'comment-body' id='likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'></div>
+
+                        <script>
+                        posturl = 'action/getlikers.php?id=$id';
+                        $.ajax({url: posturl, success: function(result){
+                                $('#likers_$id').html(result);
+                            }
+                        });
+                        </script>
 
 
                         $commentShownBox

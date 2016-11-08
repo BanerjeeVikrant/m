@@ -32,7 +32,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 //$pic_added = "<img src='$pic' class='crush_pic' />";
                 $pic_added = "";
             }
-            $back = array("#b04b16","#18177e","#7d4a17","#a3102a","#7749b5","#289f45");
+            $back = array("#1E2F4E","#465876","#687791"); //,"#7749b5","#289f45");
             $randNo = rand(0, (count($back) - 1));
             $rand = $back[$randNo];
             echo "
