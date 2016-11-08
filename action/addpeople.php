@@ -1,3 +1,4 @@
+<?php include '../system/helpers.php';?>
 <?php 
 require "../system/connect.php"; 
 

@@ -1,4 +1,6 @@
 <?php include '../system/connect.php';?>
+<?php include '../system/helpers.php';?>
+
 <?php 
 session_start();
 if (isset($_SESSION['user_login'])) {
@@ -24,8 +26,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $id = $row['id'];
             $body = $row['body'];
             $pic =  $row['picture'];
-            $time_added = $row['time_added'];
-            $date_added = $row['date_added'];
+            $time_added = time_elapsed_string($row['time_added']);
 
             $pic_added  = "";
             if($pic != ""){
@@ -41,7 +42,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 </div>
                 <span class = 'topNameCrush'>
                     Anonymous<br>
-                    <span class = 'timeCrush'>$time_added<span>, </span>$date_added</span>
+                    <span class = 'timeCrush'>$time_added<span>
                 </span>
 
                 <p class = 'msg-body-crush'><span style='font-family: Creepster Caps'>\"</span>$body<span style='font-family: Creepster Caps'>\"</span></p>
