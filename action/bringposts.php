@@ -1,4 +1,5 @@
 <?php include '../system/connect.php';?>
+<?php include '../system/helpers.php';?>
 <?php 
 session_start();
 if (isset($_SESSION['user_login'])) {
@@ -236,6 +237,20 @@ $tags = array();
     				$usersex = $pic_row['sex'];
                     $admin = $pic_row['admin'];
 
+                    $timesincestr = time_elapsed_string($time_added);
+
+                    // $timesincestr = '';
+                    // if ($dys_since) {
+                    //     $timesincestr = $timesincestr . $dys_since . "d";
+                    // } if ($hrs_since) {
+                    //     $timesincestr = $timesincestr . " " . $hrs_since - ($dys_since * 24) . "h";
+                    // } if ($min_since) {
+                    //     $timesincestr = $timesincestr . " " . $min_since - ($hrs_since * 60) . "m";
+                    // } if ($sec_since) {
+                    //     $timesincestr = $timesincestr . " " . $sec_since - ($min_since * 60) . "s";
+                    // }
+                    // $timesincestr = $timesincestr . " ago";
+
     				if($userpic == "" || $userpic == NULL){
     					if($usersex == "1"){
     						$userpic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
@@ -297,7 +312,7 @@ $tags = array();
     					<div class = 'posted-by-img' style = 'background-image: url($userpic);'></div>
     					<span class = 'topName'>
     						$topName<br>
-    						<span class = 'time'>$time_added<span>, </span>$date_added</span>
+    						<span class = 'time'>$timesincestr</span>
     					</span>
                         <hr class='post-breaker'>
     					<p class = 'msg-body'>$body</p>

@@ -1,0 +1,14 @@
+=== GROUPS ===
+
+POST HAS GROUP ID #
+IF GOES TO ALL ID IS 0
+
+FILTER BY ID NUMBER
+
+Need to be added...
+
+-group creation
+-selection when posting
+-post group id #
+-private/public groups
+-filter feed for certain group, if in group

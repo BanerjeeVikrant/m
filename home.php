@@ -191,8 +191,8 @@ if (isset($_POST['crushpost'])) {
 	$post = str_replace(">","&gt;",$post);
 	if($post != ""){
 		date_default_timezone_set("America/Los_Angeles");
-		$date_added = date("Y/m/d");
-		$time_added = date("h:i:sa"); 
+		$date_added = '';
+		$time_added = time(); 
 		$added_by = $username;
 		
 
@@ -206,9 +206,9 @@ else if (isset($_FILES['crushpictureUpload'])) {
 	$post = $_POST['crushpost'];
 	$post = str_replace("'","&apos;",$post);
 	date_default_timezone_set("America/Los_Angeles");
-	$date_added = date("Y/m/d");
+	$date_added = '';
 	$added_by = $username;
-	$time_added = date("h:i:sa");
+	$time_added = time();
 
 
 	if (((@$_FILES["crushpictureUpload"]["type"]=="image/jpeg") || (@$_FILES["crushpictureUpload"]["type"]=="image/png") || (@$_FILES["crushpictureUpload"]["type"]=="image/gif"))&&(@$_FILES["crushpictureUpload"]["size"] < 10485760)) {
@@ -249,8 +249,8 @@ if (isset($_POST['post'])) {
 	$post = str_replace(">","&gt;",$post);
 	if($post != ""){
 		date_default_timezone_set("America/Los_Angeles");
-		$date_added = date("Y/m/d");
-		$time_added = date("h:i:sa"); 
+		$date_added = '';
+		$time_added = time(); 
 		$added_by = $username;
 		
 		//(`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`)
@@ -1694,6 +1694,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
+	<?php if ($admin) {echo '<a href="admin.php"><div class="sidebody-tab">Admin Console</div></a>';} ?>
 	<br/>
 
 	<p style="margin: 10px;"><b>Branham Trends</b><?php if ($admin) {echo '<span class="glyphicon glyphicon-plus add-group"></span>';} ?></p>
@@ -1706,7 +1707,11 @@ if($groups->num_rows > 0) {
 	while ($g = $groups->fetch_assoc()) {
 		$gname = $g['name'];
 		$gid = $g['id'];
-		echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
+		$delete = '';
+		// if ($admin) {
+		// 	$delete = "<a href='' style='float:right;padding-right:10px'><img src='img/minus-red.png' width='10px'></a>";
+		// }
+		echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname$delete</div></a>";
 	}
 }
 /*if($g_ids != ""){
