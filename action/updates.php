@@ -11,7 +11,8 @@ else{
 
 $lastnotification = $_GET['nid'];
 
-$sql =  "SELECT * FROM notifications WHERE toUser='$username' ORDER BY id ASC LIMIT $lastnotification,100";
+
+$sql =  "SELECT * FROM notifications WHERE toUser = '$username' AND fromUser != '$username' AND id > '$lastnotification' ORDER BY id DESC";
 
 $getposts = $conn->query($sql) or die(mysql_error());
 

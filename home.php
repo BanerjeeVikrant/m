@@ -558,7 +558,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			display: inline-block;
 			height: 32px;
 			width: 32px;
-			background-image: url(img/notification-bell-grey.png);
+			background-image: url("img/notification-bell-grey.png");
 			background-size: cover;
 			background-repeat: no-repeat;
 
@@ -1697,6 +1697,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<?php if ($admin) {echo '<a href="admin.php"><div class="sidebody-tab">Admin Console</div></a>';} ?>
+	<div onclick="noti_update()" class="sidebody-tab">UPDATE</div>
 	<br/>
 
 	<p style="margin: 10px;"><b>Branham Trends</b><?php if ($admin) {echo '<span class="glyphicon glyphicon-plus add-group"></span>';} ?></p>
@@ -1750,6 +1751,35 @@ if($groups->num_rows > 0) {
 	
 </div>
 <script type="text/javascript">
+	var bell_img = "img/notification-bell-grey.png";
+	function noti_update() {
+		console.log(bell_img)
+		var last_noti_id = $(".notification-post").first().attr("nid");
+		var link = 'action/updates.php?nid='+ last_noti_id;
+		console.log(link);
+		$.ajax({
+			url: link, 
+			success: function(data) {
+				if (data) {
+					console.log("got noti updates");
+					bell_img = "img/notification-bell-grey-alert.png";
+					$(".notifications-img").css("background-image", "url(" + bell_img + ")");
+					$(".notifications-content").prepend(data);
+				}
+			},
+			complete: function() {
+			},
+			error: function(){
+				alert("server error");
+			}
+		});
+  	}
+	function noti_seen() {
+		console.log("seen");
+		bell_img = "img/notification-bell-grey.png";
+		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
+	}
+
 	$(".newgrouphome").hide();
 	$(".add-group").click(function(){
 		$(".newgrouphome").show();
@@ -1960,7 +1990,7 @@ if($groups->num_rows > 0) {
 		if(homedisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
-			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
 			$(".body-content").hide();
@@ -1979,7 +2009,7 @@ if($groups->num_rows > 0) {
 		else if(notificationsdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
-			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 			$(".messages-img").css("background-image", "url(img/message-blue.png)");
 
 			$(".notifications-content").hide();
@@ -2005,7 +2035,7 @@ if($groups->num_rows > 0) {
 		else if(notificationsdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-grey.png)");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
-			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
 			$(".notifications-content").hide();
@@ -2014,7 +2044,7 @@ if($groups->num_rows > 0) {
 		else if(crushdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-blue.png)");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
-			$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 			$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
 			$(".crush-content").hide();
@@ -2262,7 +2292,7 @@ if($groups->num_rows > 0) {
 	$(".home-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-blue.png)");
 		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
-		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 		$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
 		var homedisplay = $(".body-content").css("display");
@@ -2290,7 +2320,7 @@ if($groups->num_rows > 0) {
 	$(".crush-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
 		$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
-		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 		$(".messages-img").css("background-image", "url(img/message-grey.png)");
 
 		var homedisplay = $(".body-content").css("display");
@@ -2316,6 +2346,7 @@ if($groups->num_rows > 0) {
 	});
 
 	$(".notifications-tab").click(function(){
+		noti_seen();
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
 		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
@@ -2346,7 +2377,7 @@ if($groups->num_rows > 0) {
 	$(".messages-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-grey.png)");
 		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
-		$(".notifications-img").css("background-image", "url(img/notification-bell-grey.png)");
+		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 		$(".messages-img").css("background-image", "url(img/message-blue.png)");
 
 		var homedisplay = $(".body-content").css("display");
@@ -2487,6 +2518,16 @@ $(function() {
 	}
 }
 ?>
+
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
+
+window.setInterval(noti_update, 2000);
 </script>
 
 </body>
