@@ -34,7 +34,7 @@ else{
 
 date_default_timezone_set("America/Los_Angeles");
 $date_added = date("Y/m/d");
-$time_added = date("h:i:sa"); 
+$time_added = time(); 
 
 $check = $conn->query("SELECT * FROM notifications WHERE (type='2' AND fromUser='$username' AND toUser='$added_by' AND post_id='$id')");
 if ($check->num_rows == 0) {

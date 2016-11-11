@@ -39,7 +39,7 @@ if ($post_count) {
 }
 date_default_timezone_set("America/Los_Angeles");
 $date_added = date("Y/m/d");
-$time_added = date("h:i:sa"); 
+$time_added = time(); 
 
 $query = $conn->query("INSERT INTO notifications VALUES ('', '3', '$username', '$post_sender', '$last_id', '$id', '$time_added', '$date_added')");
 

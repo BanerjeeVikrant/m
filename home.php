@@ -1762,8 +1762,10 @@ if($groups->num_rows > 0) {
 			success: function(data) {
 				if (data) {
 					console.log("got noti updates");
-					bell_img = "img/notification-bell-grey-alert.png";
-					$(".notifications-img").css("background-image", "url(" + bell_img + ")");
+					if ($(".notifications-img").attr("style") != 'background-image: url("img/notification-bell-blue.png");') {
+						bell_img = "img/notification-bell-grey-alert.png";
+						$(".notifications-img").css("background-image", "url(" + bell_img + ")");
+					}
 					$(".notifications-content").prepend(data);
 				}
 			},
