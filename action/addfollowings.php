@@ -50,7 +50,7 @@ else{
 }
 date_default_timezone_set("America/Los_Angeles");
 $date_added = date("Y/m/d");
-$time_added = date("h:i:sa"); 
+$time_added = time(); 
 
 $check = $conn->query("SELECT * FROM notifications WHERE (toUser='$addto' AND fromUser='$username')");
 if ($check->num_rows == 0) {

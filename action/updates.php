@@ -1,3 +1,4 @@
+<?php include '../system/helpers.php';?>
 <?php 
 require "../system/connect.php"; 
 
@@ -39,7 +40,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
 
             $comment = $getInfo['comment'];
 
-            $notifierTime = "3h";
+            $notifierTime = time_elapsed_string($time_added);
 
             if($type == '1'){
                 $message = "started following you.";   
