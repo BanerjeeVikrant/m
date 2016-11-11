@@ -14,7 +14,7 @@ else{
 
 $offset = $_GET['o'];
 
-$sql =  "SELECT * FROM notifications WHERE toUser='$username' ORDER BY id DESC LIMIT $offset,20";
+$sql =  "SELECT * FROM notifications WHERE toUser='$username' AND fromUser != '$username' ORDER BY id DESC LIMIT $offset,20";
 
 $getposts = $conn->query($sql) or die(mysql_error());
 
