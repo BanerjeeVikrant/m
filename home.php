@@ -10,7 +10,7 @@ session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
 	$time = time();
-	$sql = "UPDATE users SET last_online_time = $time WHERE username = '$username'";
+	$sql = "UPDATE users SET last_online_time = '$time', online = '1' WHERE username = '$username'";
 	$update = $conn->query($sql);
 }
 else{
@@ -2112,6 +2112,8 @@ if($groups->num_rows > 0) {
 					all_notifications_loaded = true;
 				}
 				sensitizeNotifications();
+
+				var last_noti_id = $(".notification-post").first().attr("nid");
 			}});
 		}
 	}
@@ -2466,6 +2468,7 @@ if($groups->num_rows > 0) {
 	    });
 	}
 
+
 <?php
 if (isset($_GET['tab'])) {
 	if ($_GET['tab']=='m') {
@@ -2484,6 +2487,28 @@ $(function() {
 	}
 }
 ?>
+</script>
+<script type="text/javascript">
+	var link = 'action/updates.php?nid='+ last_noti_id;
+	updateLatest();
+	function updateLatest() {
+		alert();
+		$.ajax({
+			url: link, 
+			success: function(data) {
+				alert(data);
+				$(".notifications-content").append(data);
+			},
+			complete: function() {
+				
+				setTimeout(updateLatest, 2000);
+				alert("hi");
+			},
+			error: function(){
+				alert(link);
+			}
+		});
+	}
 </script>
 </body>
 </html>

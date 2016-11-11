@@ -1,20 +1,17 @@
-<?php include '../system/connect.php';?>
 <?php 
+require "../system/connect.php"; 
+
 session_start();
 if (isset($_SESSION['user_login'])) {
-    $username = $_SESSION['user_login'];
+	$username = $_SESSION['user_login'];
 }
 else{
-    $username = "";
+	$username = "";
 }
 
+$lastnotification = $_GET['nid'];
 
-?>
-<?php
-
-$offset = $_GET['o'];
-
-$sql =  "SELECT * FROM notifications WHERE toUser='$username' ORDER BY id DESC LIMIT $offset,20";
+$sql =  "SELECT * FROM notifications WHERE toUser='$username' ORDER BY id DESC LIMIT $lastnotification,100";
 
 $getposts = $conn->query($sql) or die(mysql_error());
 
@@ -74,14 +71,5 @@ $getposts = $conn->query($sql) or die(mysql_error());
             </div>";
 
         }     
-    }
-      else {
-        echo "        
-        <div style = 'position: relative;'>
-            <div class = 'notification-post' id='last_notification' style ='position: absolute;'>
-                <span><span class  = 'glyphicon glyphicon-share-alt'></span> No more Notifications!<span>
-            </div>
-        </div><script>document.getElementById('loading-img-notifications').remove();</script>
-        ";
     }
 ?>

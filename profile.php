@@ -1,6 +1,7 @@
 
 <?php
 require "system/connect.php";
+include "system/helpers.php";
 
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 //ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
@@ -8,6 +9,7 @@ ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$time = time();
 }
 else{
 	$username = "";
@@ -161,10 +163,20 @@ if(isset($_GET['u'])){
 		if($followers == ""){
 			$followersCount = 0;
 		}
-
-
-		$last_online_date = $get['last_online_date'];
+		$online = $get['online'];
+		$profileUserOnline = false;
+		if($online == '1'){
+			$profileUserOnline = true;
+		}
+		
 		$last_online_time = $get['last_online_time'];
+		if($time - $last_online_time > 900){
+			$sql = "UPDATE users SET online = '0' WHERE username = '$profileUser'";
+			$update = $conn->query($sql);
+			$profileUserOnline = false;
+		}
+		$onlinetimesincestr = time_elapsed_string($last_online_time);
+		
 
 		$sql = "SELECT id from posts ORDER BY id DESC LIMIT 1";
 		$result = $conn->query($sql);
@@ -1267,7 +1279,14 @@ else if (isset($_FILES['pictureUpload'])) {
 		<div class="about-me">
 			<div class="info-about-me"><span class="bio"><?php echo $bio; ?></span></div>
 			<div class="info-about-me"><img src="img/bird-in-broken-egg.png" width="25px"><span class="dob">Was born on <?php echo $dob; ?></span></div>
-			<div class="info-about-me"><img src="img/wifi.png" width="20px"><span class="lastonline">Last online <?php echo $last_online_date . ", " . $last_online_time; ?></span></div>
+			<div class="info-about-me"><img src="img/wifi.png" width="20px"><span class="lastonline">
+			<?php 
+			if($profileUserOnline){
+				echo "Online";
+			}else{
+				echo "Last online $onlinetimesincestr";
+			}
+			?></span></div>
 		</div>
 		<div class="options-tabs">
 			<div class="tabs photos-tab">Photos</div>
