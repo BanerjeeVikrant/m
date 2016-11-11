@@ -2488,27 +2488,6 @@ $(function() {
 }
 ?>
 </script>
-<script type="text/javascript">
-	var link = 'action/updates.php?nid='+ last_noti_id;
-	updateLatest();
-	function updateLatest() {
-		alert();
-		$.ajax({
-			url: link, 
-			success: function(data) {
-				alert(data);
-				$(".notifications-content").append(data);
-			},
-			complete: function() {
-				
-				setTimeout(updateLatest, 2000);
-				alert("hi");
-			},
-			error: function(){
-				alert(link);
-			}
-		});
-	}
-</script>
+
 </body>
 </html>
