@@ -37,7 +37,7 @@ if ($_SESSION['user_login']){
 <?php
 
 if($username == ""){
-	echo "<meta http-equiv=\"refresh\" content=\"0; url=profile.php?u=$username\">";
+	echo "<meta http-equiv=\"refresh\" content=\"0; url=bkm\">";
 }
 //check user exists
 $check = $conn->query("SELECT * FROM users WHERE username='$username'");
@@ -61,6 +61,7 @@ if ($check->num_rows == 1) {
 	else{
 		$staff = false;
 	}
+	$id = $get['id'];
 	$firstname = $get['first_name'];
 	$grade = $get['grade'];
 	if($grade == 9){
@@ -97,7 +98,8 @@ if ($check->num_rows == 1) {
 	if($followers == ""){
 		$followersCount = 0;
 	}
-
+	$dmfriends =  $get['dmfriends'];
+	$dmfriendsArray = explode(",", $dmfriends);
 
 	$last_online_date = $get['last_online_date'];
 	$last_online_time = $get['last_online_time'];
@@ -126,6 +128,16 @@ if ($check->num_rows == 1) {
 } else {
 	//echo "<meta http-equiv=\"refresh\" content=\"0; url=/bruinskave/index.php\">";
 	exit();
+}
+
+// Get the last message id : for message updates
+
+$check = $conn->query("SELECT id FROM messages WHERE toUser = '$id' ORDER BY id DESC LIMIT 1");
+if ($check->num_rows == 1) {
+
+	$get = $check->fetch_assoc();
+	$lastMessageId = $get['id'];
+
 }
 
 function get_group_name($id) {
@@ -1726,9 +1738,23 @@ if($groups->num_rows > 0) {
 		echo "<a href='?g=$gid'><div class='sidebody-tab'>$gname</div></a>";
 	}
 }*/
+/*
+function isThereMoreMessages(){
+	$needToRefreshMessages = false;
+	$i = 0;
+	foreach ($dmfriendsArray as $value) {
+		$query = $conn->query("SELECT id FROM messages WHERE fromUser = '$value' AND toUser = '$id' AND id > $lastMessageId");
+		$get = $query->fetch_assoc();
+		if($query > 0){
+			$needToRefreshMessages = true;
+			$i++;
+		}
+	}
+}
+*/
+
 
 ?>
-
 </div>
 </div>
 <div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
@@ -1776,11 +1802,123 @@ if($groups->num_rows > 0) {
 			}
 		});
   	}
+
 	function noti_seen() {
 		console.log("seen");
 		bell_img = "img/notification-bell-grey.png";
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 	}
+
+	function needToRefreshMessages() {
+		var link = 'action/needtorefreshmessages.php?l=<?php echo $lastMessageId; ?>';
+		$.ajax({
+			url: link, 
+			success: function(data) {
+				var dataparts = data.split(",");
+
+				var needToRefresh = dataparts[0];
+				var howManyDifferent = dataparts[1];
+
+				if(needToRefresh == 'true'){
+					$(".arrow-back").click(function(){
+						$(".messages-wrapper").hide();
+						clearTimeout(insertMsgCall);
+					});
+					var disable_msg_update = false;
+					$('#users').load('action/users.php', function() {
+						$('.each-user').click(function(){
+							var pic = $(this).children().first().css("background-image");
+							var name = $(this).children().first().next().text();
+
+							$(".messages-wrapper").show("slide", { direction: "left" }, 500);
+							$("#messenger-pic").css("background-image", pic);
+							$("#messenger-name").html(name);
+							$(this).children().first().css("background-image");
+							var lastid = 0;
+							toId = $(this).attr('uid');
+							$("#sendingText").attr("sending-to", toId);
+							$("#msg-id").val(toId);
+							url = 'action/messages.php?from=<?php echo $username; ?>&toid='+toId+'&getnew=0';
+
+							$('#messages').load(url, function() {
+								insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+							});
+						});
+					});
+					var scrollTopAlign_g = -1;
+					function scrollAndInsertNewMsg() {
+						var scrollTopAlign = scrollTopAlign_g;
+						if (scrollTopAlign == -1) { // go to bottom
+							scrollTopAlign = $("#messages")[0].scrollHeight;
+						}
+						$("#messages").scrollTop(scrollTopAlign);
+						insertMsgCall = setTimeout(insertNewMsg,1000);
+						scrollTopAlign_g = -1;
+					}
+					$("#sendingText").keyup(function(event){
+						if(event.keyCode == 13){
+							disable_msg_update = true;
+							var msgText = $("#sendingText").val();
+							var sendingToId = $("#sendingText").attr("sending-to");	
+							$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function() {disable_msg_update = false;});	
+							$("#sendingText").val("");    	
+						}
+					});
+					function insertNewMsg(){
+						if (disable_msg_update) {
+							insertMsgCall = setTimeout(insertNewMsg,1000);
+							return;
+						}
+						fromUser = "<?php echo $username; ?>";
+
+						if ($("#messages").scrollTop() == 0) {
+							//alert("Reached top");
+							$("#messages").scrollTop(2);
+							firstid = $(".first_text").first().text();
+							if(firstid == ""){
+								firstid = 99999999;
+							}
+							if (firstid != 0) { // more comments remaining
+								$.get("action/messages.php",{from : fromUser, toid : toId, getold: firstid}, function(newMsgs) {
+									var info = newMsgs;
+									if(info != "") {
+										var scrollHeightOld = $('#messages')[0].scrollHeight;
+										$('#messages').prepend(newMsgs);
+										scrollTopAlign_g = 2;
+										insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+									} else {
+										insertMsgCall = setTimeout(insertNewMsg,1500);
+									}
+								});
+								return;
+							} // else look for new messages
+						}
+						lastid = $(".last_text").last().text();
+						if(lastid == ""){
+							lastid = 0;
+						}
+						$.get("action/messages.php",{from : fromUser, toid : toId, getnew: lastid}, function(newMsgs) {		
+							var info = newMsgs;
+							if(info != ""){			
+								$('#messages').append(newMsgs);
+								insertMsgCall = setTimeout(scrollAndInsertNewMsg,500);
+							} else {
+								insertMsgCall = setTimeout(insertNewMsg,1500);
+							}
+						});
+					}  
+				}
+			},
+			complete: function() {
+				setTimeout(needToRefreshMessages, 5000);
+			},
+			error: function(){
+				alert("server error");
+			}
+		});
+  	}
+  	needToRefreshMessages();
+  
 
 	$(".newgrouphome").hide();
 	$(".add-group").click(function(){
@@ -2531,6 +2669,7 @@ function wait(ms){
 
 window.setInterval(noti_update, 2000);
 </script>
+
 
 </body>
 </html>

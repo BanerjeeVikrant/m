@@ -26,8 +26,9 @@ if (isset($_POST['sendmsg'])) {
 
 	$dmfriends = $get['dmfriends'];
 	$id = $get['id'];
+	$time = time();
 	
-	$getUser = $conn->query("INSERT INTO messages VALUES('', '$id', '$sendto', '$msg')");
+	$getUser = $conn->query("INSERT INTO messages VALUES('', '$id', '$sendto', '$msg', '$time')");
 
 
 	$dmfriendsArray = explode(",",$dmfriends);
