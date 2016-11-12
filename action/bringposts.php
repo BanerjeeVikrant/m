@@ -112,18 +112,18 @@ if (!isset($_GET['u'])) {
 }
 $getposts = $conn->query($sql) or die(mysql_error());
 $tags = array();
-
-/* //function identifyTagsInMsg($msg) {
+/*
+function identifyTagsInMsg($msg) {
         $tags = array();
-        $msg_space = split(' ',$msg);
+        $msg_space = explode(' ',$msg);
         for($i=0; $i < count($msg_space); $i++) {
-            $msg_comma = split(',',$msg_space[$i]);
+            $msg_comma = explode(',',$msg_space[$i]);
             for($j=0; $j < count($msg_comma); $j++) {
                         $new_msg_comma = $msg_comma[$j];
                     if (preg_match('/^http:/',$msg_comma[$j]) || preg_match('/^https:/',$msg_comma[$j])) {
                             $new_msg_comma = "<a href=\'".$msg_comma[$j]."\'>".$msg_comma[$j]."</a>";
                     } else {
-                            $msg_dot = split('\.',$msg_comma[$j]);
+                            $msg_dot = explode('\.',$msg_comma[$j]);
                         for($k=0; $k < count($msg_dot); $k++) {
                                 if (preg_match('/^\#/',$msg_dot[$k])) {
                                     array_push($tags, $msg_dot[$k]);
@@ -147,7 +147,8 @@ $tags = array();
         }
         $msg = join(' ',$msg_space);
         return $msg;
-    }*/
+    }
+*/
     if($getposts->num_rows > 0) {
     	while ($row = $getposts->fetch_assoc()) {
     		$id = $row['id'];
@@ -158,7 +159,7 @@ $tags = array();
     		}
     		$body = $row['body'];        
 
-    		/* //$body = identifyTagsInMsg($body);*/
+    		//$body = identifyTagsInMsg($body);
     		$pic = '';
     		$vid = '';
     		$youtube = '';

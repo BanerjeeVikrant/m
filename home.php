@@ -1798,7 +1798,7 @@ function isThereMoreMessages(){
 			complete: function() {
 			},
 			error: function(){
-				alert("server error");
+				
 			}
 		});
   	}
@@ -1808,7 +1808,28 @@ function isThereMoreMessages(){
 		bell_img = "img/notification-bell-grey.png";
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 	}
-
+	function getNewAnonymousPosts(){
+		var last_anony_id = $(".crush-post").first().attr("anonid");
+		var link = 'action/updateAnonymous.php?aid='+ last_anony_id;
+		if(last_anony_id == "undefined"){
+			getNewAnonymousPosts();
+		}
+		else{
+			$.ajax({
+				url: link, 
+				success: function(data) {
+					$(".crush-content").prepend(data);
+				},
+				complete: function() {
+					setTimeout(getNewAnonymousPosts, 5000);
+				},
+				error: function(){
+					
+				}
+			});
+		}
+	}
+	getNewAnonymousPosts();
 	function needToRefreshMessages() {
 		var link = 'action/needtorefreshmessages.php?l=<?php echo $lastMessageId; ?>';
 		$.ajax({

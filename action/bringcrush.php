@@ -37,7 +37,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $randNo = rand(0, (count($back) - 1));
             $rand = $back[$randNo];
             echo "
-            <div class = 'crush-post' style='background-color:$rand;'>
+            <div class = 'crush-post' style='background-color:$rand;' anonid = '$id'>
                 <div style = 'position: relative;'>
                 </div>
                 <span class = 'topNameCrush'>
