@@ -561,7 +561,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			display: inline-block;
 			height: 32px;
 			width: 32px;
-			background-image: url(img/anonymous-logo-white.png);
+			background-image: url("img/anonymous-logo-white.png");
 			background-size: cover;
 			background-repeat: no-repeat;
 
@@ -579,7 +579,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			display: inline-block;
 			height: 32px;
 			width: 32px;
-			background-image: url(img/message-grey.png);
+			background-image: url("img/message-grey.png");
 			background-size: cover;
 			background-repeat: no-repeat;
 
@@ -1777,7 +1777,11 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
+	var home_img = "img/home-grey.png";
 	var bell_img = "img/notification-bell-grey.png";
+	var anon_img = "img/anonymous-logo-white.png";
+	var msg_img = "img/message-grey.png";
+
 	function noti_update() {
 		console.log(bell_img)
 		var last_noti_id = $(".notification-post").first().attr("nid");
@@ -1803,12 +1807,6 @@ function isThereMoreMessages(){
 		});
   	}
 
-	function noti_seen() {
-		console.log("seen");
-		bell_img = "img/notification-bell-grey.png";
-		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-	}
-
 	function needToRefreshMessages() {
 		var link = 'action/needtorefreshmessages.php?l=<?php echo $lastMessageId; ?>';
 		$.ajax({
@@ -1820,6 +1818,8 @@ function isThereMoreMessages(){
 				var howManyDifferent = dataparts[1];
 
 				if(needToRefresh == 'true'){
+					msg_img = "img/message-grey-alert.png";
+					$(".messages-img").css("background-image", "url(" + msg_img + ")");
 					$(".arrow-back").click(function(){
 						$(".messages-wrapper").hide();
 						clearTimeout(insertMsgCall);
@@ -2128,27 +2128,27 @@ function isThereMoreMessages(){
 		var messagedisplay = $(".message-content").css("display");
 
 		if(homedisplay != "none"){
-			$(".home-img").css("background-image", "url(img/home-grey.png)");
+			$(".home-img").css("background-image", "url(" + home_img + ")");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-			$(".messages-img").css("background-image", "url(img/message-grey.png)");
+			$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 			$(".body-content").hide();
 			$(".crush-content").show();
 
 		}
 		else if(crushdisplay != "none"){
-			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+			$(".home-img").css("background-image", "url(" + home_img + ")");
+			$(".crush-img").css("background-image", "url(" + anon_img + ")");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
-			$(".messages-img").css("background-image", "url(img/message-grey.png)");
+			$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 			$(".crush-content").hide();
 			$(".notifications-content").show();
 		}
 		else if(notificationsdisplay != "none"){
-			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+			$(".home-img").css("background-image", "url(" + home_img + ")");
+			$(".crush-img").css("background-image", "url(" + anon_img + ")");
 			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 			$(".messages-img").css("background-image", "url(img/message-blue.png)");
 
@@ -2164,28 +2164,28 @@ function isThereMoreMessages(){
 		var messagedisplay = $(".message-content").css("display");
 
 		if(messagedisplay != "none"){
-			$(".home-img").css("background-image", "url(img/home-grey.png)");
-			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+			$(".home-img").css("background-image", "url(" + home_img + ")");
+			$(".crush-img").css("background-image", "url(" + anon_img + ")");
 			$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
-			$(".messages-img").css("background-image", "url(img/message-grey.png)");
+			$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 			$(".message-content").hide();
 			$(".notifications-content").show();
 		}
 		else if(notificationsdisplay != "none"){
-			$(".home-img").css("background-image", "url(img/home-grey.png)");
+			$(".home-img").css("background-image", "url(" + home_img + ")");
 			$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-			$(".messages-img").css("background-image", "url(img/message-grey.png)");
+			$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 			$(".notifications-content").hide();
 			$(".crush-content").show();
 		}
 		else if(crushdisplay != "none"){
 			$(".home-img").css("background-image", "url(img/home-blue.png)");
-			$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+			$(".crush-img").css("background-image", "url(" + anon_img + ")");
 			$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-			$(".messages-img").css("background-image", "url(img/message-grey.png)");
+			$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 			$(".crush-content").hide();
 			$(".body-content").show();
@@ -2431,9 +2431,9 @@ function isThereMoreMessages(){
 
 	$(".home-tab").click(function(){
 		$(".home-img").css("background-image", "url(img/home-blue.png)");
-		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+		$(".crush-img").css("background-image", "url(" + anon_img + ")");
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+		$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 		var homedisplay = $(".body-content").css("display");
 		var crushdisplay = $(".crush-content").css("display");
@@ -2458,10 +2458,10 @@ function isThereMoreMessages(){
 	});
 
 	$(".crush-tab").click(function(){
-		$(".home-img").css("background-image", "url(img/home-grey.png)");
+		$(".home-img").css("background-image", "url(" + home_img + ")");
 		$(".crush-img").css("background-image", "url(img/anonymous-logo-blue.png");
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
-		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+		$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 		var homedisplay = $(".body-content").css("display");
 		var crushdisplay = $(".crush-content").css("display");
@@ -2486,11 +2486,13 @@ function isThereMoreMessages(){
 	});
 
 	$(".notifications-tab").click(function(){
-		noti_seen();
-		$(".home-img").css("background-image", "url(img/home-grey.png)");
-		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+		bell_img = "img/notification-bell-grey.png";
+		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
+
+		$(".home-img").css("background-image", "url(" + home_img + ")");
+		$(".crush-img").css("background-image", "url(" + anon_img + ")");
 		$(".notifications-img").css("background-image", "url(img/notification-bell-blue.png)");
-		$(".messages-img").css("background-image", "url(img/message-grey.png)");
+		$(".messages-img").css("background-image", "url(" + msg_img + ")");
 
 		var homedisplay = $(".body-content").css("display");
 		var crushdisplay = $(".crush-content").css("display");
@@ -2515,8 +2517,11 @@ function isThereMoreMessages(){
 	});
 
 	$(".messages-tab").click(function(){
-		$(".home-img").css("background-image", "url(img/home-grey.png)");
-		$(".crush-img").css("background-image", "url(img/anonymous-logo-white.png");
+		msg_img = "img/message-grey.png";
+		$(".messages-img").css("background-image", "url(" + msg_img + ")");
+
+		$(".home-img").css("background-image", "url(" + home_img + ")");
+		$(".crush-img").css("background-image", "url(" + anon_img + ")");
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 		$(".messages-img").css("background-image", "url(img/message-blue.png)");
 
