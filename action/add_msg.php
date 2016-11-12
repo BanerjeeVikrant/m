@@ -27,7 +27,11 @@ if (isset($_POST['sendmsg'])) {
 	$dmfriends = $get['dmfriends'];
 	$id = $get['id'];
 	$time = time();
-	
+
+	$msg = str_replace("'","&apos;",$msg);
+	$msg = str_replace("<","&lt;",$msg);
+	$msg = str_replace(">","&gt;",$msg);
+
 	if ($msg) {
 		$getUser = $conn->query("INSERT INTO messages VALUES('', '$id', '$sendto', '$msg', '$time')");
 	}
