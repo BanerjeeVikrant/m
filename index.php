@@ -411,7 +411,7 @@ $('#register').submit(function(e){
 		url:url,
 		type:'post',
 		data:data, 
-		success:function(){
+		success:function(sql){
 			location.reload();
         },
         error: function(jqXHR, textStatus, errorThrown) {

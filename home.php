@@ -16,6 +16,9 @@ if (isset($_SESSION['user_login'])) {
 else{
 	$username = "";
 }
+if($username == ""){
+	echo "<meta http-equiv=\"refresh\" content=\"0; url=/bkm\">";
+}
 
 
 
@@ -36,9 +39,7 @@ if ($_SESSION['user_login']){
 ?>
 <?php
 
-if($username == ""){
-	echo "<meta http-equiv=\"refresh\" content=\"0; url=bkm\">";
-}
+
 //check user exists
 $check = $conn->query("SELECT * FROM users WHERE username='$username'");
 if ($check->num_rows == 1) {
@@ -1136,6 +1137,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			position: absolute;
 			top: 0;
 			padding-top: 125px;
+			overflow-x: hidden;
 			overflow-y: scroll;
 			background:url(img/confessionbackground.jpg);
 			background-size: cover;
@@ -1813,28 +1815,7 @@ function isThereMoreMessages(){
 		bell_img = "img/notification-bell-grey.png";
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 	}
-	function getNewAnonymousPosts(){
-		var last_anony_id = $(".crush-post").first().attr("anonid");
-		var link = 'action/updateAnonymous.php?aid='+ last_anony_id;
-		if(last_anony_id == "undefined"){
-			getNewAnonymousPosts();
-		}
-		else{
-			$.ajax({
-				url: link, 
-				success: function(data) {
-					$(".crush-content").prepend(data);
-				},
-				complete: function() {
-					setTimeout(getNewAnonymousPosts, 5000);
-				},
-				error: function(){
-					
-				}
-			});
-		}
-	}
-	getNewAnonymousPosts();
+
 
 	function needToRefreshMessages() {
 		var link = 'action/needtorefreshmessages.php?l=<?php echo $lastMessageId; ?>';
@@ -2241,6 +2222,7 @@ function isThereMoreMessages(){
 
 	var all_posts_loaded = false;
 	var loading_currently = false;
+	var post_first_time = true;
 	function load_more_post() {
 		if (!all_posts_loaded && !loading_currently)  {
 			loading_currently = true;
@@ -2250,7 +2232,10 @@ function isThereMoreMessages(){
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
 				loading_currently = false;
-				
+				if(post_first_time == true){
+					post_first_time = false;
+					load_more_post()
+				}
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
@@ -2297,6 +2282,7 @@ function isThereMoreMessages(){
 	}
 	var all_notifications_loaded = false;
 	var loading_currently_notifications = false;
+	var notifications_first_time = true;
 	function load_more_notifications() {
 		if (!all_notifications_loaded && !loading_currently_notifications)  {
 			loading_currently_notifications = true;
@@ -2306,7 +2292,10 @@ function isThereMoreMessages(){
 				$("#notificationscontent").before(result);
 				$("#notifications_offset").text(20+offset);
 				loading_currently_notifications = false;
-				
+				if(notifications_first_time == true){
+					notifications_first_time = false;
+					load_more_notifications()
+				}
 				if ($("#last_notification").length > 0) {
 					all_notifications_loaded = true;
 				}
@@ -2333,6 +2322,7 @@ function isThereMoreMessages(){
 	});
 	var all_crush_loaded = false;
 	var loading_currently_crush = false;
+	var crush_first_time = true;
 	function load_more_crush() {
 		if (!all_crush_loaded && !loading_currently_crush)  {
 			loading_currently_crush = true;
@@ -2342,12 +2332,14 @@ function isThereMoreMessages(){
 				$("#crushcontent").before(result);
 				$("#crush_offset").text(20+offset);
 				loading_currently_crush = false;
-				if(Number($("#crush_offset").text()) == 20){
+				if(crush_first_time == true){
+					crush_first_time = false;
 					load_more_crush();
 				}
 				if ($("#last_crush").length > 0) {
 					all_crush_loaded = true;
 				}
+				getNewAnonymousPosts();
 			}});
 		}
 	}
@@ -2730,6 +2722,31 @@ function notifyMe() {
 }
 
 window.setInterval(noti_update, 2000);
+
+var last_anony_id = "";
+function getNewAnonymousPosts(){
+	last_anony_id = $(".crush-post").first().attr("anonid");
+	var link = 'action/updateAnonymous.php?aid='+ last_anony_id;
+	if(typeof last_anony_id === "undefined"){
+		alert("Server Error");
+	}
+	else{
+		$.ajax({
+			url: link, 
+			success: function(data) {
+				$(".crush-content").prepend(data);
+				data = "";
+				last_anony_id = $(".crush-post").first().attr("anonid");
+			},
+			complete: function() {
+				setTimeout(getNewAnonymousPosts, 5000);
+			},
+			error: function(){
+				
+			}
+		});
+	}
+}
 </script>
 
 
