@@ -271,7 +271,7 @@ function identifyTagsInMsg($msg) {
     				
                     $admincode = "";
                     if ($admin) {
-                        $admincode = "<font color='red' style='font-size:10px'>(admin)</font>";
+                        $admincode = '<font style="font-size: 9px;position: relative;top: 5px;left: -2px;color: #1d2d4a;">Help</font>';
                     }
 
     				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
@@ -306,9 +306,9 @@ function identifyTagsInMsg($msg) {
                     }
                     $defaultCommentsCount = 3;
     				echo "
-    				<div class = 'profile-post'>
+    				<div class = 'profile-post' homeid='$id'>
     					<div style = 'position: relative;'>
-    						<div class = 'glyphicon glyphicon-flag post-options' id='$id'></div>
+    						<div class = 'glyphicon glyphicon-option-vertical post-options' id='$id'></div>
     					</div>
     					<div class = 'posted-by-img' style = 'background-image: url($userpic);'></div>
     					<span class = 'topName'>
@@ -431,24 +431,27 @@ function identifyTagsInMsg($msg) {
     				e.unbind();
     			});
 
-    			var postoptionOpen = false;
+                var boxOpen = false;
+
+    			function openOptions(postid){
+                    var newElem="";
+                    newElem += "<div class='optionBox' pid='"+postid+"'>";
+                    newElem += "    <div class='optionsPost' id='deletepost'>Delete<\/div>";
+                    newElem += "    <div class='optionsPost' id='reportpost'>Report<\/div>";
+                    newElem += "<\/div>";
+                    var jscode="";
+                    jscode += "<script>$('#deletepost').click(function(){var pstid = $('.optionBox).attr('pid');var link ='action\/deletepost.php?id='+pstid;$.ajax({url: link, success: function() {alert('deleted');},error: function({}});<\/script>";
+
+                    if(boxOpen == false){
+                        $("#anyreport").prepend(newElem + jscode);
+                        boxOpen = true;
+                    }
+                }
+
 
     			$(".post-options").click(function() {
                     var postid = $(this).attr("id");
-                    var id = "#"+postid;
-                    var url = "action/flagpost.php?id="+postid;
-                    $.ajax({url: url, success: function(result){
-                        $(id).css("color", "black");
-                        $(".reported").show();
-                        setTimeout(
-                          function() 
-                          {
-                            $(".reported").hide();
-                          }, 1000);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        alert("Connection Error");
-                    }});
+                    openOptions(postid);
     			});
 
                 $(".old-comment-box").hide();
@@ -457,4 +460,5 @@ function identifyTagsInMsg($msg) {
                     $(this).next().show();
                     $(this).hide();
                 });
+
     		</script>

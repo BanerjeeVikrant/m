@@ -1538,9 +1538,30 @@ else if (isset($_FILES['pictureUpload'])) {
 		.add-group {
 		    float: right;
 		}
+		.optionBox {
+		    background: #e6e6e6;
+		    position: fixed;
+		    top: calc(50vh - 45px);
+		    left: calc(50vw - 40vw);
+		    z-index: 10;
+		    width: 80vw;
+		    height: 89px;
+		    box-shadow: 0px 0px 1000px #000000;
+		}
+		.optionsPost {
+		    background: white;
+		    height: 43px;
+		    line-height: 43px;
+		    text-align: center;
+		    margin-top: 1px;
+		    font-size: 16px;
+		}
 	</style>
 </head>
 <body id="element">
+	<div id="anyreport">
+
+	</div>
 	<div class="newgrouphome">
 		<form action="home.php" method="POST" enctype="multipart/form-data">
 			<div class="back-img" id="back-newgroup"></div>
@@ -1779,6 +1800,25 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
+
+	if($("#anyreport").html() != ""){
+		$(document).mouseup(function (e){
+			var container = $("#anyreport");
+
+		    if (!container.is(e.target) // if the target of the click isn't the container...
+		        && container.has(e.target).length === 0) // ... nor a descendant of the container
+		    {
+		    	container.html("");
+		    	boxOpen = false;
+		    }
+		});
+	}
+
+	$("#deletepost").click(function(){
+		var postid = $(".optionBox").attr("pid");
+		alert(postid);
+	});
+
 	var home_img = "img/home-grey.png";
 	var bell_img = "img/notification-bell-grey.png";
 	var anon_img = "img/anonymous-logo-white.png";
@@ -2239,6 +2279,9 @@ function isThereMoreMessages(){
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
+				getNewHomePosts();
+
+				last_home_id = $(".profile-post").first().attr("homeid");
 			}});
 		}
 	}
@@ -2740,6 +2783,35 @@ function getNewAnonymousPosts(){
 			},
 			complete: function() {
 				setTimeout(getNewAnonymousPosts, 5000);
+			},
+			error: function(){
+				
+			}
+		});
+	}
+}
+
+var last_home_id = "";
+
+function getNewHomePosts(){
+	last_home_id = $(".profile-post").first().attr("homeid");
+
+	
+	var link = 'action/updatehome.php?hid='+last_home_id+'&g='+<?php echo $view_group_id; ?>;
+	if(typeof last_home_id === "undefined"){
+		alert("Server Error");
+	}
+	else{
+		$.ajax({
+			url: link, 
+			success: function(data) {
+
+				$(".body-content").prepend(data);
+				data = "";
+				last_home_id = $(".profile-post").first().attr("homeid");
+			},
+			complete: function() {
+				setTimeout(getNewHomePosts, 5000);
 			},
 			error: function(){
 				
