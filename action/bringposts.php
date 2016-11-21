@@ -435,10 +435,10 @@ function identifyTagsInMsg($msg) {
 
     			function openOptions(postid){
                     var newElem="";
-                    newElem += "<div class='optionBox' pid='"+postid+"'>";
+                    newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
                     newElem += "    <div class='optionsPost' id='deletepost'>Delete<\/div>";
                     newElem += "    <div class='optionsPost' id='reportpost'>Report<\/div>";
-                    newElem += "<\/div>";
+                    newElem += "<\/div><\/div>";
                     var jscode="";
                     jscode += "<script>$('#deletepost').click(function(){var pstid = $('.optionBox).attr('pid');var link ='action\/deletepost.php?id='+pstid;$.ajax({url: link, success: function() {alert('deleted');},error: function({}});<\/script>";
 

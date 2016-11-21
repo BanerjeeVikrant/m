@@ -1546,7 +1546,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    z-index: 10;
 		    width: 80vw;
 		    height: 89px;
-		    box-shadow: 0px 0px 1000px #000000;
+		    box-shadow: 1px 1px 21px #e6e6e6;
 		}
 		.optionsPost {
 		    background: white;
@@ -1555,6 +1555,13 @@ else if (isset($_FILES['pictureUpload'])) {
 		    text-align: center;
 		    margin-top: 1px;
 		    font-size: 16px;
+		}
+		.optionBox-wrapper {
+		    height: 100vh;
+		    width: 100vw;
+		    position: fixed;
+		    z-index: 9;
+		    background: rgba(222,215,215,0.3);
 		}
 	</style>
 </head>
@@ -1732,7 +1739,6 @@ else if (isset($_FILES['pictureUpload'])) {
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<?php if ($admin) {echo '<a href="admin.php"><div class="sidebody-tab">Admin Console</div></a>';} ?>
-	<div onclick="noti_update()" class="sidebody-tab">UPDATE</div>
 	<br/>
 
 	<p style="margin: 10px;"><b>Branham Trends</b><?php if ($admin) {echo '<span class="glyphicon glyphicon-plus add-group"></span>';} ?></p>
@@ -1803,21 +1809,16 @@ function isThereMoreMessages(){
 
 	if($("#anyreport").html() != ""){
 		$(document).mouseup(function (e){
-			var container = $("#anyreport");
+			var container = $(".optionBox");
 
 		    if (!container.is(e.target) // if the target of the click isn't the container...
 		        && container.has(e.target).length === 0) // ... nor a descendant of the container
 		    {
-		    	container.html("");
+		    	$("#anyreport").html("");
 		    	boxOpen = false;
 		    }
 		});
 	}
-
-	$("#deletepost").click(function(){
-		var postid = $(".optionBox").attr("pid");
-		alert(postid);
-	});
 
 	var home_img = "img/home-grey.png";
 	var bell_img = "img/notification-bell-grey.png";
@@ -1963,7 +1964,7 @@ function isThereMoreMessages(){
 				setTimeout(needToRefreshMessages, 5000);
 			},
 			error: function(){
-				alert("server error");
+				//alert("server error");
 			}
 		});
   	}
@@ -2771,7 +2772,7 @@ function getNewAnonymousPosts(){
 	last_anony_id = $(".crush-post").first().attr("anonid");
 	var link = 'action/updateAnonymous.php?aid='+ last_anony_id;
 	if(typeof last_anony_id === "undefined"){
-		alert("Server Error");
+		//alert("Server Error");
 	}
 	else{
 		$.ajax({
@@ -2799,7 +2800,7 @@ function getNewHomePosts(){
 	
 	var link = 'action/updatehome.php?hid='+last_home_id+'&g='+<?php echo $view_group_id; ?>;
 	if(typeof last_home_id === "undefined"){
-		alert("Server Error");
+		//alert("Server Error");
 	}
 	else{
 		$.ajax({
