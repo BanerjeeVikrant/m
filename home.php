@@ -1806,7 +1806,18 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
-
+	function deletepost(postid){
+		var link ='action/deletepost.php?id='+postid;
+		$.ajax({url: link, 
+			success: function() {
+				$("#profile-post-"+postid).slideUp(300);
+				$("#anyreport").html("");
+			},
+			error: function() {
+				alert('not deleted');
+			}
+		});
+	}
 	if($("#anyreport").html() != ""){
 		$(document).mouseup(function (e){
 			var container = $(".optionBox");

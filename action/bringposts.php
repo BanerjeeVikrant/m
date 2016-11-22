@@ -306,6 +306,7 @@ function identifyTagsInMsg($msg) {
                     }
                     $defaultCommentsCount = 3;
     				echo "
+                    <div id = 'profile-post-$id' style='display:inline-block;'>
     				<div class = 'profile-post' homeid='$id'>
     					<div style = 'position: relative;'>
     						<div class = 'glyphicon glyphicon-option-vertical post-options' id='$id'></div>
@@ -408,6 +409,7 @@ function identifyTagsInMsg($msg) {
 
     					echo "        
     				</div>
+                    </div>
     				";
 
 		}        
@@ -436,14 +438,12 @@ function identifyTagsInMsg($msg) {
     			function openOptions(postid){
                     var newElem="";
                     newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
-                    newElem += "    <div class='optionsPost' id='deletepost'>Delete<\/div>";
+                    newElem += "    <div class='optionsPost' id='deletepost' onclick='deletepost("+postid+");'>Delete<\/div>";
                     newElem += "    <div class='optionsPost' id='reportpost'>Report<\/div>";
                     newElem += "<\/div><\/div>";
-                    var jscode="";
-                    jscode += "<script>$('#deletepost').click(function(){var pstid = $('.optionBox).attr('pid');var link ='action\/deletepost.php?id='+pstid;$.ajax({url: link, success: function() {alert('deleted');},error: function({}});<\/script>";
 
                     if(boxOpen == false){
-                        $("#anyreport").prepend(newElem + jscode);
+                        $("#anyreport").prepend(newElem);
                         boxOpen = true;
                     }
                 }
