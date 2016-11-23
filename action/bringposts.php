@@ -439,7 +439,7 @@ function identifyTagsInMsg($msg) {
                     var newElem="";
                     newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
                     newElem += "    <div class='optionsPost' id='deletepost' onclick='deletepost("+postid+");'>Delete<\/div>";
-                    newElem += "    <div class='optionsPost' id='reportpost'>Report<\/div>";
+                    newElem += "    <div class='optionsPost' id='reportpost' onclick='reportpost("+postid+");'>Report<\/div>";
                     newElem += "<\/div><\/div>";
 
                     if(boxOpen == false){

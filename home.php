@@ -209,7 +209,7 @@ if (isset($_POST['crushpost'])) {
 		$added_by = $username;
 		
 
-		$sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$added_by', '', '$time_added', '$date_added')";
+		$sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$added_by', '', '$time_added', '$date_added','')";
 		$query = $conn->query($sqlcommand);
 	}
 	header("Location: home.php?tab=c");
@@ -1545,7 +1545,6 @@ else if (isset($_FILES['pictureUpload'])) {
 		    left: calc(50vw - 40vw);
 		    z-index: 10;
 		    width: 80vw;
-		    height: 89px;
 		    box-shadow: 1px 1px 21px #e6e6e6;
 		}
 		.optionsPost {
@@ -1562,6 +1561,23 @@ else if (isset($_FILES['pictureUpload'])) {
 		    position: fixed;
 		    z-index: 9;
 		    background: rgba(222,215,215,0.3);
+		}
+		input.anoncomment-inputs {
+		    width: 95vw;
+		    height: 35px;
+		    position: relative;
+		    top: -15px;
+		    border: 0;
+		    left: 2.5vw;
+		    padding: 15px;
+		    outline-width: 0;
+		}
+		.anoncomment-body {
+		    width: 95vw;
+		    position: relative;
+		    left: 2.5vw;
+		    background: #eaecef;
+		    top: -15px;
 		}
 	</style>
 </head>
@@ -1818,6 +1834,68 @@ function isThereMoreMessages(){
 			}
 		});
 	}
+	function reportpost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='inappost("+postid+");'>Inappropriate...<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='bullypost("+postid+");'>Abusive, Bullying...<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='idlikepost("+postid+");'>I don\'t like it...<\/div>";
+		newElem += "<\/div><\/div>";
+
+		    $("#anyreport").html(newElem);
+	}
+	function inappost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(1);'>It\'s sexually explicit<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(2);'>Drugs, or Illegal Substances<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(3);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+	function bullypost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(4);'>It\'s harassment<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(5);'>It\'s threatening, violent.<\/div>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(6);'>It\'s rude, vulgar<\/div>"; 
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(7);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+
+	function idlikepost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(8);'>It\'s not interesting<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(9);'>It\'s embarrassing<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(10);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+
+	function report(about){
+		var postid = $(".optionBox").attr("pid");
+
+		var link ='action/reportpost.php?pid='+postid+'&about='+about;
+		$.ajax({url: link, 
+			success: function() {
+				$("#profile-post-"+postid).slideUp(300);
+				var newElem="";
+				newElem += "<div class='optionBox-wrapper'><div class='optionBox'>";
+				newElem += "    <div class='optionsPost' id='deletepost'><b>Thank you</b> for you help.<\/div>";
+				newElem += "<\/div><\/div>";
+				$("#anyreport").html(newElem);
+			},
+			error: function() {
+				alert('not deleted');
+			}
+		});
+	}
+
 	if($("#anyreport").html() != ""){
 		$(document).mouseup(function (e){
 			var container = $(".optionBox");
@@ -2678,7 +2756,46 @@ function isThereMoreMessages(){
 			}
 		});
 	}
+	function postanoncomment(curr_position){
+		var url="action/post-anoncomment.php";
+		var comment = $(curr_position).children().first().val();
+		comment = comment.replace('\'','');
+		var id = $(curr_position).children().first().next().val();
+		var  data = "comment="+comment+"&id="+id;
+		var comment_html1 =
+		"<div style = 'position: relative;'>"+
+		"	<div class = 'anoncomment-body'>"+
+		"    <div class = 'comments-img'></div>" +
+		"    <div class = 'comment-area'>"+
+		"      <div style = 'position: relative;'>";
+		var comment_html2 =
+		"      </div>"+
+		"    </div>"+
+		"  </div>"+
+		"</div>";
+		$.ajax({
+			url:url,
+			type:'post',
+			data:data, 
+			success:function(commentText){
+				if(commentText == ""){
+					return;
+				}
+				var commenttxt =
+				"          <div class = 'commentPosted'>"+
+				"            <a style='position: relative;'>Anonymous</a>&nbsp;&nbsp;&nbsp;" + commentText +
+				"          </div>";
+				curr_position.parent().parent().next().append(comment_html1+commenttxt+comment_html2);
 
+				$(".anoncomment-inputs").val("");
+	            //stopCommentPosting = false;
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	        	alert("failed");
+	        }
+	    });
+	}
 	function postcomment(curr_position) {
 		var url="action/post-comment.php";
 		var comment = $(curr_position).children().first().val();

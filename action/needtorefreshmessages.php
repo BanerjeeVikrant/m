@@ -36,5 +36,5 @@ if($needToRefreshMessages == true){
 	$needToRefreshMessages = "true";
 }*/
 
-echo $needToRefreshMessages ? 'true' : 'false' . "," . $i;
+echo $needToRefreshMessages ? 'true' : 'false' . "," . $i . "";
 ?>
