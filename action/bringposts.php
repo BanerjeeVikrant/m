@@ -339,12 +339,12 @@ function identifyTagsInMsg($msg) {
                         <!--PEOPLE WHO LIKED-->
 
 
-                        <div class = 'comment-body' id='likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'></div>
+                        <div class = 'comment-body likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'></div>
 
                         <script>
                         posturl = 'action/getlikers.php?id=$id';
                         $.ajax({url: posturl, success: function(result){
-                                $('#likers_$id').html(result);
+                                $('.likers_$id').html(result);
                             }
                         });
                         </script>

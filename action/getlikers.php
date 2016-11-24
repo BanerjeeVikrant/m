@@ -4,9 +4,6 @@ $id = 0;
 if (isset($_GET['id'])) {
 	$id = $_GET['id'];
 }
-if (isset($_POST['id'])) {
-	$id = $_POST['id'];
-}
 
 $sql = "SELECT liked_by FROM posts WHERE id = $id";
 $post = $conn->query($sql);
@@ -32,7 +29,7 @@ else if (count($likedbyArray) > 5) {
     $likedbyStr = "
     <script>
     function show_likers_$id() {
-        $('#likers_$id').html($toreplace)
+        $('.likers_$id').html($toreplace)
     }
     </script>
     <img src='img/liked-paw.png' width=18> <span class='likedby-names'>$likes likes</span>";

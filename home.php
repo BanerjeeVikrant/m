@@ -663,13 +663,14 @@ else if (isset($_FILES['pictureUpload'])) {
 		.timeCrush{
 
 		}
-		.msg-body-crush{
-			font-size: 23px;
-			padding-left: 10px;
-			padding-right: 10px;
-			margin-left: 15px;
-			margin-top: 17px;
-			padding-bottom: 10px;
+		.msg-body-crush {
+		    font-size: 23px;
+		    padding-left: 10px;
+		    padding-right: 10px;
+		    margin-left: 5px;
+		    margin-top: 10px;
+		    margin-bottom: 10px;
+		    padding-bottom: 10px;
 		}
 		.crush_pic {
 			width: 95vw;
@@ -1511,7 +1512,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    height: 100%;
 		    overflow: scroll;
 		 	background-color: white;
-		 	z-index: 20;
+		 	z-index: 9;
 		}
 		.postoptions-cover {
 		    position: relative;
@@ -1543,7 +1544,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    position: fixed;
 		    top: calc(50vh - 45px);
 		    left: calc(50vw - 40vw);
-		    z-index: 10;
+		    z-index: 11;
 		    width: 80vw;
 		    box-shadow: 1px 1px 21px #e6e6e6;
 		}
@@ -1559,7 +1560,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    height: 100vh;
 		    width: 100vw;
 		    position: fixed;
-		    z-index: 9;
+		    z-index: 10;
 		    background: rgba(222,215,215,0.3);
 		}
 		input.anoncomment-inputs {
@@ -2851,6 +2852,13 @@ $(function() {
 ?>
 $(function() {
 	$(".crush-tab").trigger("click");
+})  
+<?php
+	}else if($_GET['tab']=='n'){
+
+?>
+$(function() {
+	$(".notifications-tab").trigger("click");
 })  
 <?php
 	}
