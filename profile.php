@@ -269,11 +269,11 @@ if (isset($_POST['post'])) {
 	if($post != ""){
 		date_default_timezone_set("America/Los_Angeles");
 		$date_added = date("Y/m/d");
-		$time_added = date("h:i:sa"); 
+		$time_added = time(); 
 		$added_by = $username;
 		
 
-		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', '', '', '', '0', '', '')";
+		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', '', '', '', '0', '', '', '0')";
 		if ($conn->query($sqlcommand) === TRUE) {
 			$last_id = $conn->insert_id;
 			$words_array = explode(" ", $post);
@@ -308,7 +308,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	date_default_timezone_set("America/Los_Angeles");
 	$date_added = date("Y/m/d");
 	$added_by = $username;
-	$time_added = date("h:i:sa");
+	$time_added = time();
 
 
 	if (((@$_FILES["pictureUpload"]["type"]=="image/jpeg") || (@$_FILES["pictureUpload"]["type"]=="image/png") || (@$_FILES["pictureUpload"]["type"]=="image/gif"))&&(@$_FILES["pictureUpload"]["size"] < 10485760)) {
@@ -322,7 +322,7 @@ else if (isset($_FILES['pictureUpload'])) {
 //echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
 			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
 
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '')";
+			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '0')";
 			if ($conn->query($sql) === TRUE) {
 				$last_id = $conn->insert_id;
 				$words_array = explode(" ", $post);
@@ -359,7 +359,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["pictureUpload"]["name"]);
 //echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
 			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '')";
+			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '0')";
 
 			if ($conn->query($sql) === TRUE) {
 				$last_id = $conn->insert_id;

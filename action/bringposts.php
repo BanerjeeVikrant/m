@@ -112,43 +112,43 @@ if (!isset($_GET['u'])) {
 }
 $getposts = $conn->query($sql) or die(mysql_error());
 $tags = array();
-/*
+
 function identifyTagsInMsg($msg) {
-        $tags = array();
-        $msg_space = explode(' ',$msg);
-        for($i=0; $i < count($msg_space); $i++) {
-            $msg_comma = explode(',',$msg_space[$i]);
-            for($j=0; $j < count($msg_comma); $j++) {
-                        $new_msg_comma = $msg_comma[$j];
-                    if (preg_match('/^http:/',$msg_comma[$j]) || preg_match('/^https:/',$msg_comma[$j])) {
-                            $new_msg_comma = "<a href=\'".$msg_comma[$j]."\'>".$msg_comma[$j]."</a>";
-                    } else {
-                            $msg_dot = explode('\.',$msg_comma[$j]);
-                        for($k=0; $k < count($msg_dot); $k++) {
-                                if (preg_match('/^\#/',$msg_dot[$k])) {
-                                    array_push($tags, $msg_dot[$k]);
-                                    $new_msg_dot = "<a class=\'msg-tag\' href=#>".$msg_dot[$k]."</a>";
-                                    //$new_msg_dot = "<a href=\'/v2/profile.php?u=ssdf\'>tag</a> start ".$msg_dot[$k];
-                                } elseif (preg_match('/^\@/',$msg_dot[$k])) {
-                                    $new_msg_dot = "<a href='/bruinskave/php/profile.php?u=".substr($msg_dot[$k],1)."'>".$msg_dot[$k]."</a>";
-                                } else {
-                                    $new_msg_dot = $msg_dot[$k];
-                                }
-                                if ($k == 0) {
-                                    $new_msg_comma = $new_msg_dot;
-                                } else {
-                                    $new_msg_comma = $new_msg_comma.".".$new_msg_dot;
-                                }
-                        }
+    $tags = array();
+    $msg_space = explode(' ',$msg);
+    for($i=0; $i < count($msg_space); $i++) {
+        $msg_comma = explode(',',$msg_space[$i]);
+        for($j=0; $j < count($msg_comma); $j++) {
+                    $new_msg_comma = $msg_comma[$j];
+                if (preg_match('/^http:/',$msg_comma[$j]) || preg_match('/^https:/',$msg_comma[$j])) {
+                        $new_msg_comma = "<a href=\'".$msg_comma[$j]."\'>".$msg_comma[$j]."</a>";
+                } else {
+                        $msg_dot = explode('\.',$msg_comma[$j]);
+                    for($k=0; $k < count($msg_dot); $k++) {
+                            if (preg_match('/^\#/',$msg_dot[$k])) {
+                                array_push($tags, $msg_dot[$k]);
+                                $new_msg_dot = "<a class=\'msg-tag\' href=#>".$msg_dot[$k]."</a>";
+                                //$new_msg_dot = "<a href=\'/v2/profile.php?u=ssdf\'>tag</a> start ".$msg_dot[$k];
+                            } elseif (preg_match('/^\@/',$msg_dot[$k])) {
+                                $new_msg_dot = "<a href='/bruinskave/php/profile.php?u=".substr($msg_dot[$k],1)."'>".$msg_dot[$k]."</a>";
+                            } else {
+                                $new_msg_dot = $msg_dot[$k];
+                            }
+                            if ($k == 0) {
+                                $new_msg_comma = $new_msg_dot;
+                            } else {
+                                $new_msg_comma = $new_msg_comma.".".$new_msg_dot;
+                            }
                     }
-                    $msg_comma[$j] = $new_msg_comma;
-            }
-            $msg_space[$i] = join(',',$msg_comma);
+                }
+                $msg_comma[$j] = $new_msg_comma;
         }
-        $msg = join(' ',$msg_space);
-        return $msg;
+        $msg_space[$i] = join(',',$msg_comma);
     }
-*/
+    $msg = join(' ',$msg_space);
+    return $msg;
+}
+
     if($getposts->num_rows > 0) {
     	while ($row = $getposts->fetch_assoc()) {
     		$id = $row['id'];
