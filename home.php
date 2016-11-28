@@ -2415,7 +2415,7 @@ function notifyMe() {
 				
 				if(post_first_time == true){
 					post_first_time = false;
-					//load_more_post()
+					load_more_post()
 				}
 				
 				if ($("#last_post").length > 0) {
