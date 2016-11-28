@@ -1664,7 +1664,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 	<div id = "end">
 		<div id="loading-img" style = "position: relative;">
-			<img  src = "http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style = "position: absolute;left: calc(50vw - 144px);" />
+			<img  src="img/loading.gif" style="position: absolute;left: calc(50vw - 25px);height: 50px;" class="the-loading-img" />
 		</div>
 	</div>
 	<div style="display:none" id="post_offset">0</div>
@@ -1679,7 +1679,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 	<div id = "endcrush">
 		<div id="loading-img-crush" style = "position: relative;">
-			<img  src="http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style="position: absolute;left: calc(50vw - 144px);" class="the-loading-img" />
+			<img  src="img/loading.gif" style="position: absolute;left: calc(50vw - 25px);height: 50px;" class="the-loading-img" />
 		</div>
 	</div>
 	<div style="display:none" id="crush_offset">0</div>
@@ -1694,7 +1694,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 	<div id = "endnotifications">
 		<div id="loading-img-notifications" style = "position: relative;">
-			<img  src="http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style="position: absolute;left: calc(50vw - 144px);" class="the-loading-img" />
+			<img  src="img/loading.gif" style="position: absolute;left: calc(50vw - 25px);height: 50px;" class="the-loading-img" />
 		</div>
 	</div>
 	<div style="display:none" id="notifications_offset">0</div>
@@ -1754,6 +1754,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	<a href="profile.php?u=<?php echo $username; ?>"><div class="sidebody-profiletab sidebody-tab">Profile</div></a>
 	<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
+	<div class="sidebody-faqtab sidebody-tab" onclick="notifyMe();">notify</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<?php if ($admin) {echo '<a href="admin.php"><div class="sidebody-tab">Admin Console</div></a>';} ?>
 	<br/>
@@ -1823,6 +1824,54 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
+
+// request permission on page load
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe() {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification('bruincave', {
+      icon: 'img/bearpic.png',
+      body: "You have 20+ Notifications",
+    });
+
+    notification.onclick = function () {
+      window.open("localhost/bkm");      
+    };
+
+  }
+
+}
+	function searchtag(data) {
+		$(".search-body").show();
+		$("#search").focus();
+		
+		$("#search").val(data);	
+
+		var searchStr = $("#search").val();
+		var usersurl = "action/searchusers.php";
+		var postsurl = "action/searchposts.php";
+		$.get(usersurl, {search:searchStr},
+			function(result){
+				$("#search-content").html(result);
+				$('.search-layer').click(function(){
+					var username = $(this).attr('user');
+					window.location.href = 'profile.php?u='+username;
+				});
+				$.get(postsurl, {search:searchStr},
+					function(posts){
+						$("#search-content").append(posts);
+					}
+				);
+			}
+		);
+	}
+
 	function deletepost(postid){
 		var link ='action/deletepost.php?id='+postid;
 		$.ajax({url: link, 
@@ -2363,10 +2412,12 @@ function isThereMoreMessages(){
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
 				loading_currently = false;
+				
 				if(post_first_time == true){
 					post_first_time = false;
-					load_more_post()
+					//load_more_post()
 				}
+				
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
@@ -2871,34 +2922,6 @@ function wait(ms){
    while(end < start + ms) {
      end = new Date().getTime();
   }
-}
-
-// request permission on page load
-document.addEventListener('DOMContentLoaded', function () {
-  if (!Notification) {
-    alert('Desktop notifications not available in your browser. Try Chromium.'); 
-    return;
-  }
-
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-});
-
-function notifyMe() {
-  if (Notification.permission !== "granted")
-    Notification.requestPermission();
-  else {
-    var notification = new Notification('Notification title', {
-      icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-      body: "Hey there! You've been notified!",
-    });
-
-    notification.onclick = function () {
-      window.open("http://stackoverflow.com/a/13328397/1269037");      
-    };
-
-  }
-
 }
 
 window.setInterval(noti_update, 2000);

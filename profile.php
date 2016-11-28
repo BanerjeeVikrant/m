@@ -1204,10 +1204,37 @@ else if (isset($_FILES['pictureUpload'])) {
 				    top: 3px;
 				    left: 5px;
 				}
+				.optionBox {
+				    background: #e6e6e6;
+				    position: fixed;
+				    top: calc(50vh - 45px);
+				    left: calc(50vw - 40vw);
+				    z-index: 11;
+				    width: 80vw;
+				    box-shadow: 1px 1px 21px #e6e6e6;
+				}
+				.optionsPost {
+				    background: white;
+				    height: 43px;
+				    line-height: 43px;
+				    text-align: center;
+				    margin-top: 1px;
+				    font-size: 16px;
+				}
+				.optionBox-wrapper {
+				    height: 100vh;
+				    width: 100vw;
+				    position: fixed;
+				    z-index: 10;
+				    background: rgba(222,215,215,0.3);
+				}
 	</style>
 
 </head>
 <body>
+	<div id="anyreport">
+
+	</div>
 	<div class="posthome">
 		<form action="#" method="POST" enctype="multipart/form-data">
 			<div class="back-img-post" id="back-post"></div>
@@ -1418,6 +1445,94 @@ else if (isset($_FILES['pictureUpload'])) {
 	?>
 	</div>
 	<script type="text/javascript">
+	function reportpost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='inappost("+postid+");'>Inappropriate...<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='bullypost("+postid+");'>Abusive, Bullying...<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='idlikepost("+postid+");'>I don\'t like it...<\/div>";
+		newElem += "<\/div><\/div>";
+
+		    $("#anyreport").html(newElem);
+	}
+	function inappost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(1);'>It\'s sexually explicit<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(2);'>Drugs, or Illegal Substances<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(3);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+	function bullypost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(4);'>It\'s harassment<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(5);'>It\'s threatening, violent.<\/div>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(6);'>It\'s rude, vulgar<\/div>"; 
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(7);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+
+	function idlikepost(postid){
+		var newElem="";
+		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(8);'>It\'s not interesting<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(9);'>It\'s embarrassing<\/div>";
+		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(10);'>Something Else<\/div>";
+		newElem += "<\/div><\/div>";
+
+		$("#anyreport").html(newElem);
+	}
+
+	function report(about){
+		var postid = $(".optionBox").attr("pid");
+
+		var link ='action/reportpost.php?pid='+postid+'&about='+about;
+		$.ajax({url: link, 
+			success: function() {
+				$("#profile-post-"+postid).slideUp(300);
+				var newElem="";
+				newElem += "<div class='optionBox-wrapper'><div class='optionBox'>";
+				newElem += "    <div class='optionsPost' id='deletepost'><b>Thank you</b> for you help.<\/div>";
+				newElem += "<\/div><\/div>";
+				$("#anyreport").html(newElem);
+			},
+			error: function() {
+				alert('not deleted');
+			}
+		});
+	}
+
+	if($("#anyreport").html() != ""){
+		$(document).mouseup(function (e){
+			var container = $(".optionBox");
+
+		    if (!container.is(e.target) // if the target of the click isn't the container...
+		        && container.has(e.target).length === 0) // ... nor a descendant of the container
+		    {
+		    	$("#anyreport").html("");
+		    	boxOpen = false;
+		    }
+		});
+	}
+
+	function deletepost(postid){
+		var link ='action/deletepost.php?id='+postid;
+		$.ajax({url: link, 
+			success: function() {
+				$("#profile-post-"+postid).slideUp(300);
+				$("#anyreport").html("");
+			},
+			error: function() {
+				alert('not deleted');
+			}
+		});
+	}
+
 	$(function(){
 	    $(".changeban").on('click', function(e){
 	        e.preventDefault();
@@ -1425,14 +1540,15 @@ else if (isset($_FILES['pictureUpload'])) {
 	    });
 	});
 	<?php
-		if($profileUser == $username){
+		if(strcasecmp($username,$profileUser) == 0) {
 	?>
-			document.getElementById("changebanner").onchange = function() {
+			$("#changebanner").change(function(){
 			  	$("#submitchangebanner").trigger('click');
-			};
-			document.getElementById("changeprofile").onchange = function() {
+			});
+			$("#changeprofile").change(function(){
+				alert("spot change");
 			  	$("#submitchangeprofile").trigger('click');
-			};  
+			});  
 	<?php 
 		}
 	?>

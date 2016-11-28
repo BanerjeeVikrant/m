@@ -127,10 +127,11 @@ function identifyTagsInMsg($msg) {
                     for($k=0; $k < count($msg_dot); $k++) {
                             if (preg_match('/^\#/',$msg_dot[$k])) {
                                 array_push($tags, $msg_dot[$k]);
-                                $new_msg_dot = "<a class=\'msg-tag\' href=#>".$msg_dot[$k]."</a>";
+                                $new_msg_dot = "<a class='msg-tag' onclick=searchtag('hi')>".$msg_dot[$k]."</a>";
                                 //$new_msg_dot = "<a href=\'/v2/profile.php?u=ssdf\'>tag</a> start ".$msg_dot[$k];
+
                             } elseif (preg_match('/^\@/',$msg_dot[$k])) {
-                                $new_msg_dot = "<a href='/bruinskave/php/profile.php?u=".substr($msg_dot[$k],1)."'>".$msg_dot[$k]."</a>";
+                                $new_msg_dot = "<a href='profile.php?u=".substr($msg_dot[$k],1)."'>".$msg_dot[$k]."</a>";
                             } else {
                                 $new_msg_dot = $msg_dot[$k];
                             }
@@ -159,7 +160,7 @@ function identifyTagsInMsg($msg) {
     		}
     		$body = $row['body'];        
 
-    		//$body = identifyTagsInMsg($body);
+    		$body = identifyTagsInMsg($body);
     		$pic = '';
     		$vid = '';
     		$youtube = '';
