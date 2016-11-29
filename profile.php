@@ -863,7 +863,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			width: 100vw;
 			background-color: white;
 			z-index: 20;
-			overflow-y: scroll;
+			overflow-y: hidden;
 			overflow-x: hidden;
 		}
 		.topbar-userimages{
@@ -1209,7 +1209,7 @@ else if (isset($_FILES['pictureUpload'])) {
 				    position: fixed;
 				    top: calc(50vh - 45px);
 				    left: calc(50vw - 40vw);
-				    z-index: 11;
+				    z-index: 25;
 				    width: 80vw;
 				    box-shadow: 1px 1px 21px #e6e6e6;
 				}
@@ -1225,7 +1225,7 @@ else if (isset($_FILES['pictureUpload'])) {
 				    height: 100vh;
 				    width: 100vw;
 				    position: fixed;
-				    z-index: 10;
+				    z-index: 25;
 				    background: rgba(222,215,215,0.3);
 				}
 	</style>
