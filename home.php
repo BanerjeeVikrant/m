@@ -1560,7 +1560,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    height: 100vh;
 		    width: 100vw;
 		    position: fixed;
-		    z-index: 10;
+		    z-index: 15;
 		    background: rgba(222,215,215,0.3);
 		}
 		input.anoncomment-inputs {

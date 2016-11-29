@@ -289,7 +289,8 @@ function identifyTagsInMsg($msg) {
                         $commentsCountShow = $commentsCount - 3;
                     }
                     if($commentsCountShow != 0){
-                    $commentShownBox = "<div style = 'position: relative;' class='view-more'>                      
+                    $commentShownBox = "
+                    <div style = 'position: relative;' class='view-more'>                      
                             <div class = 'comment-body'>
                                 <div class = 'comments-img'></div>
                                 <div class = 'comment-area'>
