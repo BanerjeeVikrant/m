@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 22, 2016 at 02:19 AM
+-- Generation Time: Dec 03, 2016 at 01:31 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -25,6 +25,35 @@ USE `bruinskavedata`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `anoncomments`
+--
+
+CREATE TABLE IF NOT EXISTS `anoncomments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text NOT NULL,
+  `from` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `anoncomments`
+--
+
+INSERT INTO `anoncomments` (`id`, `comment`, `from`) VALUES
+(1, 'hi', 'ssdf'),
+(2, 'hola', 'ssdf'),
+(3, 'hi', 'ssdf'),
+(4, 'hi', 'ssdf'),
+(5, 'hijkj', 'ssdf'),
+(6, 'hi', 'ssdf'),
+(7, 'hi', 'ssdf'),
+(8, 'hey', 'ssdf'),
+(9, 'hi', 'ssdf'),
+(10, 'Ggh', 'Ssdf');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `comments`
 --
 
@@ -33,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment` text NOT NULL,
   `from` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=128 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
 
 --
 -- Dumping data for table `comments`
@@ -160,7 +189,33 @@ INSERT INTO `comments` (`id`, `comment`, `from`) VALUES
 (124, 'hi', 'test'),
 (125, 'hola', 'test'),
 (126, 'ihihhih', 'ssdf'),
-(127, 'hi', 'ssdf');
+(127, 'hi', 'ssdf'),
+(128, 'hi', 'ssdf'),
+(129, 'sadfjalskdjfalskdfj', 'ssdf'),
+(130, 'hi', 'ssdf'),
+(131, 'hi', 'ssdf'),
+(132, 'hi', 'ssdf'),
+(133, 'hjlkjlk', 'ssdf'),
+(134, 'hkj', 'ssdf'),
+(135, 'hi', 'ssdf'),
+(136, 'kjlkj', 'ssdf'),
+(137, 'hi', 'ssdf'),
+(138, 'hi', 'ssdf'),
+(139, 'hi', 'ssdf'),
+(140, 'hi', 'ssdf'),
+(141, 'hi', 'ssdf'),
+(142, 'sdfas', 'ssdf'),
+(143, 'skdfl', 'ssdf'),
+(144, 'sdkjf', 'ssdf'),
+(145, 'hey', 'ssdf'),
+(146, 'hi', 'ssdf'),
+(147, '', 'ssdf'),
+(148, 'i', 'ssdf'),
+(149, 'hi', 'ssdf'),
+(150, 'hi', 'ssdf'),
+(151, 'hi', 'ssdf'),
+(152, 'hi', 'ssdf'),
+(153, 'hi', 'ssdf');
 
 -- --------------------------------------------------------
 
@@ -175,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `crush` (
   `picture` text NOT NULL,
   `time_added` text NOT NULL,
   `date_added` text NOT NULL,
+  `commentsid` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
 
@@ -182,19 +238,19 @@ CREATE TABLE IF NOT EXISTS `crush` (
 -- Dumping data for table `crush`
 --
 
-INSERT INTO `crush` (`id`, `body`, `by`, `picture`, `time_added`, `date_added`) VALUES
-(18, 'Hello', 'ssdf', '', '1478585766', ''),
-(19, 'hey', 'test', '', '1478934937', ''),
-(20, 'again', 'test', '', '1478936822', ''),
-(21, 'hi', 'ssdf', '', '1478937031', ''),
-(22, 'hey\r\n', 'ssdf', '', '1478937056', ''),
-(23, 'hi\r\n', 'ssdf', '', '1478937255', ''),
-(24, 'jfalsdkfj', 'test', '', '1478937279', ''),
-(25, 'hey', 'test', '', '1479009695', ''),
-(26, 'this post', 'test', '', '1479009732', ''),
-(27, 'heyyyyyy.....', 'test', '', '1479010296', ''),
-(28, 'sfasdlf', 'test', '', '1479010360', ''),
-(29, 'hola', 'test', '', '1479010445', '');
+INSERT INTO `crush` (`id`, `body`, `by`, `picture`, `time_added`, `date_added`, `commentsid`) VALUES
+(18, 'Hello', 'ssdf', '', '1478585766', '', ''),
+(19, 'hey', 'test', '', '1478934937', '', ''),
+(20, 'again', 'test', '', '1478936822', '', ''),
+(21, 'hi', 'ssdf', '', '1478937031', '', ''),
+(22, 'hey\r\n', 'ssdf', '', '1478937056', '', '10'),
+(23, 'hi\r\n', 'ssdf', '', '1478937255', '', ''),
+(24, 'jfalsdkfj', 'test', '', '1478937279', '', ''),
+(25, 'hey', 'test', '', '1479009695', '', ''),
+(26, 'this post', 'test', '', '1479009732', '', ''),
+(27, 'heyyyyyy.....', 'test', '', '1479010296', '', ''),
+(28, 'sfasdlf', 'test', '', '1479010360', '', ''),
+(29, 'hola', 'test', '', '1479010445', '', '1,2,1,2,1,3,4,5,6,7,8,9');
 
 -- --------------------------------------------------------
 
@@ -235,6 +291,7 @@ CREATE TABLE IF NOT EXISTS `hashtags` (
 
 INSERT INTO `hashtags` (`word`, `post_ids`) VALUES
 ('#hello', '87'),
+('#hi', '94,95'),
 ('#me', '34,36,38,39');
 
 -- --------------------------------------------------------
@@ -404,7 +461,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `time_added` text NOT NULL,
   `date_added` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=170 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=201 ;
 
 --
 -- Dumping data for table `notifications`
@@ -419,7 +476,38 @@ INSERT INTO `notifications` (`id`, `type`, `fromUser`, `toUser`, `comment_id`, `
 (166, '2', 'ssdf', 'test', 0, 88, '1479518675', '2016/11/18'),
 (167, '3', 'ssdf', 'ssdf', 127, 87, '1479596638', '2016/11/19'),
 (168, '2', 'ssdf', 'test', 0, 90, '1479609331', '2016/11/19'),
-(169, '2', 'test', 'ssdf', 0, 84, '1479609347', '2016/11/19');
+(169, '2', 'test', 'ssdf', 0, 84, '1479609347', '2016/11/19'),
+(170, '3', 'ssdf', '', 128, 29, '1479861549', '2016/11/22'),
+(171, '3', 'ssdf', '', 129, 29, '1479861556', '2016/11/22'),
+(172, '3', 'ssdf', '', 130, 29, '1479861697', '2016/11/22'),
+(173, '3', 'ssdf', '', 131, 29, '1479861734', '2016/11/22'),
+(174, '3', 'ssdf', '', 132, 29, '1479861755', '2016/11/22'),
+(175, '3', 'ssdf', '', 133, 29, '1479861756', '2016/11/22'),
+(176, '3', 'ssdf', '', 134, 29, '1479861757', '2016/11/22'),
+(177, '3', 'ssdf', '', 135, 29, '1479861813', '2016/11/22'),
+(178, '3', 'ssdf', '', 136, 29, '1479861815', '2016/11/22'),
+(179, '3', 'ssdf', '', 137, 29, '1479861871', '2016/11/22'),
+(180, '3', 'ssdf', '', 138, 29, '1479861874', '2016/11/22'),
+(181, '3', 'ssdf', 'ssdf', 139, 84, '1479868755', '2016/11/22'),
+(182, '3', 'ssdf', 'ssdf', 140, 84, '1479868936', '2016/11/22'),
+(183, '3', 'ssdf', 'ssdf', 141, 84, '1479868936', '2016/11/22'),
+(184, '3', 'ssdf', 'ssdf', 142, 84, '1479868938', '2016/11/22'),
+(185, '3', 'ssdf', 'ssdf', 143, 84, '1479868939', '2016/11/22'),
+(186, '3', 'ssdf', 'ssdf', 144, 84, '1479868940', '2016/11/22'),
+(187, '2', 'ssdf', 'ssdf', 0, 84, '1479870005', '2016/11/22'),
+(188, '3', 'ssdf', 'ssdf', 145, 84, '1479870359', '2016/11/22'),
+(189, '3', 'ssdf', 'ssdf', 146, 84, '1479870589', '2016/11/22'),
+(190, '3', 'ssdf', 'ssdf', 147, 96, '1479958131', '2016/11/23'),
+(191, '3', 'ssdf', '', 148, 43, '1480397919', '2016/11/28'),
+(192, '2', 'ssdf', '', 0, 43, '1480397923', '2016/11/28'),
+(193, '3', 'ssdf', '', 149, 43, '1480398087', '2016/11/28'),
+(194, '3', 'ssdf', '', 150, 44, '1480398099', '2016/11/28'),
+(195, '2', 'ssdf', 'ssdf', 0, 93, '1480398111', '2016/11/28'),
+(196, '3', 'ssdf', 'ssdf', 151, 93, '1480398116', '2016/11/28'),
+(197, '3', 'ssdf', 'ssdf', 152, 95, '1480398130', '2016/11/28'),
+(198, '2', 'ssdf', 'ssdf', 0, 95, '1480398131', '2016/11/28'),
+(199, '2', 'ssdf', '', 0, 44, '1480399572', '2016/11/28'),
+(200, '3', 'ssdf', '', 153, 44, '1480399585', '2016/11/28');
 
 -- --------------------------------------------------------
 
@@ -433,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `photos` (
   `photo_link` text NOT NULL,
   `post_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `photos`
@@ -480,7 +568,9 @@ INSERT INTO `photos` (`id`, `username`, `photo_link`, `post_id`) VALUES
 (39, 'test', 'userdata/pictures/test/Penguins.jpg', 67),
 (40, 'vik', 'userdata/pictures/vik/380-full-of-color-.gif', 68),
 (41, 'test', 'userdata/pictures/test/dace2.PNG', 80),
-(42, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 85);
+(42, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 85),
+(43, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 92),
+(44, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 93);
 
 -- --------------------------------------------------------
 
@@ -506,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `liked_by` text NOT NULL,
   `post_group` int(11) NOT NULL COMMENT 'if zero, no group',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=91 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=98 ;
 
 --
 -- Dumping data for table `posts`
@@ -515,13 +605,20 @@ CREATE TABLE IF NOT EXISTS `posts` (
 INSERT INTO `posts` (`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`) VALUES
 (82, 'Hi', '', '1478585736', 'ssdf', '0', '', '', '', '', '', '', '0', '', 'ssdf', 0),
 (83, 'hi', '', '1478585743', 'ssdf', '0', '', '', '', '', '', '', '0', '', '', 0),
-(84, 'hey\r\n', '', '1478585752', 'ssdf', '0', '', '', '', '', '', '', '0', '', 'ssdf,test', 0),
-(85, 'Einstein!!', '', '1478585752', 'ssdf', '0', '', '', '122,123,124,125,126', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', '', 'ssdf,test', 0),
-(86, 'hi', '', '1478840421', 'test', '0', '', '', '120,121', '', '', '', '0', '', 'test,ssdf', 0),
-(87, '#hello', '', '1478940284', 'ssdf', '0', '', '', '127', '', '', '', '0', '', 'ssdf,test', 0),
+(84, 'hey\r\n', '', '1478585752', 'ssdf', '0', '', '', '139,140,141,142,143,144,145,146', '', '', '', '0', '', 'ssdf,test,ssdf,test,ssdf,test,ssdf,test,ssdf,test', 0),
+(85, 'Einstein!!', '', '1478585752', 'ssdf', '0', '', '', '122,123,124,125,126', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', 'ssdf', 'ssdf,test', 0),
+(86, 'hi', '', '1478840421', 'test', '0', '', '', '120,121', '', '', '', '1', 'ssdf', 'test,ssdf', 0),
+(87, '#hello', '', '1478940284', 'ssdf', '0', '', '', '127', '', '', '', '1', 'ssdf', 'ssdf,test', 0),
 (88, 'Hello ', '', '1479009459', 'test', '0', '', '', '', '', '', '', '1', 'Ssdf', 'ssdf', 1),
-(89, 'heyyyyy', '', '1479609205', 'test', '0', '', '', '', '', '', '', '1', 'Ssdf', '', 0),
-(90, 'hihihi', '', '1479609282', 'test', '0', '', '', '', '', '', '', '1', 'ssdf', 'ssdf', 0);
+(89, 'heyyyyy', '', '1479609205', 'test', '0', '', '', '', '', '', '', '1', 'ssdf', '', 0),
+(90, 'hihihi', '', '1479609282', 'test', '0', '', '', '', '', '', '', '1', 'ssdf', 'ssdf', 0),
+(91, 'Hey', '', '1479609282', 'ssdf', '1', '', 'ssdf', '', '', '', '', '0', '', '', 0),
+(92, 'Heyyyyy', '2016/11/23', '1479609282', 'ssdf', '1', '', 'ssdf', '', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', '', '', 0),
+(93, 'Hey sadfj dskfj l lksdsjdf  sdlkdfj sdjflsd f kldjf  lsdkjfflsdd flddj ljf sdlfjds ffk dlkdj flks dflksd jfl ksddjf  lsdkdjflsk flskf lskd f lksdflsk dlsk dfflks ddlf slk flskd flskd f lskdf sldflsd  lk dflksjd flkds flkjsd flks dflk sdlfk dslf  lsdkf j lsk d flsk flksdjf lksdf lkdf lflkasjdf lasdkjflk f lasdjf lkasjdf lskdj flsd fls dfl sdfflksdfj sdflksaldf lsakd flks dflkas dlffklskdflksadf jlk dfls dfls dflka dflkasdlfk asdlfa ldkfj alsdkfalkdf lakds flkasdjf laksdjf lkasjdf lkasdf jalksdjfalksf alskdfjaslkdf laksdjfka sdflkajsdflkasjdfl kasd flaskjdf laksdj flkasjdf lka sjsad flsjdf skdjf sdkjdf lksjddf lksdjd flksdd l dj flsdj flsd  flsd d flsd flsd flskddj  flks  dflksd flsdkd  flsdkj f ls  dflksjdf ls dfld flsdkdf lsddkf  jjsldf lsdf dkj kdfj kdls', '2016/11/23', '1479956241', 'ssdf', '1', '', 'ssdf', '151', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', '', 'ssdf', 0),
+(94, '#hi', '', '1479957018', 'ssdf', '0', '', '', '', '', '', '', '0', '', '', 0),
+(95, '#hi', '', '1479957062', 'ssdf', '0', '', '', '152', '', '', '', '0', '', 'ssdf', 0),
+(96, '@ssdf\r\n', '', '1479957172', 'ssdf', '0', '', '', '147', '', '', '', '1', 'Ssdf', '', 0),
+(97, 'Hi', '2016/11/23', '1479960880', 'Ssdf', '1', '', 'ssdf', '', '', '', '', '1', 'ssdf', '', 0);
 
 -- --------------------------------------------------------
 
@@ -533,59 +630,65 @@ CREATE TABLE IF NOT EXISTS `report` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `post_id` int(11) NOT NULL,
   `flagger` text NOT NULL,
+  `about` set('1','2','3','4','5','6','7','8','9','10') NOT NULL COMMENT '1 = sexual, 2 = drugs, 3 = inappropriate, 4 = harrasment, 5 = threatning, 6 = rude, 7 = bully,  8 = not interesting, 9 = embarrassing, 10 = id like',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
 
 --
 -- Dumping data for table `report`
 --
 
-INSERT INTO `report` (`id`, `post_id`, `flagger`) VALUES
-(1, 38, 'ssdf'),
-(2, 38, 'ssdf'),
-(3, 26, 'ssdf'),
-(4, 26, 'ssdf'),
-(5, 26, 'ssdf'),
-(6, 25, 'ssdf'),
-(7, 26, 'ssdf'),
-(8, 25, 'ssdf'),
-(9, 38, 'ssdf'),
-(10, 38, 'ssdf'),
-(11, 38, 'Ssdf'),
-(12, 26, 'ssdf'),
-(13, 26, 'ssdf'),
-(14, 38, 'ssdf'),
-(15, 38, 'ssdf'),
-(16, 39, 'Ssdf'),
-(17, 39, 'Ssdf'),
-(18, 39, 'Ssdf'),
-(19, 39, 'Ssdf'),
-(20, 39, 'Ssdf'),
-(21, 39, 'ssdf'),
-(22, 39, 'ssdf'),
-(23, 25, 'ssdf'),
-(24, 25, 'ssdf'),
-(25, 25, 'ssdf'),
-(26, 38, 'Ssdf'),
-(27, 49, 'ssdf'),
-(28, 49, 'ssdf'),
-(29, 67, 'Ssdf'),
-(30, 67, 'ssdf'),
-(31, 65, 'Test'),
-(32, 76, 'test'),
-(33, 76, 'test'),
-(34, 76, 'test'),
-(35, 76, 'test'),
-(36, 76, 'test'),
-(37, 76, 'test'),
-(38, 77, 'test'),
-(39, 80, 'test'),
-(40, 82, 'ssdf'),
-(41, 82, 'ssdf'),
-(42, 88, 'ssdf'),
-(43, 88, 'ssdf'),
-(44, 85, 'ssdf'),
-(45, 85, 'ssdf');
+INSERT INTO `report` (`id`, `post_id`, `flagger`, `about`) VALUES
+(1, 38, 'ssdf', '10'),
+(2, 38, 'ssdf', ''),
+(3, 26, 'ssdf', ''),
+(4, 26, 'ssdf', ''),
+(5, 26, 'ssdf', ''),
+(6, 25, 'ssdf', ''),
+(7, 26, 'ssdf', ''),
+(8, 25, 'ssdf', ''),
+(9, 38, 'ssdf', ''),
+(10, 38, 'ssdf', ''),
+(11, 38, 'Ssdf', ''),
+(12, 26, 'ssdf', ''),
+(13, 26, 'ssdf', ''),
+(14, 38, 'ssdf', ''),
+(15, 38, 'ssdf', ''),
+(16, 39, 'Ssdf', ''),
+(17, 39, 'Ssdf', ''),
+(18, 39, 'Ssdf', ''),
+(19, 39, 'Ssdf', ''),
+(20, 39, 'Ssdf', ''),
+(21, 39, 'ssdf', ''),
+(22, 39, 'ssdf', ''),
+(23, 25, 'ssdf', ''),
+(24, 25, 'ssdf', ''),
+(25, 25, 'ssdf', ''),
+(26, 38, 'Ssdf', ''),
+(27, 49, 'ssdf', ''),
+(28, 49, 'ssdf', ''),
+(29, 67, 'Ssdf', ''),
+(30, 67, 'ssdf', ''),
+(31, 65, 'Test', ''),
+(32, 76, 'test', ''),
+(33, 76, 'test', ''),
+(34, 76, 'test', ''),
+(35, 76, 'test', ''),
+(36, 76, 'test', ''),
+(37, 76, 'test', ''),
+(38, 77, 'test', ''),
+(39, 80, 'test', ''),
+(40, 82, 'ssdf', ''),
+(41, 82, 'ssdf', ''),
+(42, 88, 'ssdf', ''),
+(43, 88, 'ssdf', ''),
+(44, 85, 'ssdf', ''),
+(45, 85, 'ssdf', ''),
+(46, 84, 'ssdf', ''),
+(47, 84, 'ssdf', '2'),
+(48, 84, 'Ssdf', '8'),
+(49, 84, 'ssdf', '1'),
+(50, 97, 'ssdf', '5');
 
 -- --------------------------------------------------------
 
@@ -631,7 +734,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `student_id`, `password`, `sign_up_date`, `bio`, `profile_pic`, `bannerimg`, `following`, `followers`, `sex`, `dob`, `interests`, `dmfriends`, `es`, `ms`, `grade`, `home_ip`, `last_ip`, `ips_array`, `online`, `last_online_date`, `last_online_time`, `admin`, `activated`, `account_closer`, `groups`) VALUES
-(1, 'ssdf', 'Vikrant', 'Bandyopadhyay', 538881, '5d41402abc4b2a76b9719d911017c592', '6/8/2016', 'Hello, I am the president of the site please dm me if you need any help.\n', 'userdata/pictures/ssdf/380-full-of-color-.gif', 'userdata/pictures/Ssdf/IMG_20160816_162655.jpg', 'test123,thissdf,test', 'test,ssdf,vik', '0', '2/5/2002', 'coding,', 'thissdf,test123,test,Vik', 'Hariyana', 'Dartmouth', '9', '67.188.81.253', '67.188.81.253', '67.188.81.253', '1', '6/8/2016', '1479775805', '1', '1', '', ''),
+(1, 'ssdf', 'Vikrant', 'Bandyopadhyay', 538881, '5d41402abc4b2a76b9719d911017c592', '6/8/2016', 'Hello, I am the president of the site please dm me if you need any help.\n', 'userdata/pictures/Ssdf/IMG_20161127_151641.jpg', 'userdata/pictures/Ssdf/14802893913501265276773.jpg', 'test123,thissdf,test', 'test,ssdf,vik', '0', '2/5/2002', 'coding,', 'thissdf,test123,test,Vik', 'Hariyana', 'Dartmouth', '9', '67.188.81.253', '67.188.81.253', '67.188.81.253', '0', '6/8/2016', '1480398133', '1', '1', '', ''),
 (2, 'test', 'Taste', 'Tasty', 394584, '5d41402abc4b2a76b9719d911017c592', '6/27/2016', 'This is a test account to test the functionality of the website pls dont mind me\r\n', 'https://pbs.twimg.com/profile_images/577783755605028864/IIojQn3V.jpeg', 'http://www.theresiliencyinstitute.net/wp-content/uploads/2013/09/TRI-Banner-background.jpg', 'ssdf', 'Ssdf', '0', '2/5/2002', '', 'ssdf,thissdf,test123', 'Something', 'Dartmouth', '9', '71.202.74.188', '71.202.74.188', '71.202.74.188', '0', '6/27/2016', '1479609282', '0', '1', '', '1,2'),
 (3, 'test123', 'test123', 'testpart', 2342931, '5d41402abc4b2a76b9719d911017c592', '7/20/2016', 'this is another test account to understand whats going on in the site.\r\n', 'https://expertbeacon.com/sites/default/files/advice_for_men_on_selecting_your_online_dating_profile_photo.jpg', '', '', 'ssdf', '1', '2/5/2002', NULL, 'Ssdf,vik,test', 'This', 'Dartmouth', '12', '71.202.74.188', '71.202.74.188', '71.202.74.188', '0', '7/20/2016', '7:45pm', '0', '1', '', ''),
 (4, 'thissdf', 'dfjs', 'sdkf', 20498203, 'd41d8cd98f00b204e9800998ecf8427e', '07/28/16', '', '', '', '', 'ssdf', '', '2016-07-14', '', 'Ssdf,vik,Test', 'sdkjfs', 'sdfsdf', '9', '::1', '::1', '::1', '1', '07/28/16', '1469678763', '0', '1', '', ''),
