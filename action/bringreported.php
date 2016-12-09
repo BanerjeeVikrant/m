@@ -158,6 +158,7 @@ if($reported_ids->num_rows > 0) {
                 $youtube
             </div>
             </div>
+            <br/><br/>
             ";
 
         }
