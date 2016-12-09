@@ -29,15 +29,44 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
+<body>
+
 <style type="text/css">
 #reportedposts {
-	overflow: scroll;
+	z-index: 3;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	padding-top: 80px;
+	overflow-y: scroll;
 }
 </style>
 
-<body>
+ <div class="search-topbar">
+  <div class="back-img" id="back-searchpeople"></div>
+  <div class="searchbar-wrapper">
+   <div class="search-tool-wrapper">
+    <span class="search-tool glyphicon glyphicon-search"></span>
+   </div>
+   <input class="search" id = "searchpeople" type="text" placeholder="Search..." name="search" autocomplete="off">
+  </div>
+ </div>
+ <div id="search-contentpeople">
+  
+ </div>
+</div>
 
 <div id="reportedposts"></div>
+
+
+<script type="text/javascript">
+
+function showReported() {
+	console.log("opened reported")
+	$("#reportedposts").css("height") = "50%";
+}
+
+</script>
 
 <?php
 require "system/connect.php";
