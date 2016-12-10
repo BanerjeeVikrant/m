@@ -12,7 +12,6 @@
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Alice" />
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Serif+Caption" />
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Creepster+Caps" />
-	<link rel="stylesheet" type="text/css" href="css.css" />
 
 	<!--jquery 2.2.0-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
@@ -147,13 +146,12 @@
 		background-repeat: no-repeat;
 
 	}
-	.profile-post{
-		background-color: white;
-		position: relative;
-
-		width: 100vw;
-		margin-bottom: 15px;
-
+	.profile-post {
+	    background-color: white;
+	    position: relative;
+	    width: 100vw;
+	    padding: 1px;
+	    margin-bottom: -15px;
 	}
 	.post-breaker{
 		margin: 0;
