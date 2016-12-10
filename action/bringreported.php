@@ -159,11 +159,15 @@ if($reported_ids->num_rows > 0) {
             </div>
             </div>
             <br/><br/>
+            <div class='options-tabs'>
+                <div class='tabs delete-tab'>Delete</div>
+                <div class='tabs warn-tab'>Warn</div>
+                <div class='tabs ignore-tab'>Ignore</div>
+            </div>
             ";
 
         }
     }
 }
-
 
 ?>

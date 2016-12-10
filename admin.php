@@ -33,7 +33,7 @@
 		height: 100vh;
 		position: absolute;
 		top: 0;
-		padding-top: 80px;
+		padding-top: 65px;
 		overflow-y: scroll;
 	}
 	*{
@@ -81,24 +81,27 @@
 		width: 70vw;
 		padding-left: 30px;
 	}
-	.options-tabs{
-		position: fixed;
-		top: 60px;
-		height: 50px;
-		border-bottom: 1px solid #e6e6e6;
-		z-index: 6;
-		background-color: white;
+	.options-tabs {
+	    height: 40px;
+	    border-bottom: 1px solid #e6e6e6;
+	    z-index: 6;
+	    background-color: white;
+	    margin-bottom: 10px;
 	}
-	.tabs{
-		position: relative;
-		display: inline-block;
-		width: calc((100vw / 4) + 1px);
-		height: 50px;
-		text-align: center;
-		line-height: 40px;
-		font-size: 15px;
-		margin-bottom: 15px;
-		padding-top: 10px;
+	.tabs {
+	    position: relative;
+	    display: inline-block;
+	    width: calc((100vw / 3) + 1px);
+	    height: 40px;
+	    text-align: center;
+	    line-height: 40px;
+	    font-size: 15px;
+	    background: #cecece;
+	    margin-left: -5px;
+	    border: 1px solid #e4e4e4;
+	}
+	.ignore-tab {
+	    width: calc((100vw / 3) + 5px);
 	}
 	.crush-tab{
 		margin-left: -5px;
@@ -151,7 +154,7 @@
 	    position: relative;
 	    width: 100vw;
 	    padding: 1px;
-	    margin-bottom: -15px;
+	    margin-bottom: -20px;
 	}
 	.post-breaker{
 		margin: 0;
@@ -1128,12 +1131,8 @@
 
  <div class="search-topbar">
   <div class="back-img" id="back-searchpeople"></div>
-  <div class="searchbar-wrapper">
-   <div class="search-tool-wrapper">
-    <span class="search-tool glyphicon glyphicon-search"></span>
-   </div>
-   <input class="search" id = "searchpeople" type="text" placeholder="Search..." name="search" autocomplete="off">
-  </div>
+  <div class="userimages-name">Admin Console</div>
+   
  </div>
  <div id="search-contentpeople">
   
