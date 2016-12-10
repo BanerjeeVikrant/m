@@ -1,3 +1,11 @@
+<?php
+require "system/connect.php";
+
+$lifetime = 60 * 60 * 24 * 7 * 365;
+session_set_cookie_params($lifetime);
+session_start();
+
+?>
 <html>
 
 <head>
@@ -1152,11 +1160,6 @@ function showReported() {
 </script>
 
 <?php
-require "system/connect.php";
-
-$lifetime = 60 * 60 * 24 * 7 * 365;
-session_set_cookie_params($lifetime);
-session_start();
 
 $allowed = false;
 
