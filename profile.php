@@ -141,11 +141,8 @@ if(isset($_GET['u'])){
 		$signupdate= $get['sign_up_date'];
 		$profilepic = $get['profile_pic'];
 		$bannerimg = $get['bannerimg'];
-		$es = $get['es'];
-		$ms = $get['ms'];
 		$bio = $get['bio'];
 		$sex = $get['sex'];
-		$interests = $get['interests'];
 		
 		$dob = $get['dob'];
 		$followings = $get['following'];
@@ -244,7 +241,6 @@ if ($yourcheck->num_rows == 1) {
 	$yourbannerimg = $yourget['bannerimg'];
 	$yourbio = $yourget['bio'];
 	$yoursex = $yourget['sex'];
-	$yourinterests = $yourget['interests'];
 	$yourdob = $yourget['dob'];
 	$yourfollowing = $yourget['following'];
 	$yourfollowers = $yourget['followers'];

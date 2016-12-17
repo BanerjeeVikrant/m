@@ -29,16 +29,11 @@ if (isset($_GET['id'])) {
 	}
 	
 	
-	if(($admin) || ($username == $goto)){
-		$sql = "UPDATE posts SET hidden='1', hidden_by='$username' WHERE id='$id'";
-		$delete = $conn->query($sql);
-	}
-
 	if($admin){
 		$sql = "DELETE FROM `report` WHERE post_id='$id'";
 		$delete = $conn->query($sql);
 	}
-	
+
 	//echo "<script>location.assign('profile.php?u=$goto#profilePosts')</script>";
 }
 ?>

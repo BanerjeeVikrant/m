@@ -62,7 +62,6 @@ if (isset($_GET['u'])) {
 		$profilepic = $get['profile_pic'];
 		$bio = $get['bio'];
 		$sex = $get['sex'];
-		$interests = $get['interests'];
 		$dob = $get['dob'];
 		$followers = $get['followers'];        
 		$following = $get['following'];
@@ -90,7 +89,6 @@ if ($checkme->num_rows == 1) {
 	$yourprofilepic = $getuser['profile_pic'];
 	$yourbio = $getuser['bio'];
 	$yoursex = $getuser['sex'];
-	$yourinterests = $getuser['interests'];
 	$yourdob = $getuser['dob'];
 	$yourfollowers = $getuser['followers'];
 	$yourfollowing = $getuser['following'];

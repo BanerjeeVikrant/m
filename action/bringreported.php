@@ -141,7 +141,7 @@ if($reported_ids->num_rows > 0) {
             }
             $topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
             echo "
-            <div id = 'profile-post-$id' style='display:inline-block;'>
+            <div class = 'profile-post-$id' style='display:inline-block;'>
             <div class = 'profile-post' homeid='$id'>
                 <div style = 'position: relative;'>
                     <div class = 'glyphicon glyphicon-option-vertical post-options' id='$id'></div>
@@ -158,11 +158,10 @@ if($reported_ids->num_rows > 0) {
                 $youtube
             </div>
             </div>
-            <br/><br/>
-            <div class='options-tabs'>
-                <div class='tabs delete-tab'>Delete</div>
-                <div class='tabs warn-tab'>Warn</div>
-                <div class='tabs ignore-tab'>Ignore</div>
+            <div class='options-tabs options-tabs-$id'>
+                <div class='tabs delete-tab' onclick='deletepost($id)'>Delete</div>
+                <div class='tabs warn-tab' onclick='warnpost($id)'>Warn</div>
+                <div class='tabs ignore-tab' onclick='ignorepost($id)'>Ignore</div>
             </div>
             ";
 

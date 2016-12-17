@@ -34,7 +34,6 @@ if ($checkme->num_rows == 1) {
     $yourprofilepic = $getuser['profile_pic'];
     $yourbio = $getuser['bio'];
     $yoursex = $getuser['sex'];
-    $yourinterests = $getuser['interests'];
     $yourdob = $getuser['dob'];
     $yourfollowers = $getuser['followers'];
     $yourfollowing = $getuser['following'];

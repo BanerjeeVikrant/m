@@ -1,5 +1,6 @@
 <?php
 require "system/connect.php";
+require "system/helpers.php";
 
 //ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 //ini_set('session.gc_maxlifetime', 60 * 60 * 24 * 7);
@@ -78,11 +79,24 @@ if ($check->num_rows == 1) {
 	$signupdate= $get['sign_up_date'];
 	$profilepic = $get['profile_pic'];
 	$bannerimg = $get['bannerimg'];
-	$es = $get['es'];
-	$ms = $get['ms'];
+
+	$warned = $get['warned'];
+
+	$warnedorNot = false;
+
+	$warned_post = $get['warned_post'];
+
+	if($warned == '1'){
+		$warnedorNot = true;	
+	}
+
+	$warnedfor = $get['warned_for'];
+
+	$warnedforText = reportType($warnedfor);
+
 	$bio = $get['bio'];
 	$sex = $get['sex'];
-	$interests = $get['interests'];
+
 	$dob = $get['dob'];
 	$followings = $get['following'];
 	$followers = $get['followers'];
@@ -588,7 +602,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		.profile-post{
 			background-color: white;
 			position: relative;
-
+			padding-bottom: 1px;
 			width: 100vw;
 			margin-bottom: 15px;
 
@@ -785,6 +799,14 @@ else if (isset($_FILES['pictureUpload'])) {
 			padding: 20px;
 			border-top: 1px solid #bbb;
 			border-bottom: 1px solid #bbb;
+		}
+		#warned_post{
+			border-top: 1px solid #bbb;
+		    border-bottom: 1px solid #bbb;
+		    margin-bottom: 10px;
+		    color: white;
+		    background: #a61414;
+		    min-height: 40px;
 		}
 		.youtube-link-iframe{
 			width: 100vw;
@@ -1659,6 +1681,113 @@ else if (isset($_FILES['pictureUpload'])) {
 		</h4>
 		</div>";}
 		?>
+	<?php
+	if($warnedorNot == true){
+		$sql = "SELECT * FROM posts WHERE id = '$warned_post'";
+		$getposts = $conn->query($sql) or die(mysql_error());
+
+	    $row = $getposts->fetch_assoc();
+	    $id = $warned_post;
+	    $body = $row['body'];        
+	    $pic = '';
+	    $vid = '';
+	    $youtube = '';
+	    $likedby = $row['liked_by'];
+	    $likedbyArray = explode(",",$likedby);
+	    $countLikes = count($likedbyArray);
+	    if($countLikes > 1){
+	        $numberLikes = "<span class='count-likes'>$countLikes likes</span>";
+	    }
+	    else if($countLikes == 1){
+	        $numberLikes = "<span class='count-likes'>$countLikes like</span>";
+	    }
+	    else{
+	        $numberLikes = "";
+	    }
+	    if(in_array($username, $likedbyArray)){
+	        $userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'liked' onclick = 'unlikePost($id);'></div></div>";
+	    }
+	    else{
+	        $userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'notliked' onclick = 'likePost($id);'></div></div>";
+	    }
+
+	    $picture_added = $row['picture'];
+	    $video_link = $row['youtubevideo'];
+	    $video_added = $row['video'];
+	    if($picture_added != NULL || $picture_added != ""){
+	        $pic = "<img src = '$picture_added' class = 'posted-pic'></img>";
+	    }else if($video_added != NULL || $video_added != "") {
+	        $vid = "
+	        <video class = 'posted-video' controls loop>
+	            <source src='$video_added' type='video/mp4'>
+	                <source src='$video_added' type='video/ogg'>
+	                    Your browser does not support HTML5 video.
+	                </video>";
+	    }else if($video_link != NULL || $video_link != ""){
+	        $youtube = "<iframe class = 'youtube-link-iframe' src='$video_link' frameborder='0' allowfullscreen></iframe>";
+	    }
+	    $date_added = $row['date_added'];
+	    $added_by = $row['added_by'];
+	    $time_added = $row['time_added'];
+	    $username_posted_to = $row['user_posted_to'];
+	    $commentsid = $row['commentsid'];
+
+	    $sql = "SELECT * FROM users WHERE username='$added_by'"; 
+	    $result = $conn->query($sql);
+	    $pic_row  = $result->fetch_assoc();
+	    $userpic =  $pic_row['profile_pic'];
+	    $usersex = $pic_row['sex'];
+	    $admin = $pic_row['admin'];
+
+	    $timesincestr = time_elapsed_string($time_added);
+
+	    if($userpic == "" || $userpic == NULL){
+	        if($usersex == "1"){
+	            $userpic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
+	        }
+	        else{
+	            $userpic = "http://ieeemjcet.org/wp-content/uploads/2014/11/default-girl.jpg";
+	        }
+	    }
+	    $userfirstname = $pic_row['first_name'];
+	    $userlastname = $pic_row['last_name'];
+	    $topName = '';
+	    if (isset($_GET['u'])) {
+	        if($username == $profileUser){
+	            $hide = "<a href = 'deleteposts.php?p=$id' class = 'glyphicon glyphicon-remove'></a>";
+	        }
+	    }
+	    $admincode = "";
+	    if ($admin) {
+	        $admincode = '<font style="font-size: 9px;position: relative;top: 5px;left: -2px;color: #1d2d4a;">Help</font>';
+	    }
+	    $topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
+	    
+		echo "<div class='profile-post' id='warned_post' warnedfor='$warned_post'>
+			<span style='position: relative;left: 43px;top: 9px;'>You have been flagged <b>[Learn More]</b></span><span>
+			<div class='reportedfor'>
+				<div class = 'profile-post-$id' style='margin-bottom: -15px;margin-top: 20px;'>
+				<div class = 'profile-post' homeid='$id'>
+				    <div style = 'position: relative;'>
+				        <div class = 'glyphicon glyphicon-option-vertical post-options' id='$id'></div>
+				    </div>
+				    <div class = 'posted-by-img' style = 'background-image: url($userpic);'></div>
+				    <span class = 'topName'>
+				        $topName<br>
+				        <span class = 'time'>$timesincestr</span>
+				    </span>
+				    <hr class='post-breaker'>
+				    <p class = 'msg-body'>$body</p>
+				    $pic
+				    $vid
+				    $youtube
+				</div>
+				</div>
+			</div>
+		</span></span><span class = 'whywarned' style='padding: 10px;'>Your post is accused for being $warnedforText</span></div>";
+
+	}	
+	?>
 	<div class="content" id="content">
 
 	</div>
@@ -1754,7 +1883,6 @@ else if (isset($_FILES['pictureUpload'])) {
 	<a href="profile.php?u=<?php echo $username; ?>"><div class="sidebody-profiletab sidebody-tab">Profile</div></a>
 	<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
-	<div class="sidebody-faqtab sidebody-tab" onclick="notifyMe();">notify</div>
 	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
 	<?php if ($admin) {echo '<a href="admin.php"><div class="sidebody-tab">Admin Console</div></a>';} ?>
 	<br/>
@@ -1824,7 +1952,13 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
+$(".reportedfor").hide();
+$(".whywarned").hide();
 
+$("#warned_post").click(function(){
+	$(".reportedfor").slideDown();
+	$(".whywarned").slideDown();
+});
 // request permission on page load
 document.addEventListener('DOMContentLoaded', function () {
   if (Notification.permission !== "granted")

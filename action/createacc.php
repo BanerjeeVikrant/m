@@ -27,8 +27,6 @@ $pswd2 = "";
 $dob = "";
 $gender = "";
 $grade = "";
-$es = "";
-$ms = "";
 $stuid = "";
 $num = "";
 //registration form
@@ -41,8 +39,6 @@ $pswd2 = strip_tags(@$_POST['psw2']);
 $dob = strip_tags(@$_POST['dob']);
 $gender = strip_tags(@$_POST['gender']);
 $grade = strip_tags(@$_POST['grade']);
-$es = strip_tags(@$_POST['es']);
-$ms = strip_tags(@$_POST['ms']);
 $stuid = strip_tags(@$_POST['stuid']);
 $num = strip_tags(@$_POST['num']);
 
@@ -51,7 +47,7 @@ $t = time();
         
 
 $pswdmd5 = md5($pswd);
-$sql = "INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswdmd5', '$d', '', '', '', '', '', '$gender', '$dob', '', '', '$es', '$ms', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')";
+$sql = "INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswdmd5', '$d', '', '', '', '', '', '$gender', '$dob', '0', '', '', '', '', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')";
 $conn->query($sql);
 
 
