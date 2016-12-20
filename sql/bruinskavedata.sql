@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2016 at 01:31 AM
+-- Generation Time: Dec 20, 2016 at 06:04 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `anoncomments` (
   `comment` text NOT NULL,
   `from` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `anoncomments`
@@ -49,7 +49,23 @@ INSERT INTO `anoncomments` (`id`, `comment`, `from`) VALUES
 (7, 'hi', 'ssdf'),
 (8, 'hey', 'ssdf'),
 (9, 'hi', 'ssdf'),
-(10, 'Ggh', 'Ssdf');
+(10, 'Ggh', 'Ssdf'),
+(11, 'hi', 'ssdf'),
+(12, 'ok', 'ssdf'),
+(13, 'ok', 'ssdf'),
+(14, 'hi', 'ssdf'),
+(15, 'hi', 'ssdf'),
+(16, 'hi', 'ssdf'),
+(17, 'hey', 'ssdf'),
+(18, 'torch', 'ssdf'),
+(19, 'chess', 'ssdf'),
+(20, 'hey', 'ssdf'),
+(21, 'ok', 'ssdf'),
+(22, 'ok', 'ssdf'),
+(23, 'hi', 'ssdf'),
+(24, 'ok', 'ssdf'),
+(25, 'ok', 'ssdf'),
+(26, 'this', 'ssdf');
 
 -- --------------------------------------------------------
 
@@ -62,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment` text NOT NULL,
   `from` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=154 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=157 ;
 
 --
 -- Dumping data for table `comments`
@@ -215,7 +231,10 @@ INSERT INTO `comments` (`id`, `comment`, `from`) VALUES
 (150, 'hi', 'ssdf'),
 (151, 'hi', 'ssdf'),
 (152, 'hi', 'ssdf'),
-(153, 'hi', 'ssdf');
+(153, 'hi', 'ssdf'),
+(154, 'hi', 'ssdf'),
+(155, 'hi', 'ssdf'),
+(156, 'hi', 'ssdf');
 
 -- --------------------------------------------------------
 
@@ -247,10 +266,10 @@ INSERT INTO `crush` (`id`, `body`, `by`, `picture`, `time_added`, `date_added`, 
 (23, 'hi\r\n', 'ssdf', '', '1478937255', '', ''),
 (24, 'jfalsdkfj', 'test', '', '1478937279', '', ''),
 (25, 'hey', 'test', '', '1479009695', '', ''),
-(26, 'this post', 'test', '', '1479009732', '', ''),
-(27, 'heyyyyyy.....', 'test', '', '1479010296', '', ''),
-(28, 'sfasdlf', 'test', '', '1479010360', '', ''),
-(29, 'hola', 'test', '', '1479010445', '', '1,2,1,2,1,3,4,5,6,7,8,9');
+(26, 'this post', 'test', '', '1479009732', '', '21'),
+(27, 'heyyyyyy.....', 'test', '', '1479010296', '', '19,22,24,25,26'),
+(28, 'sfasdlf', 'test', '', '1479010360', '', '12,13,15,16,17,18,20,23'),
+(29, 'hola', 'test', '', '1479010445', '', '1,2,1,2,1,3,4,5,6,7,8,9,11,14');
 
 -- --------------------------------------------------------
 
@@ -307,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message` text NOT NULL,
   `time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=131 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=249 ;
 
 --
 -- Dumping data for table `messages`
@@ -443,7 +462,125 @@ INSERT INTO `messages` (`id`, `fromUser`, `toUser`, `message`, `time`) VALUES
 (127, '2', '1', 'helloooooo', 1479010547),
 (128, '1', '2', 'Hello ! ssdf', 1479010611),
 (129, '2', '1', 'Heieie', 1479010778),
-(130, '1', '2', 'rwe', 1479518517);
+(130, '1', '2', 'rwe', 1479518517),
+(131, '2', '1', 'Ok', 1481950150),
+(132, '2', '1', 'hi', 1481950197),
+(133, '1', '2', 'hi', 1481950294),
+(134, '1', '4', 'hi', 1481950323),
+(135, '1', '2', 'hola', 1481950339),
+(136, '1', '2', 'hi', 1481950347),
+(137, '1', '2', 'ok', 1481950352),
+(138, '1', '2', 'hhiii', 1481950776),
+(139, '1', '2', 'hey', 1481951172),
+(140, '2', '1', 'Hi', 1481954373),
+(141, '2', '1', 'Hi', 1481954388),
+(142, '2', '1', 'Hggg', 1481954392),
+(143, '2', '1', 'Hohcd', 1481954405),
+(144, '1', '2', 'kjlkjlk', 1481954416),
+(145, '1', '2', 'jlkj', 1481954431),
+(146, '2', '1', 'Hi', 1481954451),
+(147, '1', '2', 'jlkjl', 1481954457),
+(148, '1', '2', 'hi', 1481954637),
+(149, '2', '1', 'Ok', 1481954660),
+(150, '2', '1', 'Ok', 1481954928),
+(151, '2', '1', 'GDI', 1481954942),
+(152, '1', '2', 'hi', 1481955082),
+(153, '2', '1', 'Hi', 1481955173),
+(154, '1', '2', 'hi', 1481955187),
+(155, '1', '2', 'hi', 1481955204),
+(156, '1', '2', 'jasldfkj', 1481955210),
+(157, '1', '2', 'never', 1481955241),
+(158, '2', '1', 'Ok', 1481956398),
+(159, '2', '1', 'K', 1481956649),
+(160, '2', '1', 'Hi', 1481956692),
+(161, '1', '2', 'hi', 1481956776),
+(162, '2', '1', 'Hi', 1481957046),
+(163, '2', '1', 'Hi', 1481957074),
+(164, '1', '2', 'jkj', 1481957084),
+(165, '1', '2', 'kjlkj', 1481957090),
+(166, '1', '2', 'cool', 1481957097),
+(167, '1', '2', 'great', 1481957121),
+(168, '1', '2', 'hi', 1481957274),
+(169, '1', '2', 'hi', 1481957286),
+(170, '2', '1', 'Hi', 1481957316),
+(171, '1', '2', 'hi', 1481957624),
+(172, '2', '1', 'Hola', 1481957648),
+(173, '2', '1', 'Hi', 1481957856),
+(174, '1', '2', 'hi', 1482115206),
+(175, '1', '2', 'hey', 1482119680),
+(176, '2', '1', 'Hi', 1482119885),
+(177, '1', '2', 'hi', 1482119954),
+(178, '2', '1', 'Hi', 1482119975),
+(179, '2', '1', 'Hey', 1482119986),
+(180, '1', '2', 'hi', 1482120023),
+(181, '2', '1', 'Hi', 1482120762),
+(182, '1', '2', 'hi', 1482120822),
+(183, '2', '1', 'Hi', 1482120841),
+(184, '1', '2', 'hi', 1482120948),
+(185, '2', '1', 'Hi', 1482120956),
+(186, '2', '1', 'Hi', 1482120975),
+(187, '1', '2', 'hi', 1482120982),
+(188, '1', '2', 'hi', 1482121094),
+(189, '2', '1', 'Hi', 1482121117),
+(190, '1', '2', 'hi', 1482121229),
+(191, '2', '1', 'Hi', 1482121255),
+(192, '2', '1', 'Hi', 1482121265),
+(193, '1', '2', 'hi', 1482121281),
+(194, '1', '2', 'hi', 1482121300),
+(195, '2', '1', 'Hi', 1482121318),
+(196, '2', '1', 'Hi', 1482121328),
+(197, '2', '1', 'FNF', 1482121349),
+(198, '1', '2', 'hi', 1482121373),
+(199, '2', '1', 'Yu', 1482121413),
+(200, '1', '2', 'hi', 1482121437),
+(201, '1', '2', 'hi', 1482121444),
+(202, '2', '1', 'BK', 1482121462),
+(203, '1', '2', 'hi', 1482121533),
+(204, '1', '2', 'ok', 1482121562),
+(205, '1', '2', 'hi', 1482121746),
+(206, '1', '2', 'hi', 1482121943),
+(207, '2', '1', 'Hi', 1482121965),
+(208, '2', '1', 'Hi', 1482122027),
+(209, '1', '2', 'hi', 1482122170),
+(210, '1', '2', 'hey', 1482122181),
+(211, '2', '1', 'Hi', 1482122190),
+(212, '1', '2', 'hi', 1482122266),
+(213, '2', '1', 'Hi', 1482122277),
+(214, '1', '2', 'hi', 1482122416),
+(215, '1', '2', 'hey', 1482122444),
+(216, '1', '2', 'hi', 1482122488),
+(217, '1', '2', 'ok', 1482122506),
+(218, '1', '2', 'hi', 1482122942),
+(219, '1', '2', 'hi', 1482123016),
+(220, '1', '2', 'ok boi', 1482123152),
+(221, '2', '1', 'Hi', 1482123195),
+(222, '1', '2', 'hey', 1482123203),
+(223, '1', '2', 'ok', 1482128989),
+(224, '1', '2', 'ea', 1482129045),
+(225, '1', '2', 'chess', 1482129081),
+(226, '2', '1', 'Hi', 1482129123),
+(227, '2', '1', 'To', 1482129188),
+(228, '2', '1', 'Hi', 1482129267),
+(229, '2', '1', 'OK', 1482129285),
+(230, '1', '2', 'hey', 1482130608),
+(231, '1', '2', 'ok', 1482130647),
+(232, '1', '2', 'hididij', 1482131967),
+(233, '1', '2', 'ok', 1482132097),
+(234, '2', '1', 'Hi', 1482132179),
+(235, '1', '2', 'ok', 1482132446),
+(236, '2', '1', 'Hi', 1482132617),
+(237, '1', '2', 'ok', 1482132644),
+(238, '2', '1', 'That&apos;s it', 1482132651),
+(239, '1', '2', 'yeah', 1482132689),
+(240, '2', '1', 'That&apos;s it', 1482132691),
+(241, '1', '2', 'dont be a problem', 1482132761),
+(242, '2', '1', 'OK', 1482132815),
+(243, '2', '1', 'Advisory', 1482132845),
+(244, '1', '2', 'hey', 1482172868),
+(245, '1', '2', 'ok', 1482172938),
+(246, '1', '2', 'ok', 1482173198),
+(247, '2', '1', 'OK', 1482173412),
+(248, '1', '2', 'ok', 1482173427);
 
 -- --------------------------------------------------------
 
@@ -461,7 +598,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `time_added` text NOT NULL,
   `date_added` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=201 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=206 ;
 
 --
 -- Dumping data for table `notifications`
@@ -507,7 +644,12 @@ INSERT INTO `notifications` (`id`, `type`, `fromUser`, `toUser`, `comment_id`, `
 (197, '3', 'ssdf', 'ssdf', 152, 95, '1480398130', '2016/11/28'),
 (198, '2', 'ssdf', 'ssdf', 0, 95, '1480398131', '2016/11/28'),
 (199, '2', 'ssdf', '', 0, 44, '1480399572', '2016/11/28'),
-(200, '3', 'ssdf', '', 153, 44, '1480399585', '2016/11/28');
+(200, '3', 'ssdf', '', 153, 44, '1480399585', '2016/11/28'),
+(201, '3', 'ssdf', 'ssdf', 154, 94, '1481264017', '2016/12/08'),
+(202, '2', 'Test', 'ssdf', 0, 83, '1482173675', '2016/12/19'),
+(203, '2', 'Test', 'ssdf', 0, 82, '1482173716', '2016/12/19'),
+(204, '3', 'ssdf', 'ssdf', 155, 82, '1482175416', '2016/12/19'),
+(205, '3', 'ssdf', 'ssdf', 156, 84, '1482212671', '2016/12/19');
 
 -- --------------------------------------------------------
 
@@ -521,7 +663,7 @@ CREATE TABLE IF NOT EXISTS `photos` (
   `photo_link` text NOT NULL,
   `post_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `photos`
@@ -570,7 +712,8 @@ INSERT INTO `photos` (`id`, `username`, `photo_link`, `post_id`) VALUES
 (41, 'test', 'userdata/pictures/test/dace2.PNG', 80),
 (42, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 85),
 (43, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 92),
-(44, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 93);
+(44, 'ssdf', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', 93),
+(45, 'ssdf', 'userdata/pictures/ssdf/Capture11.PNG', 99);
 
 -- --------------------------------------------------------
 
@@ -596,29 +739,31 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `liked_by` text NOT NULL,
   `post_group` int(11) NOT NULL COMMENT 'if zero, no group',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=98 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=100 ;
 
 --
 -- Dumping data for table `posts`
 --
 
 INSERT INTO `posts` (`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`) VALUES
-(82, 'Hi', '', '1478585736', 'ssdf', '0', '', '', '', '', '', '', '0', '', 'ssdf', 0),
-(83, 'hi', '', '1478585743', 'ssdf', '0', '', '', '', '', '', '', '0', '', '', 0),
-(84, 'hey\r\n', '', '1478585752', 'ssdf', '0', '', '', '139,140,141,142,143,144,145,146', '', '', '', '0', '', 'ssdf,test,ssdf,test,ssdf,test,ssdf,test,ssdf,test', 0),
-(85, 'Einstein!!', '', '1478585752', 'ssdf', '0', '', '', '122,123,124,125,126', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', 'ssdf', 'ssdf,test', 0),
-(86, 'hi', '', '1478840421', 'test', '0', '', '', '120,121', '', '', '', '1', 'ssdf', 'test,ssdf', 0),
-(87, '#hello', '', '1478940284', 'ssdf', '0', '', '', '127', '', '', '', '1', 'ssdf', 'ssdf,test', 0),
-(88, 'Hello ', '', '1479009459', 'test', '0', '', '', '', '', '', '', '1', 'Ssdf', 'ssdf', 1),
+(82, 'Hi', '', '1478585736', 'ssdf', '0', '', '', '155', '', '', '', '0', 'ssdf', 'ssdf,Test', 0),
+(83, 'hi', '', '1478585743', 'ssdf', '0', '', '', '', '', '', '', '0', 'ssdf', 'Test', 0),
+(84, 'hey\r\n', '', '1478585752', 'ssdf', '0', '', '', '139,140,141,142,143,144,145,146,156', '', '', '', '0', 'ssdf', 'ssdf,test,ssdf,test,ssdf,test,ssdf,test,ssdf,test', 0),
+(85, 'Einstein!!', '', '1478585752', 'ssdf', '0', '', '', '122,123,124,125,126', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '1', 'ssdf', 'ssdf,test', 0),
+(86, 'hi', '', '1478840421', 'test', '0', '', '', '120,121', '', '', '', '0', 'ssdf', 'test,ssdf', 0),
+(87, '#hello', '', '1478940284', 'ssdf', '0', '', '', '127', '', '', '', '0', 'ssdf', 'ssdf,test,Test', 0),
+(88, 'Hello ', '', '1479009459', 'test', '0', '', '', '', '', '', '', '0', 'ssdf', 'ssdf', 1),
 (89, 'heyyyyy', '', '1479609205', 'test', '0', '', '', '', '', '', '', '1', 'ssdf', '', 0),
 (90, 'hihihi', '', '1479609282', 'test', '0', '', '', '', '', '', '', '1', 'ssdf', 'ssdf', 0),
 (91, 'Hey', '', '1479609282', 'ssdf', '1', '', 'ssdf', '', '', '', '', '0', '', '', 0),
 (92, 'Heyyyyy', '2016/11/23', '1479609282', 'ssdf', '1', '', 'ssdf', '', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', '', '', 0),
 (93, 'Hey sadfj dskfj l lksdsjdf  sdlkdfj sdjflsd f kldjf  lsdkjfflsdd flddj ljf sdlfjds ffk dlkdj flks dflksd jfl ksddjf  lsdkdjflsk flskf lskd f lksdflsk dlsk dfflks ddlf slk flskd flskd f lskdf sldflsd  lk dflksjd flkds flkjsd flks dflk sdlfk dslf  lsdkf j lsk d flsk flksdjf lksdf lkdf lflkasjdf lasdkjflk f lasdjf lkasjdf lskdj flsd fls dfl sdfflksdfj sdflksaldf lsakd flks dflkas dlffklskdflksadf jlk dfls dfls dflka dflkasdlfk asdlfa ldkfj alsdkfalkdf lakds flkasdjf laksdjf lkasjdf lkasdf jalksdjfalksf alskdfjaslkdf laksdjfka sdflkajsdflkasjdfl kasd flaskjdf laksdj flkasjdf lka sjsad flsjdf skdjf sdkjdf lksjddf lksdjd flksdd l dj flsdj flsd  flsd d flsd flsd flskddj  flks  dflksd flsdkd  flsdkj f ls  dflksjdf ls dfld flsdkdf lsddkf  jjsldf lsdf dkj kdfj kdls', '2016/11/23', '1479956241', 'ssdf', '1', '', 'ssdf', '151', 'userdata/pictures/ssdf/einstein-genius-quote.jpg', '', '', '0', '', 'ssdf', 0),
-(94, '#hi', '', '1479957018', 'ssdf', '0', '', '', '', '', '', '', '0', '', '', 0),
-(95, '#hi', '', '1479957062', 'ssdf', '0', '', '', '152', '', '', '', '0', '', 'ssdf', 0),
-(96, '@ssdf\r\n', '', '1479957172', 'ssdf', '0', '', '', '147', '', '', '', '1', 'Ssdf', '', 0),
-(97, 'Hi', '2016/11/23', '1479960880', 'Ssdf', '1', '', 'ssdf', '', '', '', '', '1', 'ssdf', '', 0);
+(94, '#hi', '', '1479957018', 'ssdf', '0', '', '', '154', '', '', '', '1', 'ssdf', '', 0),
+(95, '#hi', '', '1479957062', 'ssdf', '0', '', '', '152', '', '', '', '1', 'ssdf', 'ssdf', 0),
+(96, '@ssdf\r\n', '', '1479957172', 'ssdf', '0', '', '', '147', '', '', '', '1', 'ssdf', '', 0),
+(97, 'Hi', '2016/11/23', '1479960880', 'Ssdf', '1', '', 'ssdf', '', '', '', '', '0', 'ssdf', '', 0),
+(98, 'ok', '2016/12/19', '1482183860', 'ssdf', '1', '', 'test', '', '', '', '', '0', '', '', 0),
+(99, 'This is a puzzle cube!', '2016/12/19', '1482183879', 'ssdf', '1', '', 'test', '', 'userdata/pictures/ssdf/Capture11.PNG', '', '', '0', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -632,7 +777,7 @@ CREATE TABLE IF NOT EXISTS `report` (
   `flagger` text NOT NULL,
   `about` set('1','2','3','4','5','6','7','8','9','10') NOT NULL COMMENT '1 = sexual, 2 = drugs, 3 = inappropriate, 4 = harrasment, 5 = threatning, 6 = rude, 7 = bully,  8 = not interesting, 9 = embarrassing, 10 = id like',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=51 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `report`
@@ -678,17 +823,7 @@ INSERT INTO `report` (`id`, `post_id`, `flagger`, `about`) VALUES
 (37, 76, 'test', ''),
 (38, 77, 'test', ''),
 (39, 80, 'test', ''),
-(40, 82, 'ssdf', ''),
-(41, 82, 'ssdf', ''),
-(42, 88, 'ssdf', ''),
-(43, 88, 'ssdf', ''),
-(44, 85, 'ssdf', ''),
-(45, 85, 'ssdf', ''),
-(46, 84, 'ssdf', ''),
-(47, 84, 'ssdf', '2'),
-(48, 84, 'Ssdf', '8'),
-(49, 84, 'ssdf', '1'),
-(50, 97, 'ssdf', '5');
+(41, 87, 'ssdf', '5');
 
 -- --------------------------------------------------------
 
@@ -711,10 +846,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `followers` text NOT NULL,
   `sex` set('0','1','2') NOT NULL,
   `dob` text COMMENT 'date of birth',
-  `interests` text,
+  `warned` enum('0','1') NOT NULL,
   `dmfriends` text NOT NULL,
-  `es` text,
-  `ms` text,
+  `warned_by` text NOT NULL,
+  `warned_times` int(11) NOT NULL,
+  `warned_post` int(11) NOT NULL,
+  `warned_for` set('1','2','3','4','5','6','7','8','9','10') NOT NULL,
   `grade` text,
   `home_ip` text NOT NULL COMMENT 'ip used for sign up.',
   `last_ip` text NOT NULL COMMENT 'last login ip',
@@ -733,15 +870,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `student_id`, `password`, `sign_up_date`, `bio`, `profile_pic`, `bannerimg`, `following`, `followers`, `sex`, `dob`, `interests`, `dmfriends`, `es`, `ms`, `grade`, `home_ip`, `last_ip`, `ips_array`, `online`, `last_online_date`, `last_online_time`, `admin`, `activated`, `account_closer`, `groups`) VALUES
-(1, 'ssdf', 'Vikrant', 'Bandyopadhyay', 538881, '5d41402abc4b2a76b9719d911017c592', '6/8/2016', 'Hello, I am the president of the site please dm me if you need any help.\n', 'userdata/pictures/Ssdf/IMG_20161127_151641.jpg', 'userdata/pictures/Ssdf/14802893913501265276773.jpg', 'test123,thissdf,test', 'test,ssdf,vik', '0', '2/5/2002', 'coding,', 'thissdf,test123,test,Vik', 'Hariyana', 'Dartmouth', '9', '67.188.81.253', '67.188.81.253', '67.188.81.253', '0', '6/8/2016', '1480398133', '1', '1', '', ''),
-(2, 'test', 'Taste', 'Tasty', 394584, '5d41402abc4b2a76b9719d911017c592', '6/27/2016', 'This is a test account to test the functionality of the website pls dont mind me\r\n', 'https://pbs.twimg.com/profile_images/577783755605028864/IIojQn3V.jpeg', 'http://www.theresiliencyinstitute.net/wp-content/uploads/2013/09/TRI-Banner-background.jpg', 'ssdf', 'Ssdf', '0', '2/5/2002', '', 'ssdf,thissdf,test123', 'Something', 'Dartmouth', '9', '71.202.74.188', '71.202.74.188', '71.202.74.188', '0', '6/27/2016', '1479609282', '0', '1', '', '1,2'),
-(3, 'test123', 'test123', 'testpart', 2342931, '5d41402abc4b2a76b9719d911017c592', '7/20/2016', 'this is another test account to understand whats going on in the site.\r\n', 'https://expertbeacon.com/sites/default/files/advice_for_men_on_selecting_your_online_dating_profile_photo.jpg', '', '', 'ssdf', '1', '2/5/2002', NULL, 'Ssdf,vik,test', 'This', 'Dartmouth', '12', '71.202.74.188', '71.202.74.188', '71.202.74.188', '0', '7/20/2016', '7:45pm', '0', '1', '', ''),
-(4, 'thissdf', 'dfjs', 'sdkf', 20498203, 'd41d8cd98f00b204e9800998ecf8427e', '07/28/16', '', '', '', '', 'ssdf', '', '2016-07-14', '', 'Ssdf,vik,Test', 'sdkjfs', 'sdfsdf', '9', '::1', '::1', '::1', '1', '07/28/16', '1469678763', '0', '1', '', ''),
-(5, 'saikat', 'Saikat', 'Bandyopadhyay', 898423, '5d41402abc4b2a76b9719d911017c592', '09/02/16', '', '', '', '', 'Ssdf', '', '2015-06-12', '', '', 'KVI', 'KVI', '9', '::1', '::1', '::1', '1', '09/02/16', '1472789724', '0', '1', '', ''),
-(6, 'Vik', 'Vikrant', 'Banerjee', 65356, '5d41402abc4b2a76b9719d911017c592', '09/29/16', '', '', '', 'ssdf', '', '1', '2016-09-15', '', 'ssdf,thissdf,test123', 'Jxh', 'Hch', '9', '192.168.0.104', '192.168.0.104', '192.168.0.104', '1', '09/29/16', '1475117084', '0', '1', '', ''),
-(7, 'asdf', 'asdf', 'asdf', 1234, '5d41402abc4b2a76b9719d911017c592', '11/16/16', '', '', '', '', '', '', '2016-11-17', '', '', '', '', '9', '', '', '', '1', '11/16/16', '1479281963', '0', '1', '', ''),
-(8, 'asdfg', 'asdf', 'asdf', 1234, '5d41402abc4b2a76b9719d911017c592', '11/16/16', '', '', '', '', '', '', '2016-11-17', '', '', '', '', '9', '::1', '::1', '::1', '1', '11/16/16', '1479282106', '0', '1', '', '');
+INSERT INTO `users` (`id`, `username`, `first_name`, `last_name`, `student_id`, `password`, `sign_up_date`, `bio`, `profile_pic`, `bannerimg`, `following`, `followers`, `sex`, `dob`, `warned`, `dmfriends`, `warned_by`, `warned_times`, `warned_post`, `warned_for`, `grade`, `home_ip`, `last_ip`, `ips_array`, `online`, `last_online_date`, `last_online_time`, `admin`, `activated`, `account_closer`, `groups`) VALUES
+(1, 'ssdf', 'Vikrant', 'Bandyopadhyay', 538881, '5d41402abc4b2a76b9719d911017c592', '6/8/2016', 'Hello, I am the president of the site please dm me if you need any help.\n', 'userdata/pictures/ssdf/Capture9.PNG', 'userdata/pictures/Ssdf/14802893913501265276773.jpg', 'test', 'test', '0', '2/5/2002', '', 'test,thissdf,test123,Vik', 'Hariyana', 0, 0, '', '9', '67.188.81.253', '67.188.81.253', '67.188.81.253', '1', '6/8/2016', '1482213549', '1', '1', '', ''),
+(2, 'test', 'Taste', 'Tasty', 394584, '5d41402abc4b2a76b9719d911017c592', '6/27/2016', 'This is a test account to test the functionality of the website pls dont mind me\r\n', 'userdata/pictures/Test/14821844749911439930751.jpg', 'http://www.theresiliencyinstitute.net/wp-content/uploads/2013/09/TRI-Banner-background.jpg', 'ssdf', 'ssdf', '0', '2/5/2002', '1', 'ssdf,thissdf,test123', 'ssdf', 3, 88, '4', '9', '71.202.74.188', '71.202.74.188', '71.202.74.188', '1', '6/27/2016', '1482210877', '0', '1', '', '1,2'),
+(3, 'test123', 'test123', 'testpart', 2342931, '5d41402abc4b2a76b9719d911017c592', '7/20/2016', 'this is another test account to understand whats going on in the site.\r\n', 'https://expertbeacon.com/sites/default/files/advice_for_men_on_selecting_your_online_dating_profile_photo.jpg', '', '', 'ssdf', '1', '2/5/2002', '', 'Ssdf,vik,test', 'This', 0, 0, '', '12', '71.202.74.188', '71.202.74.188', '71.202.74.188', '0', '7/20/2016', '7:45pm', '0', '1', '', ''),
+(4, 'thissdf', 'dfjs', 'sdkf', 20498203, 'd41d8cd98f00b204e9800998ecf8427e', '07/28/16', '', '', '', '', 'ssdf', '', '2016-07-14', '', 'ssdf,vik,Test', 'sdkjfs', 0, 0, '', '9', '::1', '::1', '::1', '1', '07/28/16', '1469678763', '0', '1', '', ''),
+(5, 'saikat', 'Saikat', 'Bandyopadhyay', 898423, '5d41402abc4b2a76b9719d911017c592', '09/02/16', '', '', '', '', 'Ssdf', '', '2015-06-12', '', '', 'KVI', 0, 0, '', '9', '::1', '::1', '::1', '1', '09/02/16', '1472789724', '0', '1', '', ''),
+(6, 'Vik', 'Vikrant', 'Banerjee', 65356, '5d41402abc4b2a76b9719d911017c592', '09/29/16', '', '', '', 'ssdf', '', '1', '2016-09-15', '', 'ssdf,thissdf,test123', 'Jxh', 0, 0, '', '9', '192.168.0.104', '192.168.0.104', '192.168.0.104', '0', '09/29/16', '1475117084', '0', '1', '', ''),
+(7, 'asdf', 'asdf', 'asdf', 1234, '5d41402abc4b2a76b9719d911017c592', '11/16/16', '', '', '', '', '', '', '2016-11-17', '', '', '', 0, 0, '', '9', '', '', '', '1', '11/16/16', '1479281963', '0', '1', '', ''),
+(8, 'asdfg', 'asdf', 'asdf', 1234, '5d41402abc4b2a76b9719d911017c592', '11/16/16', '', '', '', '', '', '', '2016-11-17', '', '', '', 0, 0, '', '9', '::1', '::1', '::1', '1', '11/16/16', '1479282106', '0', '1', '', '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
