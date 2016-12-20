@@ -147,7 +147,7 @@ if ($check->num_rows == 1) {
 
 // Get the last message id : for message updates
 
-$check = $conn->query("SELECT id FROM messages WHERE toUser = '$id' ORDER BY id DESC LIMIT 1");
+$check = $conn->query("SELECT id FROM messages WHERE toUser = '$id' OR fromUser = '$id' ORDER BY id DESC LIMIT 1");
 if ($check->num_rows == 1) {
 
 	$get = $check->fetch_assoc();
@@ -2130,20 +2130,31 @@ function notifyMe() {
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 	}
 
-
+	var lastMessageId = "<?php echo $lastMessageId; ?>";
 	function needToRefreshMessages() {
-		var link = 'action/needtorefreshmessages.php?l=<?php echo $lastMessageId; ?>';
+		var link = 'action/needtorefreshmessages.php?l='+lastMessageId;
 		$.ajax({
 			url: link, 
 			success: function(data) {
 				var dataparts = data.split(",");
 
 				var needToRefresh = dataparts[0];
+				var linknewId = 'action/newlastMessageId.php';
+				$.ajax({
+					url: linknewId, 
+					success: function(newId) {
+						lastMessageId = newId;
+					}
+				});
 				var howManyDifferent = dataparts[1];
 
+				var selfMessaged = dataparts[2];
+
 				if(needToRefresh == 'true'){
-					msg_img = "img/message-grey-alert.png";
-					$(".messages-img").css("background-image", "url(" + msg_img + ")");
+					var msg_img_alert = "img/message-grey-alert.png";
+					if(selfMessaged == 'false'){
+						$(".messages-img").css("background-image", "url(" + msg_img_alert + ")");
+					}
 					$(".arrow-back").click(function(){
 						$(".messages-wrapper").hide();
 						clearTimeout(insertMsgCall);
@@ -2155,7 +2166,9 @@ function notifyMe() {
 							var name = $(this).children().first().next().text();
 
 							$(".messages-wrapper").show("slide", { direction: "left" }, 500);
-							$("#messenger-pic").css("background-image", pic);
+							
+								$("#messenger-pic").css("background-image", pic);
+							
 							$("#messenger-name").html(name);
 							$(this).children().first().css("background-image");
 							var lastid = 0;
@@ -2189,6 +2202,7 @@ function notifyMe() {
 						}
 					});
 					function insertNewMsg(){
+
 						if (disable_msg_update) {
 							insertMsgCall = setTimeout(insertNewMsg,1000);
 							return;
@@ -2213,6 +2227,7 @@ function notifyMe() {
 									} else {
 										insertMsgCall = setTimeout(insertNewMsg,1500);
 									}
+
 								});
 								return;
 							} // else look for new messages
@@ -2229,12 +2244,23 @@ function notifyMe() {
 							} else {
 								insertMsgCall = setTimeout(insertNewMsg,1500);
 							}
+							needToRefreshMessages();
 						});
-					}  
+					} 
+
 				}
+				<?php
+				$check = $conn->query("SELECT id FROM messages WHERE toUser = '$id' ORDER BY id DESC LIMIT 1");
+				if ($check->num_rows == 1) {
+
+					$get = $check->fetch_assoc();
+					$lastMessageId = $get['id'];
+
+				}
+				?>
 			},
 			complete: function() {
-				setTimeout(needToRefreshMessages, 5000);
+				setTimeout(needToRefreshMessages, 3000);
 			},
 			error: function(){
 				//alert("server error");
@@ -2393,7 +2419,7 @@ function notifyMe() {
 								window.location.replace("home.php?tab=m");
 							},
 							error: function(){
-								alert("error");
+								//alert("error");
 							}
 						});
 					});
@@ -2595,7 +2621,7 @@ function notifyMe() {
                 });     
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
+                //alert(textStatus);
             }});
         });
 	}

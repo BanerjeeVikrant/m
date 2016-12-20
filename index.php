@@ -27,7 +27,7 @@ if (isset($_POST["user_login"]) && isset($_POST["password_login"])) {
 		$row = $result->fetch_assoc();
              	$id = $row["id"];
 		$_SESSION["id"] = $id;
-		$_SESSION["user_login"] = $user_login;
+		$_SESSION["user_login"] = strtolower($user_login);
 		$_SESSION["password_login"] = $password_login;
 
 		//echo 'header("Location: http://www.gogogoru.com/v2/socialnetwork/php/home.php");';

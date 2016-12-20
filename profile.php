@@ -1271,7 +1271,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	</div>
 
 	<div class="profile-name"><?php echo $firstname . " " . $lastname;?></div>
-
+	<!---Fixx THis-->
 	<?php
 	if(strcasecmp($username,$profileUser) != 0) { // non profile user:  strings differ
 		if(in_array($username, $followersArray)){
