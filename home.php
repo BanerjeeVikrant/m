@@ -319,7 +319,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	date_default_timezone_set("America/Los_Angeles");
 	$date_added = date("Y/m/d");
 	$added_by = $username;
-	$time_added = date("h:i:sa");
+	$time_added = time();
 
 
 	if (((@$_FILES["pictureUpload"]["type"]=="image/jpeg") || (@$_FILES["pictureUpload"]["type"]=="image/png") || (@$_FILES["pictureUpload"]["type"]=="image/gif"))&&(@$_FILES["pictureUpload"]["size"] < 10485760)) {
@@ -334,6 +334,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
 
 			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '$view_group_id')";
+
 			if ($conn->query($sql) === TRUE) {
 				$last_id = $conn->insert_id;
 				$words_array = explode(" ", $post);
@@ -2099,15 +2100,12 @@ function notifyMe() {
 	var msg_img = "img/message-grey.png";
 
 	function noti_update() {
-		console.log(bell_img)
 		var last_noti_id = $(".notification-post").first().attr("nid");
 		var link = 'action/updates.php?nid='+ last_noti_id;
-		console.log(link);
 		$.ajax({
 			url: link, 
 			success: function(data) {
 				if (data) {
-					console.log("got noti updates");
 					if ($(".notifications-img").attr("style") != 'background-image: url("img/notification-bell-blue.png");') {
 						bell_img = "img/notification-bell-grey-alert.png";
 						$(".notifications-img").css("background-image", "url(" + bell_img + ")");
@@ -2125,7 +2123,6 @@ function notifyMe() {
 
 
 	function noti_seen() {
-		console.log("seen");
 		bell_img = "img/notification-bell-grey.png";
 		$(".notifications-img").css("background-image", "url(" + bell_img + ")");
 	}
@@ -2575,7 +2572,7 @@ function notifyMe() {
 				
 				if(post_first_time == true){
 					post_first_time = false;
-					load_more_post()
+					load_more_post();
 				}
 				
 				if ($("#last_post").length > 0) {
@@ -3112,32 +3109,25 @@ function getNewAnonymousPosts(){
 }
 
 var last_home_id = "";
-
+var i = 0;
 function getNewHomePosts(){
 	last_home_id = $(".profile-post").first().attr("homeid");
-
-	
 	var link = 'action/updatehome.php?hid='+last_home_id+'&g='+<?php echo $view_group_id; ?>;
-	if(typeof last_home_id === "undefined"){
-		//alert("Server Error");
-	}
-	else{
-		$.ajax({
-			url: link, 
-			success: function(data) {
 
-				$(".body-content").prepend(data);
-				data = "";
-				last_home_id = $(".profile-post").first().attr("homeid");
-			},
-			complete: function() {
-				setTimeout(getNewHomePosts, 5000);
-			},
-			error: function(){
-				
-			}
-		});
-	}
+	$.ajax({
+		url: link, 
+		success: function(data) {
+			//alert(data); creating 2 rqs
+			$(".body-content").prepend(data);
+			data = "";
+			last_home_id = $(".profile-post").first().attr("homeid");
+			i = i + 1;
+			setTimeout(getNewHomePosts, 5000);
+		},
+		error: function(){
+			
+		}
+	});
 }
 </script>
 

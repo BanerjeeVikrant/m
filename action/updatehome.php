@@ -46,7 +46,7 @@ if (!isset($_GET['u'])) {
         $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$username' AND posted_to = '0') AND (post_group = '0')) AND id > '$lasthome' ORDER BY id DESC";
     }
     else {
-        $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC";
+        $sql = "SELECT * FROM posts WHERE (post_group = '$group') AND id > '$lasthome' ORDER BY id DESC";
     }
    
 }
@@ -316,4 +316,5 @@ $getposts = $conn->query($sql) or die(mysql_error());
 
         }        
     }
+    
 ?>
