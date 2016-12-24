@@ -47,7 +47,7 @@ $username = $_SESSION['user_login'];
                         $chat_profile_pic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
                     }
                 }
-                $chat_both_name = $chat_first_name . "%20" . $chat_last_name;
+                $chat_both_name = $chat_first_name . " " . $chat_last_name;
                 if (isset($_GET['s'])) {
                     if (! (startsWith($chat_first_name, $_GET['s']) || startsWith($chat_last_name, $_GET['s']) || startsWith($chat_user_name, $_GET['s']) || startsWith($chat_both_name, $_GET['s']) ) ) {
                         continue;

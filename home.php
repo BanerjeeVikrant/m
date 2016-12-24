@@ -372,8 +372,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["pictureUpload"]["name"]);
 //echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
 			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '')";
-
+			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '$view_group_id')";
 			if ($conn->query($sql) === TRUE) {
 				$last_id = $conn->insert_id;
 				$words_array = explode(" ", $post);
@@ -404,7 +403,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 
 	}
-	header("Location: home.php?g=$view_group_id");
+	//header("Location: home.php?g=$view_group_id");
 } /* else if (isset($_FILES['videoUpload'])) {
 	$post = '';
 	$post = $_POST['videopost'];
@@ -641,6 +640,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		.posted-pic {
 			width: 100%;
+			position: relative;
 		}
 		.samepostedby {
 			margin: 10px;
@@ -681,8 +681,8 @@ else if (isset($_FILES['pictureUpload'])) {
 		.msg-body-crush {
 		    font-size: 23px;
 		    padding-left: 10px;
-		    padding-right: 10px;
-		    margin-left: 5px;
+		    padding-right: 30px;
+		    margin-left: -25px;
 		    margin-top: 10px;
 		    margin-bottom: 10px;
 		    padding-bottom: 10px;
@@ -1377,7 +1377,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			z-index: -1;
 		}
 		.inputfile + label {
-			width: 49vw;
+			width: 98vw;
 			height: 50px;
 			font-size: 15px;
 			display: inline-block;
@@ -1493,19 +1493,6 @@ else if (isset($_FILES['pictureUpload'])) {
 			line-height: 50px;
 			border-left: 1px solid #c6c8cd;
 		}
-		.link-div{
-			width: 49vw;
-			height: 50px;
-			font-size: 15px;
-			display: inline-block;
-			overflow: hidden;
-			text-align: center;
-			position: relative;
-			top: -6px;
-			left: 0;
-			line-height: 50px;
-			font-weight: bold;
-		}
 		.reported{
 			position: fixed;
 			background-color: lightgray;
@@ -1603,6 +1590,25 @@ else if (isset($_FILES['pictureUpload'])) {
 		    background: #eaecef;
 		    top: -15px;
 		}
+		.posted-pic-crop {
+		    max-height: 440px;
+		    overflow: hidden;
+		}
+		img#uploadshownimg {
+	        position: absolute;
+	        left: 0;
+	        top: 65vh;
+	        max-height: calc(30vh - 70px);
+	        max-width: 100vw;
+	    }
+		#uploadshownimg-div{
+			display: none;
+		}
+		div#users {
+		    height: calc(100vh - 240px);
+		    overflow-y: scroll;
+		    overflow-x: hidden;
+		}
 	</style>
 </head>
 <body id="element">
@@ -1676,7 +1682,7 @@ else if (isset($_FILES['pictureUpload'])) {
 <div class="body-content">
 	<?php if ($view_group_id) { echo "
 		<div style = 'position:relative;'>
-		<h4 style='text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;'>
+		<h4 class = 'backtohome' style='text-align: center;color: #1d2d4a;font-size: 16px;margin-top: 0px;margin-bottom: 1px;padding: 10px;background: white;width: 100vw;'>
 			<a href='?g=0'><img src='img/back-blue.png' width='20' style='float:left;position: relative;left: 10px;'></a>
 			<span>Now browsing $view_group_name</span>
 		</h4>
@@ -1953,6 +1959,21 @@ function isThereMoreMessages(){
 	
 </div>
 <script type="text/javascript">
+
+$("input#search-users").keyup(function(){
+    var text = $(this).val();
+    var link = "action/users.php?s="+text;
+    $.ajax({
+      url: link,
+      success: function(data){
+      	$("#users").html(data);
+      },
+      error: function(xhr, type, exception) { 
+      	//error
+      }
+    });
+});
+
 $(".reportedfor").hide();
 $(".whywarned").hide();
 
@@ -1982,6 +2003,29 @@ function notifyMe() {
   }
 
 }
+
+var wid = 0;
+var wx = 0;
+
+	function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#uploadshownimg').attr('src', e.target.result);
+                $("#uploadshownimg-div").css("display", "block");
+
+                wid = $("#uploadshownimg").width();
+                wid = parseInt(wid, 10);
+                wx = Number(wid) / 2;
+                wxPx = wx + "px";
+                wxText = "calc( 50vw - " + wxPx + " ) ";
+                $("#uploadshownimg").css('left', wxText);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 	function searchtag(data) {
 		$(".search-body").show();
 		$("#search").focus();
@@ -2569,7 +2613,7 @@ function notifyMe() {
 				$("#content").before(result);
 				$("#post_offset").text(20+offset);
 				loading_currently = false;
-				
+				shouldReschedule = !post_first_time;
 				if(post_first_time == true){
 					post_first_time = false;
 					load_more_post();
@@ -2578,7 +2622,9 @@ function notifyMe() {
 				if ($("#last_post").length > 0) {
 					all_posts_loaded = true;
 				}
-				getNewHomePosts();
+				if (shouldReschedule) {
+					getNewHomePosts();
+				}
 
 				last_home_id = $(".profile-post").first().attr("homeid");
 			}});
@@ -3113,21 +3159,19 @@ var i = 0;
 function getNewHomePosts(){
 	last_home_id = $(".profile-post").first().attr("homeid");
 	var link = 'action/updatehome.php?hid='+last_home_id+'&g='+<?php echo $view_group_id; ?>;
-
-	$.ajax({
-		url: link, 
-		success: function(data) {
-			//alert(data); creating 2 rqs
-			$(".body-content").prepend(data);
-			data = "";
-			last_home_id = $(".profile-post").first().attr("homeid");
-			i = i + 1;
-			setTimeout(getNewHomePosts, 5000);
-		},
-		error: function(){
-			
-		}
-	});
+		$.ajax({
+			url: link, 
+			success: function(data) {
+				$(".backtohome").after(data);
+				data = "";
+				last_home_id = $(".profile-post").first().attr("homeid");
+				i = i + 1;
+				setTimeout(getNewHomePosts, 5000);
+			},
+			error: function(){
+				
+			}
+		});
 }
 </script>
 

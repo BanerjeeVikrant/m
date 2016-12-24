@@ -999,7 +999,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    padding: 7px;
 		    border-bottom: 1px solid #b5b4b4;
 		}
-		input#search-users {
+		input.search-users {
 		    width: 100vw;
 		    height: 32px;
 		    border: 0;
@@ -1015,215 +1015,219 @@ else if (isset($_FILES['pictureUpload'])) {
 		    color: #b0b0b0;
 		}
 		.posthome {
-					position: fixed;
-					top: 0;
-					height: 100vh;
-					width: 100vw;
-					background-color: #1d2d4a;
-					z-index: 20;
-					overflow: hidden;
-				}
-				.feedbackhome {
-					position: fixed;
-					top: 0;
-					height: 100vh;
-					width: 100vw;
-					background-color: #1d2d4a;
-					z-index: 30;
-					overflow: hidden;
-				}
-				.postcrush {
-					position: fixed;
-					top: 0;
-					height: 100vh;
-					width: 100vw;
-					background-color: #1d2d4a;
-					z-index: 20;
-					overflow: hidden;
-				}
-				textarea.posttext {
-					position: relative;
-					top: 50px;
-					height: calc(100vh - 100px);
-					width: 100vw;
-					border: 0;
-					resize: none;
-					border-top: 1px solid #cec9c9;
-					padding: 16px;
-					font-size: 17px;
-				}
-				textarea.feedbacktext {
-					position: relative;
-					top: 50px;
-					height: 100vh;
-					width: 100vw;
-					border: 0;
-					resize: none;
-					border-top: 1px solid #cec9c9;
-					padding: 16px;
-					font-size: 17px;
-				}
-				textarea.posttextcrush {
-					position: relative;
-					top: 50px;
-					height: 100vh;
-					width: 100vw;
-					border: 0;
-					resize: none;
-					border-top: 1px solid #cec9c9;
-					padding: 16px;
-					font-size: 17px;
-				}
-				
-				.crushoptions-cover {
-					position: relative;
-					height: 50px;
-					top: 45px;
-					background: #e6e6e6;
-				}
-				.photooption {
-					border-right: 1px solid #cec9c9;
-				}
-				.postoptions {
-					display: inline-block;
-					line-height: 50px;
-					width: 49vw;
-					text-align: center;
-					font-size: 18px;
-				}
-				.back-img-post{
-					position: fixed;
-					display: inline-block;
-					height: 32px;
-					width: 32px;
-					background-image: url(img/back.png);
-					background-size: cover;
-					background-repeat: no-repeat;
-					top: 10px;
-					left: 15px;
-				}
-				.topbar-userimages{
-					background-color: #1d2d4a;
-					width: 100vw;
-					height: 60px;
-				}
-				.inputfile {
-					width: 0.1px;
-					height: 0.1px;
-					opacity: 0;
-					overflow: hidden;
-					position: absolute;
-					z-index: -1;
-				}
-				.inputfile + label {
-					width: 49vw;
-					height: 50px;
-					font-size: 15px;
-					display: inline-block;
-					overflow: hidden;
-					text-align: center;
-					position: relative;
-					top: 0px;
-					left: 0;
-					line-height: 50px;
-				}
+			position: fixed;
+			top: 0;
+			height: 100vh;
+			width: 100vw;
+			background-color: #1d2d4a;
+			z-index: 20;
+			overflow: hidden;
+		}
+		.feedbackhome {
+			position: fixed;
+			top: 0;
+			height: 100vh;
+			width: 100vw;
+			background-color: #1d2d4a;
+			z-index: 30;
+			overflow: hidden;
+		}
+		.postcrush {
+			position: fixed;
+			top: 0;
+			height: 100vh;
+			width: 100vw;
+			background-color: #1d2d4a;
+			z-index: 20;
+			overflow: hidden;
+		}
+		textarea.posttext {
+			position: relative;
+			top: 50px;
+			height: calc(100vh - 100px);
+			width: 100vw;
+			border: 0;
+			resize: none;
+			border-top: 1px solid #cec9c9;
+			padding: 16px;
+			font-size: 17px;
+		}
+		textarea.feedbacktext {
+			position: relative;
+			top: 50px;
+			height: 100vh;
+			width: 100vw;
+			border: 0;
+			resize: none;
+			border-top: 1px solid #cec9c9;
+			padding: 16px;
+			font-size: 17px;
+		}
+		textarea.posttextcrush {
+			position: relative;
+			top: 50px;
+			height: 100vh;
+			width: 100vw;
+			border: 0;
+			resize: none;
+			border-top: 1px solid #cec9c9;
+			padding: 16px;
+			font-size: 17px;
+		}
+		
+		.crushoptions-cover {
+			position: relative;
+			height: 50px;
+			top: 45px;
+			background: #e6e6e6;
+		}
+		.photooption {
+			border-right: 1px solid #cec9c9;
+		}
+		.postoptions {
+			display: inline-block;
+			line-height: 50px;
+			width: 49vw;
+			text-align: center;
+			font-size: 18px;
+		}
+		.back-img-post{
+			position: fixed;
+			display: inline-block;
+			height: 32px;
+			width: 32px;
+			background-image: url(img/back.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			top: 10px;
+			left: 15px;
+		}
+		.topbar-userimages{
+			background-color: #1d2d4a;
+			width: 100vw;
+			height: 60px;
+		}
+		.inputfile {
+			width: 0.1px;
+			height: 0.1px;
+			opacity: 0;
+			overflow: hidden;
+			position: absolute;
+			z-index: -1;
+		}
+		.inputfile + label {
+			width: 49vw;
+			height: 50px;
+			font-size: 15px;
+			display: inline-block;
+			overflow: hidden;
+			text-align: center;
+			position: relative;
+			top: 0px;
+			left: 0;
+			line-height: 50px;
+		}
 
-				.no-js .inputfile + label {
-					display: none;
-				}
+		.no-js .inputfile + label {
+			display: none;
+		}
 
-				.inputfile:focus + label,
-				.inputfile.has-focus + label {
-					outline: 1px dotted #000;
-					outline: -webkit-focus-ring-color auto 5px;
-				}
+		.inputfile:focus + label,
+		.inputfile.has-focus + label {
+			outline: 1px dotted #000;
+			outline: -webkit-focus-ring-color auto 5px;
+		}
 
-				.inputfile + label svg {
-					width: 1em;
-					height: 1em;
-					vertical-align: middle;
-					fill: currentColor;
-					margin-top: -0.25em;
-					/* 4px */
-					margin-right: 0.25em;
-					/* 4px */
-				}
+		.inputfile + label svg {
+			width: 1em;
+			height: 1em;
+			vertical-align: middle;
+			fill: currentColor;
+			margin-top: -0.25em;
+			/* 4px */
+			margin-right: 0.25em;
+			/* 4px */
+		}
 
-				.inputfile-1 + label {
-					color: black;
-					background-color: transparent;
-				}
-				.submitpost{
-					position: fixed;
-					width: 100px;
-					height: 50px;
-					left: calc(100vw - 100px);
-					font-size: 17px;
-					background: transparent;
-					color: white;
-					border: 0;
-				}
-				.postoptions-cover {
-				    top: calc(100vh - 50px);
-				    position: absolute;
-				    background: #e6e6e6;
-				}
-				.post-write-tabs {
-					display: inline-block;
-					width: calc((100vw / 2) - 2px);
-					font-size: 18px;
-					text-align: center;
-					line-height: 50px;
-					border-left: 1px solid #c6c8cd;
-				}
-				.link-div{
-					width: 49vw;
-					height: 50px;
-					font-size: 15px;
-					display: inline-block;
-					overflow: hidden;
-					text-align: center;
-					position: relative;
-					top: -6px;
-					left: 0;
-					line-height: 50px;
-					font-weight: bold;
-				}
-				#changebanner{
-				    display:none;
-				}
-				#changeprofile{
-				    display:none;
-				}
-				span.likedby-names {
-				    position: relative;
-				    top: 3px;
-				    left: 5px;
-				}
-				.optionBox {
-				    background: #e6e6e6;
-				    position: fixed;
-				    top: calc(50vh - 45px);
-				    left: calc(50vw - 40vw);
-				    z-index: 25;
-				    width: 80vw;
-				    box-shadow: 1px 1px 21px #e6e6e6;
-				}
-				.optionsPost {
-				    background: white;
-				    height: 43px;
-				    line-height: 43px;
-				    text-align: center;
-				    margin-top: 1px;
-				    font-size: 16px;
-				}
-				.optionBox-wrapper {
-				    height: 100vh;
-				    width: 100vw;
-				    position: fixed;
-				    z-index: 25;
-				    background: rgba(222,215,215,0.3);
-				}
+		.inputfile-1 + label {
+			color: black;
+			background-color: transparent;
+		}
+		.submitpost{
+			position: fixed;
+			width: 100px;
+			height: 50px;
+			left: calc(100vw - 100px);
+			font-size: 17px;
+			background: transparent;
+			color: white;
+			border: 0;
+		}
+		.postoptions-cover {
+		    top: calc(100vh - 50px);
+		    position: absolute;
+		    background: #e6e6e6;
+		}
+		.post-write-tabs {
+			display: inline-block;
+			width: calc((100vw / 2) - 2px);
+			font-size: 18px;
+			text-align: center;
+			line-height: 50px;
+			border-left: 1px solid #c6c8cd;
+		}
+		.link-div{
+			width: 49vw;
+			height: 50px;
+			font-size: 15px;
+			display: inline-block;
+			overflow: hidden;
+			text-align: center;
+			position: relative;
+			top: -6px;
+			left: 0;
+			line-height: 50px;
+			font-weight: bold;
+		}
+		#changebanner{
+		    display:none;
+		}
+		#changeprofile{
+		    display:none;
+		}
+		span.likedby-names {
+		    position: relative;
+		    top: 3px;
+		    left: 5px;
+		}
+		.optionBox {
+		    background: #e6e6e6;
+		    position: fixed;
+		    top: calc(50vh - 45px);
+		    left: calc(50vw - 40vw);
+		    z-index: 25;
+		    width: 80vw;
+		    box-shadow: 1px 1px 21px #e6e6e6;
+		}
+		.optionsPost {
+		    background: white;
+		    height: 43px;
+		    line-height: 43px;
+		    text-align: center;
+		    margin-top: 1px;
+		    font-size: 16px;
+		}
+		.optionBox-wrapper {
+		    height: 100vh;
+		    width: 100vw;
+		    position: fixed;
+		    z-index: 25;
+		    background: rgba(222,215,215,0.3);
+		}
+		.posted-pic-crop {
+		    max-height: 440px;
+		    overflow: hidden;
+		}
 	</style>
 
 </head>
@@ -1365,39 +1369,11 @@ else if (isset($_FILES['pictureUpload'])) {
 		</div>
 		<div class="users-searchbox">
 			<span class="usersearch-tool glyphicon glyphicon-search"></span>
-			<input class = "search-users" id = "search-users" placeholder = "Lookup!" />
+			<input class = "search-users" id = "search-users-following" placeholder = "Lookup!" />
 		</div>
-	<?php
-		foreach ($followingArray as $value) {
-			$sql = "SELECT * FROM users WHERE username='$value'";
-			$results = $conn->query($sql);
-			$row = $results->fetch_assoc();
-			$tusername = $row["username"];
-			$tfirstname = $row["first_name"];
-			$tlastname = $row["last_name"];
-			$tprofilepic = $row["profile_pic"];
-			$tlastonline_date = $row["last_online_date"];
-			$tlastonline_time = $row["last_online_time"];
-			$tsex = $row['sex'];
-			if($tprofilepic == "" || $tprofilepic == NULL){
-				if($tsex == "1"){
-					$tprofilepic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
-				}
-				else{
-					$tprofilepic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
-				}
-			}
-			echo "
-				<a href='profile.php?u=$tusername'><div class='search-layer'>
-					<div style='position:relative;display: inline-block;'>
-					<div class='search-userpic' style='background-image:url($tprofilepic)'></div>
-					</div>
-					<div class='search-name'>$tfirstname $tlastname</div>
-					<div class='search-time'>Last online 3h ago</div>
-				</div></a>
-			";
-		}
-	?>
+		<div class="following-people-list">
+
+		</div>
 	</div>
 	<div class="followers-wrapper">
 		<div class="topbar-userimages">
@@ -1406,41 +1382,45 @@ else if (isset($_FILES['pictureUpload'])) {
 		</div>
 		<div class="users-searchbox">
 			<span class="usersearch-tool glyphicon glyphicon-search"></span>
-			<input class = "search-users" id = "search-users" placeholder = "Lookup!" />
+			<input class = "search-users" id = "search-users-followers" placeholder = "Lookup!" />
 		</div>
-	<?php
-		foreach ($followersArray as $value) {
-			$sql = "SELECT * FROM users WHERE username='$value'";
-			$results = $conn->query($sql);
-			$row = $results->fetch_assoc();
-			$tusername = $row["username"];
-			$tfirstname = $row["first_name"];
-			$tlastname = $row["last_name"];
-			$tprofilepic = $row["profile_pic"];
-			$tlastonline_date = $row["last_online_date"];
-			$tlastonline_time = $row["last_online_time"];
-			$tsex = $row['sex'];
-			if($tprofilepic == "" || $tprofilepic == NULL){
-				if($tsex == "1"){
-					$tprofilepic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
-				}
-				else{
-					$tprofilepic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
-				}
-			}
-			echo "
-				<a href='profile.php?u=$tusername'><div class='search-layer'>
-					<div style='position:relative;display: inline-block;'>
-					<div class='search-userpic' style='background-image:url($tprofilepic)'></div>
-					</div>
-					<div class='search-name'>$tfirstname $tlastname</div>
-					<div class='search-time'>Last online 3h ago</div>
-				</div></a>
-			";
-		}
-	?>
+		<div class="followers-people-list">
+
+		</div>
 	</div>
 	<script type="text/javascript">
+		var username = "<?php echo $profileUser; ?>";
+		$(".following-people-list").load("action/searchfollowing.php?u="+username);
+		$(".followers-people-list").load("action/searchfollowers.php?u="+username);
+		$("input#search-users-following").keyup(function(){
+		    var text = $(this).val();
+		    var username = "<?php echo $profileUser; ?>";
+		    var link = "action/searchfollowing.php?u="+username+"&s="+text;
+		    $.ajax({
+		      url: link,
+		      success: function(data){
+		      	$(".following-people-list").html(data);
+		      },
+		      error: function(xhr, type, exception) { 
+		      	//error
+		      }
+		    });
+		});
+		$("input#search-users-followers").keyup(function(){
+		    var text = $(this).val();
+		    var username = "<?php echo $profileUser; ?>";
+		    var link = "action/searchfollowers.php?u="+username+"&s="+text;
+		    $.ajax({
+		      url: link,
+		      success: function(data){
+		      	$(".followers-people-list").html(data);
+		      },
+		      error: function(xhr, type, exception) { 
+		      	//error
+		      }
+		    });
+		});
+
 	function reportpost(postid){
 		var newElem="";
 		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";

@@ -213,7 +213,10 @@ function identifyTagsInMsg($msg) {
     		$video_link = $row['youtubevideo'];
     		$video_added = $row['video'];
     		if($picture_added != NULL || $picture_added != ""){
-    			$pic = "<img src = '$picture_added' class = 'posted-pic'></img>";
+    			$pic = "<div class='posted-pic-crop'>
+                            <img src = '$picture_added' class = 'posted-pic'></img>
+                        </div>
+                        ";
     		}else if($video_added != NULL || $video_added != ""){
     			$vid = "
     			<video class = 'posted-video' controls loop>
