@@ -1,5 +1,5 @@
 <?php include '../system/connect.php';?>
-<?php include '../system/helpers.php';?>
+
 <?php 
 session_start();
 if (isset($_SESSION['user_login'])) {
@@ -20,7 +20,6 @@ if (isset($_GET['g'])) {
 else {
     $group = 0;
 }
-
 if (isset($_GET['u'])) {
 	$profileUser = $_GET['u'];
 
