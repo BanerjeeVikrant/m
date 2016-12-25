@@ -98,10 +98,10 @@ if(isset($_GET['id'])){
     			$numberLikes = "";
     		}
     		if(in_array($username, $likedbyArray)){
-    			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'liked' onclick = 'unlikePost($id);'></div></div>";
+    			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$postid' class = 'liked' onclick = 'unlikePost($postid);'></div></div>";
     		}
     		else{
-    			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'notliked' onclick = 'likePost($id);'></div></div>";
+    			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$postid' class = 'notliked' onclick = 'likePost($postid);'></div></div>";
     		}
 
 
@@ -120,8 +120,8 @@ if(isset($_GET['id'])){
             //     $toreplace = '"' . $likedbyFull . '"';
             //     $likedbyStr = "
             //     <script>
-            //     function show_likers_$id() {
-            //         $('#likers_$id').html($toreplace)
+            //     function show_likers_$postid() {
+            //         $('#likers_$postid').html($toreplace)
             //     }
             //     </script>
             //     <img src='img/liked-paw.png' width=18> <span class='likedby-names'>$likes likes";
@@ -187,7 +187,7 @@ if(isset($_GET['id'])){
     				$topName = '';
     				if (isset($_GET['u'])) {
     					if($username == $profileUser){
-    						$hide = "<a href = 'deleteposts.php?p=$id' class = 'glyphicon glyphicon-remove'></a>";
+    						$hide = "<a href = 'deleteposts.php?p=$postid' class = 'glyphicon glyphicon-remove'></a>";
     					}
     				}
     				
@@ -233,10 +233,10 @@ if(isset($_GET['id'])){
     							<div class='back-img' id='back-photos'></div>
     							<div class='userimages-name'>$firstname's Photo Uploads</div>
     						</div>
-                    <div id = 'profile-post-$id' style='display:inline-block;'>
-    				<div class = 'profile-post' homeid='$id'>
+                    <div id = 'profile-post-$postid' style='display:inline-block;'>
+    				<div class = 'profile-post' homeid='$postid'>
     					<div style = 'position: relative;'>
-    						<div class = 'glyphicon glyphicon-option-vertical post-options' id='$id'></div>
+    						<div class = 'glyphicon glyphicon-option-vertical post-options' id='$postid'></div>
     					</div>
     					<div class = 'posted-by-img' style = 'background-image: url($userpic);'></div>
     					<span class = 'topName'>
@@ -255,7 +255,7 @@ if(isset($_GET['id'])){
                         <div style = 'position: relative;'>
                             <form method = 'POST' class='post-comment'>
                                 <input type = 'text' name = 'comment' placeholder = 'Write a Comment&hellip;' class = 'comment-inputs' autocomplete = 'off' />
-                                <input type = 'text' name = 'id' value = '$id' style = 'display: none;' />
+                                <input type = 'text' name = 'id' value = '$postid' style = 'display: none;' />
                                 <input type = 'submit' id = 'commentid' name = 'commentid' style = 'display: none;'/>        
                             </form>        
                         </div>        
@@ -266,12 +266,12 @@ if(isset($_GET['id'])){
                         <!--PEOPLE WHO LIKED-->
 
 
-                        <div class = 'comment-body likers_$id' onclick='show_likers_$id()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'></div>
+                        <div class = 'comment-body likers_$postid' onclick='show_likers_$postid()' style='font-size:13px;padding-left:10px;padding-bottom:10px;padding-top:10px'></div>
 
                         <script>
-                        posturl = 'action/getlikers.php?id=$id';
+                        posturl = 'action/getlikers.php?id=$postid';
                         $.ajax({url: posturl, success: function(result){
-                                $('.likers_$id').html(result);
+                                $('.likers_$postid').html(result);
                             }
                         });
                         </script>

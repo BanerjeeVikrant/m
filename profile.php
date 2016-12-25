@@ -310,82 +310,56 @@ else if (isset($_FILES['pictureUpload'])) {
 	if (((@$_FILES["pictureUpload"]["type"]=="image/jpeg") || (@$_FILES["pictureUpload"]["type"]=="image/png") || (@$_FILES["pictureUpload"]["type"]=="image/gif"))&&(@$_FILES["pictureUpload"]["size"] < 10485760)) {
 
 		$rand_dir_name = $username;
+		$rand_pic = generateRandomString();
+		$pic_name = $_FILES["pictureUpload"]["type"];
+		$pic_name_explode = explode("/", $pic_name);
+		$pic_type = $pic_name_explode[1];
+		$rand_pic_name = $rand_pic . "." . $pic_type;
 
-
-		if (file_exists("userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"])){
-
-			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["pictureUpload"]["name"]);
-//echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
-			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
-
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '0')";
-			if ($conn->query($sql) === TRUE) {
-				$last_id = $conn->insert_id;
-				$words_array = explode(" ", $post);
-
-				foreach ($words_array as $value) {
-					if (preg_match("/#.+/", $value)) {
-						$check = $conn->query("SELECT * FROM hashtags WHERE word='$value'");
-						if($check->num_rows == 1){
-							$get = $check->fetch_assoc();
-							$postids = $get["post_ids"];
-							$postsid = $postids . ",". $last_id;
-							$query = $conn->query("UPDATE hashtags SET post_ids='$postsid' WHERE word='$value'");
-						}
-						else{
-							$query = $conn->query("INSERT INTO hashtags VALUES ('$value', '$last_id')");
-						}
-					} else {
-
-					}
-				}
-			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
+		if($pic_type == "gif"){
+			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
+		}
+		else{
+			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
+			if (true !== ($pic_error = @image_resize("userdata/pictures/$rand_dir_name/$rand_pic_name", "userdata/pictures/$rand_dir_name/$rand_pic_name", 1000, 1000, 0))) {
+			    //echo $pic_error;
 			}
-
-
-			$sql = "INSERT INTO photos VALUES ('', '$username', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '$maxid')";
-			$profile_pic_query = $conn->query($sql);
 		}
 
-		else {
-			if (file_exists("userdata/pictures/$rand_dir_name")){
-				mkdir("userdata/pictures/$rand_dir_name");
-			}
-			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["pictureUpload"]["name"]);
-//echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["pictureUpload"]["name"];
-			$profile_pic_name = @$_FILES["pictureUpload"]["name"];
-			$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '', '', '0', '', '', '0')";
+		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$rand_pic_name', '', '', '0', '', '', '0')";
 
-			if ($conn->query($sql) === TRUE) {
-				$last_id = $conn->insert_id;
-				$words_array = explode(" ", $post);
+		if ($conn->query($sql) === TRUE) {
+			$last_id = $conn->insert_id;
+			$words_array = explode(" ", $post);
 
-				foreach ($words_array as $value) {
-					if (preg_match("/#.+/", $value)) {
-						$check = $conn->query("SELECT * FROM hashtags WHERE word='$value'");
-						if($check->num_rows == 1){
-							$get = $check->fetch_assoc();
-							$postids = $get["post_ids"];
-							$postsid = $postids . ",". $last_id;
-							$query = $conn->query("UPDATE hashtags SET post_ids='$postsid' WHERE word='$value'");
-						}
-						else{
-							$query = $conn->query("INSERT INTO hashtags VALUES ('$value', '$last_id')");
-						}
-					} else {
-
+			foreach ($words_array as $value) {
+				if (preg_match("/#.+/", $value)) {
+					$check = $conn->query("SELECT * FROM hashtags WHERE word='$value'");
+					if($check->num_rows == 1){
+						$get = $check->fetch_assoc();
+						$postids = $get["post_ids"];
+						$postsid = $postids . ",". $last_id;
+						$query = $conn->query("UPDATE hashtags SET post_ids='$postsid' WHERE word='$value'");
 					}
+					else{
+
+						$query = $conn->query("INSERT INTO hashtags VALUES ('$value', '$last_id')");
+					}
+				} else {
+
 				}
-			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
 			}
-
-
-			$sql = "INSERT INTO photos VALUES ('', '$username', 'userdata/pictures/$rand_dir_name/$profile_pic_name', '$maxid')";
-			$profile_pic_query = $conn->query($sql);
+		} else {
+			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 
+		if (true !== ($pic_error = @image_resize("userdata/pictures/$rand_dir_name/$rand_pic_name", "userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name", 200, 200, 0))) {
+		    //echo $pic_error;
+		}
+
+
+		$sql = "INSERT INTO photos VALUES ('', '$username', 'userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name', '$maxid')";
+		$profile_pic_query = $conn->query($sql);
 
 	}
 }
@@ -1116,7 +1090,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			z-index: -1;
 		}
 		.inputfile + label {
-			width: 49vw;
+			width: 98vw;
 			height: 50px;
 			font-size: 15px;
 			display: inline-block;
@@ -1228,541 +1202,599 @@ else if (isset($_FILES['pictureUpload'])) {
 		    max-height: 440px;
 		    overflow: hidden;
 		}
+		#load{
+		    width:100%;
+		    height:100%;
+		    position:fixed;
+		    z-index:9999;
+		    background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25)
+		}
+		img#uploadshownimg {
+	        position: absolute;
+	        left: 0;
+	        top: 65vh;
+	        max-height: calc(30vh - 70px);
+	        max-width: 100vw;
+	    }
+		#uploadshownimg-div{
+			display: none;
+		}
 	</style>
 
 </head>
 <body>
-	<div id="anyreport">
-
-	</div>
-	<div class="posthome">
-		<form action="#" method="POST" enctype="multipart/form-data">
-			<div class="back-img-post" id="back-post"></div>
-			<input type="submit" name="submitpost" class="submitpost" value="Roar">
-			<div id="posttype">
-				<textarea class="posttext" placeholder="What's on your mind?" name="post"></textarea>
-			</div>
-			<div class="postoptions-cover">
-				<div class="post-write-tabs text-tab-post">Text</div>
-				<div class="post-write-tabs photo-tab-post">Photo</div>
-				<!--<div class="post-write-tabs video-tab-post">Video</div>-->
-			</div>
-		</form>
-	</div>
-	<div class="top-bar">
-		<a href="home.php"><div class="back-img"></div></a>
-
-		<div class="searchbar-wrapper">
-			<div class="search-tool-wrapper">
-				<span class="search-tool glyphicon glyphicon-search"></span>
-			</div>
-			<input class="search" type="text" onclick="location.href = 'home.php'" placeholder="Search..." name="search" autocomplete="off" value="<?php echo $firstname . " " . $lastname; ?>">
-		</div>
-	</div>
-	<div class="banner"></div>
-	<div class="profile-pic">
-		<?php 
-		if(strcasecmp($username,$profileUser) == 0) { // profile user: strings match
-			echo '
-			<form id="sendprofile" action="profile.php?u='.$username.'" method="POST" enctype="multipart/form-data">
-				<input id="changeprofile" name="changeprofile" type="file"/>
-				<input type="submit" id="submitchangeprofile" style="display:none;"/>
-				<button id = "changepic" class = "changeedit changepro">Change Picture</button>
-			</form>
-			';
-		}
-		?>
-	</div>
-
-	<div class="profile-name"><?php echo $firstname . " " . $lastname;?></div>
-	<!---Fixx THis-->
-	<?php
-	if(strcasecmp($username,$profileUser) != 0) { // non profile user:  strings differ
-		if(in_array($username, $followersArray)){
-			echo '
-			<button id = "follow" class = "unfollow" onclick="removeFollowing();">Unfollow</button>
-			';
-		}else{
-			echo '
-			<button id = "follow" class = "follow" onclick="addFollowing();">Follow</button>
-			';
-		}
-	}
-	else{
-		echo '
-		<form id="sendbanner" action="profile.php?u='.$username.'" method="POST" enctype="multipart/form-data">
-			<input id="changebanner" name="changebanner" type="file"/>
-			<input type="submit" id="submitchangebanner" style="display:none;"/>
-			<button id = "follow" class = "changeedit changeban">Change Banner</button>
-		</form>
-		';
-	}
-
-	?>
-	<div class="add-post" id="addPost">
-		<div class="add-post-pen"></div>
-	</div>
-	<div class="lower-body">
-		<div class="about-me">
-			<div class="info-about-me"><span class="bio"><?php echo $bio; ?></span></div>
-			<div class="info-about-me"><img src="img/bird-in-broken-egg.png" width="25px"><span class="dob">Was born on <?php echo $dob; ?></span></div>
-			<div class="info-about-me"><img src="img/wifi.png" width="20px"><span class="lastonline">
-			<?php 
-			if($profileUserOnline){
-				echo "Online";
-			}else{
-				echo "Last online $onlinetimesincestr";
-			}
-			?></span></div>
-		</div>
-		<div class="options-tabs">
-			<div class="tabs photos-tab">Photos</div>
-			<div class="tabs following-tab">Following</div>
-			<div class="tabs followers-tab">Followers</div>
-		</div>
-		<div class="body-content" id="body-content">
-			<div class="content" id="content">
-
-			</div>
-			<div id = "end">
-				<div id="loading-img" style = "position: relative;">
-					<img  src = "http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style = "position: absolute;left: calc(50vw - 144px);" />
-				</div>
-			</div>
-			<div style="display:none" id="post_offset">0</div>
-		</div>
-	</div>
-	<div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
-
-	<div class="photos-wrapper">
-		<div class="topbar-userimages">
-			<div class="back-img" id="back-userimages"></div>
-			<div class="userimages-name"><?php echo $firstname . "'s Photo Uploads"; ?></div>
-		</div>
-		<div class="photo-cover">
-		<?php
-			$getphotos = $conn->query("SELECT * FROM photos WHERE username='$profileUser' ORDER BY id DESC");
-
-			if($getphotos->num_rows > 0) {
-				while ($row = $getphotos->fetch_assoc()) {
-					$photo_id = $row['id'];
-					$photo_link = $row['photo_link'];
-					$post_id = $row['post_id'];
-
-					echo '
-						<div class="photo-div-wrapper">
-							<div class="photo-div" photoid = "'.$photo_id.'" style="background-image: url('.$photo_link.');"></div>
-						</div>
-					';
-				}
-			}
-		?>
-		</div>
-		<div id="fullscreen-img-wrapper">
-			
-		</div>
-	</div>
-	<div class="following-wrapper">
-		<div class="topbar-userimages">
-			<div class="back-img" id="back-following"></div>
-			<div class="userimages-name"><?php echo $firstname . "'s Followings"; ?></div>
-		</div>
-		<div class="users-searchbox">
-			<span class="usersearch-tool glyphicon glyphicon-search"></span>
-			<input class = "search-users" id = "search-users-following" placeholder = "Lookup!" />
-		</div>
-		<div class="following-people-list">
-
-		</div>
-	</div>
-	<div class="followers-wrapper">
-		<div class="topbar-userimages">
-			<div class="back-img" id="back-followers"></div>
-			<div class="userimages-name"><?php echo $firstname . "'s Followers"; ?></div>
-		</div>
-		<div class="users-searchbox">
-			<span class="usersearch-tool glyphicon glyphicon-search"></span>
-			<input class = "search-users" id = "search-users-followers" placeholder = "Lookup!" />
-		</div>
-		<div class="followers-people-list">
-
-		</div>
-	</div>
-	<script type="text/javascript">
-		var username = "<?php echo $profileUser; ?>";
-		$(".following-people-list").load("action/searchfollowing.php?u="+username);
-		$(".followers-people-list").load("action/searchfollowers.php?u="+username);
-		$("input#search-users-following").keyup(function(){
-		    var text = $(this).val();
-		    var username = "<?php echo $profileUser; ?>";
-		    var link = "action/searchfollowing.php?u="+username+"&s="+text;
-		    $.ajax({
-		      url: link,
-		      success: function(data){
-		      	$(".following-people-list").html(data);
-		      },
-		      error: function(xhr, type, exception) { 
-		      	//error
-		      }
-		    });
-		});
-		$("input#search-users-followers").keyup(function(){
-		    var text = $(this).val();
-		    var username = "<?php echo $profileUser; ?>";
-		    var link = "action/searchfollowers.php?u="+username+"&s="+text;
-		    $.ajax({
-		      url: link,
-		      success: function(data){
-		      	$(".followers-people-list").html(data);
-		      },
-		      error: function(xhr, type, exception) { 
-		      	//error
-		      }
-		    });
-		});
-
-	function reportpost(postid){
-		var newElem="";
-		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
-		newElem += "    <div class='optionsPost' id='deletepost' onclick='inappost("+postid+");'>Inappropriate...<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='bullypost("+postid+");'>Abusive, Bullying...<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='idlikepost("+postid+");'>I don\'t like it...<\/div>";
-		newElem += "<\/div><\/div>";
-
-		    $("#anyreport").html(newElem);
-	}
-	function inappost(postid){
-		var newElem="";
-		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
-		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(1);'>It\'s sexually explicit<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(2);'>Drugs, or Illegal Substances<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(3);'>Something Else<\/div>";
-		newElem += "<\/div><\/div>";
-
-		$("#anyreport").html(newElem);
-	}
-	function bullypost(postid){
-		var newElem="";
-		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
-		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(4);'>It\'s harassment<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(5);'>It\'s threatening, violent.<\/div>";
-		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(6);'>It\'s rude, vulgar<\/div>"; 
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(7);'>Something Else<\/div>";
-		newElem += "<\/div><\/div>";
-
-		$("#anyreport").html(newElem);
-	}
-
-	function idlikepost(postid){
-		var newElem="";
-		newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
-		newElem += "    <div class='optionsPost' id='deletepost' onclick='report(8);'>It\'s not interesting<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(9);'>It\'s embarrassing<\/div>";
-		newElem += "    <div class='optionsPost' id='reportpost' onclick='report(10);'>Something Else<\/div>";
-		newElem += "<\/div><\/div>";
-
-		$("#anyreport").html(newElem);
-	}
-
-	function report(about){
-		var postid = $(".optionBox").attr("pid");
-
-		var link ='action/reportpost.php?pid='+postid+'&about='+about;
-		$.ajax({url: link, 
-			success: function() {
-				$("#profile-post-"+postid).slideUp(300);
-				var newElem="";
-				newElem += "<div class='optionBox-wrapper'><div class='optionBox'>";
-				newElem += "    <div class='optionsPost' id='deletepost'><b>Thank you</b> for you help.<\/div>";
-				newElem += "<\/div><\/div>";
-				$("#anyreport").html(newElem);
-			},
-			error: function() {
-				alert('not deleted');
-			}
-		});
-	}
-
-	if($("#anyreport").html() != ""){
-		$(document).mouseup(function (e){
-			var container = $(".optionBox");
-
-		    if (!container.is(e.target) // if the target of the click isn't the container...
-		        && container.has(e.target).length === 0) // ... nor a descendant of the container
-		    {
-		    	$("#anyreport").html("");
-		    	boxOpen = false;
-		    }
-		});
-	}
-
-	function deletepost(postid){
-		var link ='action/deletepost.php?id='+postid;
-		$.ajax({url: link, 
-			success: function() {
-				$("#profile-post-"+postid).slideUp(300);
-				$("#anyreport").html("");
-			},
-			error: function() {
-				alert('not deleted');
-			}
-		});
-	}
-
-	$(function(){
-	    $(".changeban").on('click', function(e){
-	        e.preventDefault();
-	        $("#changebanner:hidden").trigger('click');
-	    });
-	});
-	<?php
-		if(strcasecmp($username,$profileUser) == 0) {
-	?>
-			$("#changebanner").change(function(){
-			  	$("#submitchangebanner").trigger('click');
-			});
-			$("#changeprofile").change(function(){
-				alert("spot change");
-			  	$("#submitchangeprofile").trigger('click');
-			});  
-	<?php 
-		}
-	?>
-	$(function(){
-	    $(".changepro").on('click', function(e){
-	        e.preventDefault();
-	        $("#changeprofile:hidden").trigger('click');
-	    });
-	});
-	
-	$(".posthome").hide();
-	$("#addPost").click(function(){
-		$(".posthome").slideDown(700);
-	});
-	$("#back-post").click(function(){
-		$(".posthome").slideUp(700);
-	});
-	$(".text-tab-post").click(function(){
-		$("#posttype").load("postmethods/textpost.php");
-		
-	});
-	$(".photo-tab-post").click(function(){
-		$("#posttype").load("postmethods/photopost.php");
-		
-	});
-	$(function() {
-		var current_scrolltop = $(window).scrollTop();
-		$(window).scroll(function(){
-
-
-			if ($(window).scrollTop() >= current_scrolltop && $(window).scrollTop() >= 60) {
-				$(".top-bar").hide();
-			}
-			else {
-				$(".top-bar").show();
-			}
-			current_scrolltop = $(window).scrollTop();
-			
-		});
-	});
-
-	$(".following-wrapper").hide();
-	$(".followers-wrapper").hide();
-	$(".following-tab").click(function(){
-		$(".following-wrapper").show("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "hidden");
-	});
-	$("#back-following").click(function(){
-		$(".following-wrapper").hide("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "scroll");
-	});
-	$(".followers-tab").click(function(){
-		$(".followers-wrapper").show("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "hidden");
-	});
-	$("#back-followers").click(function(){
-		$(".followers-wrapper").hide("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "scroll");
-	});
-	$("#fullscreen-img-wrapper").hide();
-	$(".photos-wrapper").hide();
-	$(".photos-tab").click(function(){
-		$(".photos-wrapper").show("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "hidden");
-	});
-	$("#back-userimages").click(function(){
-		$(".photos-wrapper").hide("slide", { direction: "left" }, 200);
-		$("html").css("overflow", "scroll");
-	});
-	$(".photo-div").click(function(){
-		var id = $(this).attr("photoid");
-		var url = "action/bringfullscreenphoto.php?id="+id;
-		$.ajax({url: url, success: function(result){
-			$("#fullscreen-img-wrapper").show("slide", { direction: "left" }, 200);
-			$("#fullscreen-img-wrapper").html(result);
-			$('#close-fullscreen').click(function(){
-				$('#fullscreen-img-wrapper').html('');
-			});
-			$('.post-comment').submit(function(e){
-			    e.preventDefault();
-			    var curr_position = $(this).closest('.post-comment');
-			    postcomment(curr_position);
-			    e.unbind();
-			});		
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-	        alert(textStatus);
-	    }});
-	});
-	$(".like-bearpic").hide();
-		var all_posts_loaded = false;
-		var loading_currently = false;
-		function load_more_post() {
-			if (!all_posts_loaded && !loading_currently)  {
-				loading_currently = true;
-				offset = Number($("#post_offset").text());
-				username = <?php echo '"'.$profileUser.'"'; ?>;
-				posturl = "action/bringposts.php?u="+username+"&o="+offset;
-
-				$.ajax({url: posturl, success: function(result){
-					$("#content").before(result);
-					$("#post_offset").text(20+offset);
-					loading_currently = false;
-					if ($("#last_post").length > 0) {
-						all_posts_loaded = true;
-					}
-				}});
-			}
-		}	
-		$(function() {
-			$("#loading-img").hide();
-			load_more_post();
-			$("#loading-img").show();
-		//alert('end reached');
-
-		$(window).bind('scroll', function() {
-			if(($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) - 400) {
-
-				//alert('end reached');
-				load_more_post();
-				$("#loading-img").show();
-			}
-		});
-	});
-	/*var $document = $(document);
-
-	$document.scroll(function() {
-	  if ($document.scrollTop() >= 300) {
-
-	  	$(".top-bar").css("background-color","#1d2d4a");
-
-	  } else {
-	  	$(".top-bar").css("background-color","transparent");
-	  }
-	});*/
-	function addFollowing() {
-
-		var text = <?php echo '"'.$profileUser.'"'; ?>;
-		var addurl = "action/addfollowings.php?addto="+text;
-
-		$.ajax({url: addurl, success: function(){
-			$("#follow").attr('class', 'unfollow');
-			$("#follow").attr('onclick', 'removeFollowing();');
-			$("#follow").html("Unfollow");
-			var i = $("#followersCount").html();
-			i = Number(i) + 1;
-			$("#followersCount").html(i);
-		}});
-	}
-
-	function removeFollowing() {
-
-		var text = <?php echo '"'.$profileUser.'"'; ?>;
-		var addurl = "action/removefollowings.php?rem="+text;
-
-		$.ajax({url: addurl, success: function(){
-			$("#follow").attr('class', 'follow');
-			$("#follow").attr('onclick', 'addFollowing();');
-			$("#follow").html("Follow");
-			var i = $("#followersCount").html();
-			i = Number(i) - 1;
-			$("#followersCount").html(i);
-		}});
-	}
-	function likePost(id) {
-		var addurl = "action/likepost.php?id="+id;
-		var postid = "#like-btn-"+id;
-		$.ajax({url: addurl, 
-			success: function(){
-				$(postid).attr('class', 'liked');
-				$(postid).attr('onclick', 'unlikePost(' + id + ')');
-				$(".like-bearpic").show();
-				$(".like-bearpic").effect("shake", 3000);
-				setTimeout(
-				  function() 
-				  {
-				    $(".like-bearpic").hide();
-				  }, 500);
-			},
-			error: function(){
-				alert("failed");
-			}
-		});
-	}
-	function unlikePost(id) {
-		var addurl = "action/unlikepost.php?id="+id;
-		var postid = "#like-btn-"+id;
-		$.ajax({url: addurl, 
-			success: function(){
-				$(postid).attr('class', 'notliked');
-				$(postid).attr('onclick', 'likePost(' + id + ')');
-			},
-			error: function(){
-				alert("failed");
-			}
-		});
-	}
-
-	function postcomment(curr_position) {
-		var url="action/post-comment.php";
-		var comment = $(curr_position).children().first().val();
-		comment = comment.replace('\'','');
-		var id    = $(curr_position).children().first().next().val();
-		var  data = "comment="+comment+"&id="+id;
-		var comment_html1 =
-		"<div style = 'position: relative;'>"+
-		"	<div class = 'comment-body'>"+
-		"    <div class = 'comments-img'></div>" +
-		"    <div class = 'comment-area'>"+
-		"      <div style = 'position: relative;'>";
-		var comment_html2 =
-		"      </div>"+
-		"    </div>"+
-		"  </div>"+
-		"</div>";
-		$.ajax({
-			url:url,
-			type:'post',
-			data:data, 
-			success:function(commentText){
-				if(commentText == ""){
-					return;
-				}
-				var commenttxt =
-				"          <div class = 'commentPosted'>"+
-				"            <a style='position: relative;' href = 'profile.php?u=<?php echo $username; ?>'><?php echo $username; ?></a>&nbsp;&nbsp;&nbsp;" + commentText +
-				"          </div>";
-				curr_position.parent().parent().next().append(comment_html1+commenttxt+comment_html2);
-
-				$(".comment-inputs").val("");
-	            //stopCommentPosting = false;
-	            
-	        },
-	        error: function(jqXHR, textStatus, errorThrown) {
-	        	alert("failed");
-	        }
-	    });
-	}
+<script>
+document.onreadystatechange = function () {
+  var state = document.readyState
+  if (state == 'interactive') {
+       document.getElementById('contents').style.visibility="hidden";
+  } else if (state == 'complete') {
+      setTimeout(function(){
+         document.getElementById('interactive');
+         document.getElementById('load').style.visibility="hidden";
+         document.getElementById('contents').style.visibility="visible";
+      },2000);
+  }
+}
 </script>
+	<div id="load"></div>
+	    <div id="contents">
+	    		<div id="anyreport">
+
+	    		</div>
+	    		<div class="posthome">
+	    			<form action="#" method="POST" enctype="multipart/form-data">
+	    				<div class="back-img-post" id="back-post"></div>
+	    				<input type="submit" name="submitpost" class="submitpost" value="Roar">
+	    				<div id="posttype">
+	    					<textarea class="posttext" placeholder="What's on your mind?" name="post"></textarea>
+	    				</div>
+	    				<div class="postoptions-cover">
+	    					<div class="post-write-tabs text-tab-post">Text</div>
+	    					<div class="post-write-tabs photo-tab-post">Photo</div>
+	    					<!--<div class="post-write-tabs video-tab-post">Video</div>-->
+	    				</div>
+	    			</form>
+	    		</div>
+	    		<div class="top-bar">
+	    			<a href="home.php"><div class="back-img"></div></a>
+
+	    			<div class="searchbar-wrapper">
+	    				<div class="search-tool-wrapper">
+	    					<span class="search-tool glyphicon glyphicon-search"></span>
+	    				</div>
+	    				<input class="search" type="text" onclick="location.href = 'home.php'" placeholder="Search..." name="search" autocomplete="off" value="<?php echo $firstname . " " . $lastname; ?>">
+	    			</div>
+	    		</div>
+	    		<div class="banner"></div>
+	    		<div class="profile-pic">
+	    			<?php 
+	    			if(strcasecmp($username,$profileUser) == 0) { // profile user: strings match
+	    				echo '
+	    				<form id="sendprofile" action="profile.php?u='.$username.'" method="POST" enctype="multipart/form-data">
+	    					<input id="changeprofile" name="changeprofile" type="file"/>
+	    					<input type="submit" id="submitchangeprofile" style="display:none;"/>
+	    					<button id = "changepic" class = "changeedit changepro">Change Picture</button>
+	    				</form>
+	    				';
+	    			}
+	    			?>
+	    		</div>
+
+	    		<div class="profile-name"><?php echo $firstname . " " . $lastname;?></div>
+	    		<!---Fixx THis-->
+	    		<?php
+	    		if(strcasecmp($username,$profileUser) != 0) { // non profile user:  strings differ
+	    			if(in_array($username, $followersArray)){
+	    				echo '
+	    				<button id = "follow" class = "unfollow" onclick="removeFollowing();">Unfollow</button>
+	    				';
+	    			}else{
+	    				echo '
+	    				<button id = "follow" class = "follow" onclick="addFollowing();">Follow</button>
+	    				';
+	    			}
+	    		}
+	    		else{
+	    			echo '
+	    			<form id="sendbanner" action="profile.php?u='.$username.'" method="POST" enctype="multipart/form-data">
+	    				<input id="changebanner" name="changebanner" type="file"/>
+	    				<input type="submit" id="submitchangebanner" style="display:none;"/>
+	    				<button id = "follow" class = "changeedit changeban">Change Banner</button>
+	    			</form>
+	    			';
+	    		}
+
+	    		?>
+	    		<div class="add-post" id="addPost">
+	    			<div class="add-post-pen"></div>
+	    		</div>
+	    		<div class="lower-body">
+	    			<div class="about-me">
+	    				<div class="info-about-me"><span class="bio"><?php echo $bio; ?></span></div>
+	    				<div class="info-about-me"><img src="img/bird-in-broken-egg.png" width="25px"><span class="dob">Was born on <?php echo $dob; ?></span></div>
+	    				<div class="info-about-me"><img src="img/wifi.png" width="20px"><span class="lastonline">
+	    				<?php 
+	    				if($profileUserOnline){
+	    					echo "Online";
+	    				}else{
+	    					echo "Last online $onlinetimesincestr";
+	    				}
+	    				?></span></div>
+	    			</div>
+	    			<div class="options-tabs">
+	    				<div class="tabs photos-tab">Photos</div>
+	    				<div class="tabs following-tab">Following</div>
+	    				<div class="tabs followers-tab">Followers</div>
+	    			</div>
+	    			<div class="body-content" id="body-content">
+	    				<div class="content" id="content">
+
+	    				</div>
+	    				<div id = "end">
+	    					<div id="loading-img" style = "position: relative;">
+	    						<img  src = "http://bestanimations.com/Science/Gears/loadinggears/loading-gear.gif" style = "position: absolute;left: calc(50vw - 144px);" />
+	    					</div>
+	    				</div>
+	    				<div style="display:none" id="post_offset">0</div>
+	    			</div>
+	    		</div>
+	    		<div class="like-bearpic" style="position: fixed;height: 209px;width: 200px;top: calc(50vh - 100px);left: calc(50vw - 100px);background: url(http://web1.nbed.nb.ca/sites/ASD-S/1929/PublishingImages/BEAR%20PAW.gif);z-index: 20;background-size:cover;background-repeat:no-repeat;"></div>
+
+	    		<div class="photos-wrapper">
+	    			<div class="topbar-userimages">
+	    				<div class="back-img" id="back-userimages"></div>
+	    				<div class="userimages-name"><?php echo $firstname . "'s Photo Uploads"; ?></div>
+	    			</div>
+	    			<div class="photo-cover">
+	    			<?php
+	    				$getphotos = $conn->query("SELECT * FROM photos WHERE username='$profileUser' ORDER BY id DESC");
+
+	    				if($getphotos->num_rows > 0) {
+	    					while ($row = $getphotos->fetch_assoc()) {
+	    						$photo_id = $row['id'];
+	    						$photo_link = $row['photo_link'];
+	    						$post_id = $row['post_id'];
+
+	    						echo '
+	    							<div class="photo-div-wrapper">
+	    								<div class="photo-div" photoid = "'.$photo_id.'" style="background-image: url('.$photo_link.');"></div>
+	    							</div>
+	    						';
+	    					}
+	    				}
+	    			?>
+	    			</div>
+	    			<div id="fullscreen-img-wrapper">
+	    				
+	    			</div>
+	    		</div>
+	    		<div class="following-wrapper">
+	    			<div class="topbar-userimages">
+	    				<div class="back-img" id="back-following"></div>
+	    				<div class="userimages-name"><?php echo $firstname . "'s Followings"; ?></div>
+	    			</div>
+	    			<div class="users-searchbox">
+	    				<span class="usersearch-tool glyphicon glyphicon-search"></span>
+	    				<input class = "search-users" id = "search-users-following" placeholder = "Lookup!" />
+	    			</div>
+	    			<div class="following-people-list">
+
+	    			</div>
+	    		</div>
+	    		<div class="followers-wrapper">
+	    			<div class="topbar-userimages">
+	    				<div class="back-img" id="back-followers"></div>
+	    				<div class="userimages-name"><?php echo $firstname . "'s Followers"; ?></div>
+	    			</div>
+	    			<div class="users-searchbox">
+	    				<span class="usersearch-tool glyphicon glyphicon-search"></span>
+	    				<input class = "search-users" id = "search-users-followers" placeholder = "Lookup!" />
+	    			</div>
+	    			<div class="followers-people-list">
+
+	    			</div>
+	    		</div>
+	    	<script type="text/javascript">
+	    		var wid = 0;
+	    		var wx = 0;
+
+    			function readURL(input) {
+    		        if (input.files && input.files[0]) {
+    		            var reader = new FileReader();
+
+    		            reader.onload = function (e) {
+    		                $('#uploadshownimg').attr('src', e.target.result);
+    		                $("#uploadshownimg-div").css("display", "block");
+
+    		                wid = $("#uploadshownimg").width();
+    		                wid = parseInt(wid, 10);
+    		                wx = Number(wid) / 2;
+    		                wxPx = wx + "px";
+    		                wxText = "calc( 50vw - " + wxPx + " ) ";
+    		                $("#uploadshownimg").css('left', wxText);
+    		            };
+
+    		            reader.readAsDataURL(input.files[0]);
+    		        }
+    		    }
+	    		var username = "<?php echo $profileUser; ?>";
+	    		$(".following-people-list").load("action/searchfollowing.php?u="+username);
+	    		$(".followers-people-list").load("action/searchfollowers.php?u="+username);
+	    		$("input#search-users-following").keyup(function(){
+	    		    var text = $(this).val();
+	    		    var username = "<?php echo $profileUser; ?>";
+	    		    var link = "action/searchfollowing.php?u="+username+"&s="+text;
+	    		    $.ajax({
+	    		      url: link,
+	    		      success: function(data){
+	    		      	$(".following-people-list").html(data);
+	    		      },
+	    		      error: function(xhr, type, exception) { 
+	    		      	//error
+	    		      }
+	    		    });
+	    		});
+	    		$("input#search-users-followers").keyup(function(){
+	    		    var text = $(this).val();
+	    		    var username = "<?php echo $profileUser; ?>";
+	    		    var link = "action/searchfollowers.php?u="+username+"&s="+text;
+	    		    $.ajax({
+	    		      url: link,
+	    		      success: function(data){
+	    		      	$(".followers-people-list").html(data);
+	    		      },
+	    		      error: function(xhr, type, exception) { 
+	    		      	//error
+	    		      }
+	    		    });
+	    		});
+
+	    		function reportpost(postid){
+	    			var newElem="";
+	    			newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+	    			newElem += "    <div class='optionsPost' id='deletepost' onclick='inappost("+postid+");'>Inappropriate...<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='bullypost("+postid+");'>Abusive, Bullying...<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='idlikepost("+postid+");'>I don\'t like it...<\/div>";
+	    			newElem += "<\/div><\/div>";
+
+	    			    $("#anyreport").html(newElem);
+	    		}
+	    		function inappost(postid){
+	    			var newElem="";
+	    			newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+	    			newElem += "    <div class='optionsPost' id='deletepost' onclick='report(1);'>It\'s sexually explicit<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(2);'>Drugs, or Illegal Substances<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(3);'>Something Else<\/div>";
+	    			newElem += "<\/div><\/div>";
+
+	    			$("#anyreport").html(newElem);
+	    		}
+	    		function bullypost(postid){
+	    			var newElem="";
+	    			newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+	    			newElem += "    <div class='optionsPost' id='deletepost' onclick='report(4);'>It\'s harassment<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(5);'>It\'s threatening, violent.<\/div>";
+	    			newElem += "    <div class='optionsPost' id='deletepost' onclick='report(6);'>It\'s rude, vulgar<\/div>"; 
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(7);'>Something Else<\/div>";
+	    			newElem += "<\/div><\/div>";
+
+	    			$("#anyreport").html(newElem);
+	    		}
+
+	    		function idlikepost(postid){
+	    			var newElem="";
+	    			newElem += "<div class='optionBox-wrapper'><div class='optionBox' pid='"+postid+"'>";
+	    			newElem += "    <div class='optionsPost' id='deletepost' onclick='report(8);'>It\'s not interesting<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(9);'>It\'s embarrassing<\/div>";
+	    			newElem += "    <div class='optionsPost' id='reportpost' onclick='report(10);'>Something Else<\/div>";
+	    			newElem += "<\/div><\/div>";
+
+	    			$("#anyreport").html(newElem);
+	    		}
+
+	    		function report(about){
+	    			var postid = $(".optionBox").attr("pid");
+
+	    			var link ='action/reportpost.php?pid='+postid+'&about='+about;
+	    			$.ajax({url: link, 
+	    				success: function() {
+	    					$("#profile-post-"+postid).slideUp(300);
+	    					var newElem="";
+	    					newElem += "<div class='optionBox-wrapper'><div class='optionBox'>";
+	    					newElem += "    <div class='optionsPost' id='deletepost'><b>Thank you</b> for you help.<\/div>";
+	    					newElem += "<\/div><\/div>";
+	    					$("#anyreport").html(newElem);
+	    				},
+	    				error: function() {
+	    					alert('not deleted');
+	    				}
+	    			});
+	    		}
+
+	    		if($("#anyreport").html() != ""){
+	    			$(document).mouseup(function (e){
+	    				var container = $(".optionBox");
+
+	    			    if (!container.is(e.target) // if the target of the click isn't the container...
+	    			        && container.has(e.target).length === 0) // ... nor a descendant of the container
+	    			    {
+	    			    	$("#anyreport").html("");
+	    			    	boxOpen = false;
+	    			    }
+	    			});
+	    		}
+
+	    		function deletepost(postid){
+	    			var link ='action/deletepost.php?id='+postid;
+	    			$.ajax({url: link, 
+	    				success: function() {
+	    					$("#profile-post-"+postid).slideUp(300);
+	    					$("#anyreport").html("");
+	    				},
+	    				error: function() {
+	    					alert('not deleted');
+	    				}
+	    			});
+	    		}
+
+	    		$(function(){
+	    		    $(".changeban").on('click', function(e){
+	    		        e.preventDefault();
+	    		        $("#changebanner:hidden").trigger('click');
+	    		    });
+	    		});
+	    		<?php
+	    			if(strcasecmp($username,$profileUser) == 0) {
+	    		?>
+	    				$("#changebanner").change(function(){
+	    				  	$("#submitchangebanner").trigger('click');
+	    				});
+	    				$("#changeprofile").change(function(){
+	    					alert("spot change");
+	    				  	$("#submitchangeprofile").trigger('click');
+	    				});  
+	    		<?php 
+	    			}
+	    		?>
+	    		$(function(){
+	    		    $(".changepro").on('click', function(e){
+	    		        e.preventDefault();
+	    		        $("#changeprofile:hidden").trigger('click');
+	    		    });
+	    		});
+
+	    		$(".posthome").hide();
+	    		$("#addPost").click(function(){
+	    			$(".posthome").slideDown(700);
+	    		});
+	    		$("#back-post").click(function(){
+	    			$(".posthome").slideUp(700);
+	    		});
+	    		$(".text-tab-post").click(function(){
+	    			$("#posttype").load("postmethods/textpost.php");
+	    			
+	    		});
+	    		$(".photo-tab-post").click(function(){
+	    			$("#posttype").load("postmethods/photopost.php");
+	    			
+	    		});
+	    		$(function() {
+	    			var current_scrolltop = $(window).scrollTop();
+	    			$(window).scroll(function(){
+
+
+	    				if ($(window).scrollTop() >= current_scrolltop && $(window).scrollTop() >= 60) {
+	    					$(".top-bar").hide();
+	    				}
+	    				else {
+	    					$(".top-bar").show();
+	    				}
+	    				current_scrolltop = $(window).scrollTop();
+	    				
+	    			});
+	    		});
+
+	    		$(".following-wrapper").hide();
+	    		$(".followers-wrapper").hide();
+	    		$(".following-tab").click(function(){
+	    			$(".following-wrapper").show();
+	    			$("html").css("overflow", "hidden");
+	    		});
+	    		$("#back-following").click(function(){
+	    			$(".following-wrapper").hide();
+	    			$("html").css("overflow", "scroll");
+	    		});
+	    		$(".followers-tab").click(function(){
+	    			$(".followers-wrapper").show();
+	    			$("html").css("overflow", "hidden");
+	    		});
+	    		$("#back-followers").click(function(){
+	    			$(".followers-wrapper").hide();
+	    			$("html").css("overflow", "scroll");
+	    		});
+	    		$("#fullscreen-img-wrapper").hide();
+	    		$(".photos-wrapper").hide();
+	    		$(".photos-tab").click(function(){
+	    			$(".photos-wrapper").show();
+	    			$("html").css("overflow", "hidden");
+	    		});
+	    		$("#back-userimages").click(function(){
+	    			$(".photos-wrapper").hide();
+	    			$("html").css("overflow", "scroll");
+	    		});
+	    		$(".photo-div").click(function(){
+	    			var id = $(this).attr("photoid");
+	    			var url = "action/bringfullscreenphoto.php?id="+id;
+	    			$.ajax({url: url, success: function(result){
+	    				$("#fullscreen-img-wrapper").show();
+	    				$("#fullscreen-img-wrapper").html(result);
+	    				$('#close-fullscreen').click(function(){
+	    					$('#fullscreen-img-wrapper').html('');
+	    				});
+	    				$('.post-comment').submit(function(e){
+	    				    e.preventDefault();
+	    				    var curr_position = $(this).closest('.post-comment');
+	    				    postcomment(curr_position);
+	    				    e.unbind();
+	    				});		
+	    			},
+	    			error: function(jqXHR, textStatus, errorThrown) {
+	    		        alert(textStatus);
+	    		    }});
+	    		});
+	    		$(".like-bearpic").hide();
+	    			var all_posts_loaded = false;
+	    			var loading_currently = false;
+	    			function load_more_post() {
+	    				if (!all_posts_loaded && !loading_currently)  {
+	    					loading_currently = true;
+	    					offset = Number($("#post_offset").text());
+	    					username = <?php echo '"'.$profileUser.'"'; ?>;
+	    					posturl = "action/bringposts.php?u="+username+"&o="+offset;
+
+	    					$.ajax({url: posturl, success: function(result){
+	    						$("#content").before(result);
+	    						$("#post_offset").text(20+offset);
+	    						loading_currently = false;
+	    						if ($("#last_post").length > 0) {
+	    							all_posts_loaded = true;
+	    						}
+	    					}});
+	    				}
+	    			}	
+	    			$(function() {
+	    				$("#loading-img").hide();
+	    				load_more_post();
+	    				$("#loading-img").show();
+	    			//alert('end reached');
+
+	    			$(window).bind('scroll', function() {
+	    				if(($(window).scrollTop() >= $('#end').offset().top + $('#end').outerHeight() - window.innerHeight) - 400) {
+
+	    					//alert('end reached');
+	    					load_more_post();
+	    					$("#loading-img").show();
+	    				}
+	    			});
+	    		});
+	    		/*var $document = $(document);
+
+	    		$document.scroll(function() {
+	    		  if ($document.scrollTop() >= 300) {
+
+	    		  	$(".top-bar").css("background-color","#1d2d4a");
+
+	    		  } else {
+	    		  	$(".top-bar").css("background-color","transparent");
+	    		  }
+	    		});*/
+	    		function addFollowing() {
+
+	    			var text = <?php echo '"'.$profileUser.'"'; ?>;
+	    			var addurl = "action/addfollowings.php?addto="+text;
+
+	    			$.ajax({url: addurl, success: function(){
+	    				$("#follow").attr('class', 'unfollow');
+	    				$("#follow").attr('onclick', 'removeFollowing();');
+	    				$("#follow").html("Unfollow");
+	    				var i = $("#followersCount").html();
+	    				i = Number(i) + 1;
+	    				$("#followersCount").html(i);
+	    			}});
+	    		}
+
+	    		function removeFollowing() {
+
+	    			var text = <?php echo '"'.$profileUser.'"'; ?>;
+	    			var addurl = "action/removefollowings.php?rem="+text;
+
+	    			$.ajax({url: addurl, success: function(){
+	    				$("#follow").attr('class', 'follow');
+	    				$("#follow").attr('onclick', 'addFollowing();');
+	    				$("#follow").html("Follow");
+	    				var i = $("#followersCount").html();
+	    				i = Number(i) - 1;
+	    				$("#followersCount").html(i);
+	    			}});
+	    		}
+	    		function likePost(id) {
+	    			alert(id);
+	    			var addurl = "action/likepost.php?id="+id;
+	    			var postid = "#like-btn-"+id;
+	    			$.ajax({url: addurl, 
+	    				success: function(){
+	    					$(postid).attr('class', 'liked');
+	    					$(postid).attr('onclick', 'unlikePost(' + id + ')');
+	    					$(".like-bearpic").show();
+	    					$(".like-bearpic").effect("shake", 3000);
+	    					setTimeout(
+	    					  function() 
+	    					  {
+	    					    $(".like-bearpic").hide();
+	    					  }, 500);
+	    				},
+	    				error: function(){
+	    					alert("failed");
+	    				}
+	    			});
+	    		}
+	    		function unlikePost(id) {
+	    			var addurl = "action/unlikepost.php?id="+id;
+	    			var postid = "#like-btn-"+id;
+	    			$.ajax({url: addurl, 
+	    				success: function(){
+	    					$(postid).attr('class', 'notliked');
+	    					$(postid).attr('onclick', 'likePost(' + id + ')');
+	    				},
+	    				error: function(){
+	    					alert("failed");
+	    				}
+	    			});
+	    		}
+
+	    		function postcomment(curr_position) {
+	    			var url="action/post-comment.php";
+	    			var comment = $(curr_position).children().first().val();
+	    			comment = comment.replace('\'','');
+	    			var id    = $(curr_position).children().first().next().val();
+	    			var  data = "comment="+comment+"&id="+id;
+	    			var comment_html1 =
+	    			"<div style = 'position: relative;'>"+
+	    			"	<div class = 'comment-body'>"+
+	    			"    <div class = 'comments-img'></div>" +
+	    			"    <div class = 'comment-area'>"+
+	    			"      <div style = 'position: relative;'>";
+	    			var comment_html2 =
+	    			"      </div>"+
+	    			"    </div>"+
+	    			"  </div>"+
+	    			"</div>";
+	    			$.ajax({
+	    				url:url,
+	    				type:'post',
+	    				data:data, 
+	    				success:function(commentText){
+	    					if(commentText == ""){
+	    						return;
+	    					}
+	    					var commenttxt =
+	    					"          <div class = 'commentPosted'>"+
+	    					"            <a style='position: relative;' href = 'profile.php?u=<?php echo $username; ?>'><?php echo $username; ?></a>&nbsp;&nbsp;&nbsp;" + commentText +
+	    					"          </div>";
+	    					curr_position.parent().parent().next().append(comment_html1+commenttxt+comment_html2);
+
+	    					$(".comment-inputs").val("");
+	    		            //stopCommentPosting = false;
+	    		            
+	    		        },
+	    		        error: function(jqXHR, textStatus, errorThrown) {
+	    		        	alert("failed");
+	    		        }
+	    		    });
+	    		}
+	    	</script>
+	    </div>
+	
 </body>
 </html>
