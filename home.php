@@ -2628,6 +2628,7 @@ document.onreadystatechange = function () {
 		          					last_home_id = $(".profile-post").first().attr("homeid");
 	          					},
 	          					error: function(error){
+	          						alert(posturl);
 	          						alert("error");
 	          					}
 	          				});
