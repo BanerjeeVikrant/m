@@ -25,10 +25,10 @@ if (isset($_GET['u'])) {
 	$profileUser = $_GET['u'];
 
          //check user exists
-    $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
-	if ($check->num_rows == 1) {
+    $check = mysql_query("SELECT * FROM users WHERE username='$profileUser'");
+	if (mysql_num_rows($check) == 1) {
 
-		$get = $check->fetch_assoc();
+		$get = mysql_fetch_assoc($check);
 		$activatedornot = $get['activated'];
 		if($activatedornot == '0'){
 			exit("ERROR 5718 No User exits. <a href = 'profile.php?u=$username'>Your profile</a>");
@@ -68,10 +68,10 @@ if (isset($_GET['u'])) {
 	}
 }
 $offset = $_GET['o'];
-$checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
-if ($checkme->num_rows == 1) {
+$checkme = mysql_query("SELECT * FROM users WHERE username='$username'");
+if (mysql_num_rows($checkme) == 1) {
 
-	$getuser = $checkme->fetch_assoc();
+	$getuser = mysql_fetch_assoc($checkme);
 
 	$yourfirstname = $getuser['first_name'];
 	$yourgrade = $getuser['grade'];
@@ -108,7 +108,7 @@ if (!isset($_GET['u'])) {
 	$sql =  "SELECT * FROM posts WHERE (added_by = '$profileUser' AND posted_to = '1') OR (user_posted_to = '$profileUser') ORDER BY id DESC LIMIT $offset,20";
 
 }
-$getposts = $conn->query($sql) or die(mysql_error());
+$getposts = mysql_query($sql) or die(mysql_error());
 $tags = array();
 
 function identifyTagsInMsg($msg) {
@@ -148,8 +148,8 @@ function identifyTagsInMsg($msg) {
     return $msg;
 }
 
-    if($getposts->num_rows > 0) {
-    	while ($row = $getposts->fetch_assoc()) {
+    if(mysql_num_rows($getposts) > 0) {
+    	while ($row = mysql_fetch_assoc($getposts)) {
     		$id = $row['id'];
 
     		$hidden = $row['hidden'];
@@ -234,8 +234,8 @@ function identifyTagsInMsg($msg) {
     				$commentsid = $row['commentsid'];
 
     				$sql = "SELECT * FROM users WHERE username='$added_by'"; 
-    				$result = $conn->query($sql);
-    				$pic_row  = $result->fetch_assoc();
+    				$result = mysql_query($sql);
+    				$pic_row  = mysql_fetch_assoc($result);
     				$userpic =  $pic_row['profile_pic'];
     				$usersex = $pic_row['sex'];
                     $admin = $pic_row['admin'];
@@ -358,12 +358,12 @@ function identifyTagsInMsg($msg) {
 
     					for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
                             $value = $commentsArray[$i];
-    						$getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
-    						$getCommentRow = $getCommentQuery->fetch_assoc();
+    						$getCommentQuery = mysql_query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
+    						$getCommentRow = mysql_fetch_assoc($getCommentQuery);
     						$commentPost = $getCommentRow['comment'];
     						$commentpostedby =  $getCommentRow['from'];
-    						$getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
-    						$getfetch = $getUser->fetch_assoc();
+    						$getUser = mysql_query("SELECT * FROM users WHERE username = '$commentpostedby'");
+    						$getfetch = mysql_fetch_assoc($getUser);
     						$userpic = $getfetch['profile_pic'];
     						echo "                
     						<div style = 'position: relative;'>                        
@@ -386,12 +386,12 @@ function identifyTagsInMsg($msg) {
                         ";
                         for ($i = max(0,$commentsCount - $defaultCommentsCount); $i < $commentsCount; $i++) {
                             $value = $commentsArray[$i];
-                            $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
-                            $getCommentRow = $getCommentQuery->fetch_assoc();
+                            $getCommentQuery = mysql_query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
+                            $getCommentRow = mysql_fetch_assoc($getCommentQuery);
                             $commentPost = $getCommentRow['comment'];
                             $commentpostedby =  $getCommentRow['from'];
-                            $getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
-                            $getfetch = $getUser->fetch_assoc();
+                            $getUser = mysql_query("SELECT * FROM users WHERE username = '$commentpostedby'");
+                            $getfetch = mysql_fetch_assoc($getUser);
                             $userpic = $getfetch['profile_pic'];
                             echo "                
                             <div style = 'position: relative;'>                        
