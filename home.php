@@ -2601,29 +2601,36 @@ document.onreadystatechange = function () {
 	          		var loading_currently = false;
 	          		var post_first_time = true;
 	          		function load_more_post() {
+	          			alert("hi");
 	          			if (!all_posts_loaded && !loading_currently)  {
 	          				loading_currently = true;
 	          				offset = Number($("#post_offset").text());
 	          				posturl = "action/bringposts.php?o="+offset+"&g="+<?php echo $view_group_id;?>;
-	          				$.ajax({url: posturl, success: function(result){
-	          					$("#content").before(result);
-	          					$("#post_offset").text(20+offset);
-	          					loading_currently = false;
-	          					shouldReschedule = !post_first_time;
-	          					if(post_first_time == true){
-	          						post_first_time = false;
-	          						load_more_post();
-	          					}
-	          					
-	          					if ($("#last_post").length > 0) {
-	          						all_posts_loaded = true;
-	          					}
-	          					if (shouldReschedule) {
-	          						getNewHomePosts();
-	          					}
+	          				$.ajax({url: posturl, 
+	          					success: function(result){
+		          					alert(result);
+		          					$("#content").before(result);
+		          					$("#post_offset").text(20+offset);
+		          					loading_currently = false;
+		          					shouldReschedule = !post_first_time;
+		          					if(post_first_time == true){
+		          						post_first_time = false;
+		          						load_more_post();
+		          					}
+		          					
+		          					if ($("#last_post").length > 0) {
+		          						all_posts_loaded = true;
+		          					}
+		          					if (shouldReschedule) {
+		          						getNewHomePosts();
+		          					}
 
-	          					last_home_id = $(".profile-post").first().attr("homeid");
-	          				}});
+		          					last_home_id = $(".profile-post").first().attr("homeid");
+	          					},
+	          					error: function(error){
+	          						alert(error);
+	          					}
+	          				});
 	          			}
 	          		}
 	          		$(function() {
