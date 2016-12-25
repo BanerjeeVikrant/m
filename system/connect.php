@@ -2,7 +2,8 @@
 	$servername = "localhost";
 	$username1 = "root";
 	$password = "H@ll054321";
-	$dbname = "bruinsKaveData";
+	$dbname = "bruinskavedata";
+
 
 	// Create connection
 	$conn = new mysqli($servername, $username1, $password, $dbname);
