@@ -2608,7 +2608,7 @@ document.onreadystatechange = function () {
 	          				posturl = "action/bringposts.php?o="+offset+"&g="+<?php echo $view_group_id;?>;
 	          				$.ajax({url: posturl, 
 	          					success: function(result){
-		          					alert(result);
+	          						alert("success");
 		          					$("#content").before(result);
 		          					$("#post_offset").text(20+offset);
 		          					loading_currently = false;
@@ -2628,7 +2628,7 @@ document.onreadystatechange = function () {
 		          					last_home_id = $(".profile-post").first().attr("homeid");
 	          					},
 	          					error: function(error){
-	          						alert(error);
+	          						alert("error");
 	          					}
 	          				});
 	          			}
