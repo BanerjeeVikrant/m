@@ -1688,7 +1688,7 @@ document.onreadystatechange = function () {
 	          	<?php
 	          	if($warnedorNot == true){
 	          		$sql = "SELECT * FROM posts WHERE id = '$warned_post'";
-	          		$getposts = $conn->query($sql) or die(mysql_error());
+	          		$getposts = $conn->query($sql);
 
 	          	    $row = $getposts->fetch_assoc();
 	          	    $id = $warned_post;
