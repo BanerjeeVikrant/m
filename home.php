@@ -1743,7 +1743,7 @@ document.onreadystatechange = function () {
 	          	    $usersex = $pic_row['sex'];
 	          	    $admin = $pic_row['admin'];
 
-	          	    $timesincestr = time_elapsed_string($time_added);
+	          	    $timesincestr = $time_added;
 
 	          	    if($userpic == "" || $userpic == NULL){
 	          	        if($usersex == "1"){
