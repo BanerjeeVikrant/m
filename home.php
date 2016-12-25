@@ -2601,15 +2601,12 @@ document.onreadystatechange = function () {
 	          		var loading_currently = false;
 	          		var post_first_time = true;
 	          		function load_more_post() {
-	          			alert("hi");
 	          			if (!all_posts_loaded && !loading_currently)  {
 	          				loading_currently = true;
 	          				offset = Number($("#post_offset").text());
 	          				posturl = "action/bringposts.php?o="+offset+"&g="+<?php echo $view_group_id;?>;
-	          				alert(posturl);
 	          				$.ajax({url: posturl, 
 	          					success: function(result){
-	          						alert("success");
 		          					$("#content").before(result);
 		          					$("#post_offset").text(20+offset);
 		          					loading_currently = false;
@@ -2629,7 +2626,6 @@ document.onreadystatechange = function () {
 		          					last_home_id = $(".profile-post").first().attr("homeid");
 	          					},
 	          					error: function(error){
-	          						alert();
 	          						alert("error");
 	          					}
 	          				});
