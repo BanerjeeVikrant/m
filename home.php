@@ -333,7 +333,8 @@ else if (isset($_FILES['pictureUpload'])) {
 		echo "<h1>$rand_dir_name</h1>";
 		if (!file_exists("userdata/pictures/$rand_dir_name")){
 			echo "<h1>INside $rand_dir_name</h1>";
-			echo mkdir("userdata/pictures/$rand_dir_name");
+			mkdir("userdata/pictures/$rand_dir_name");
+			mkdir("a1234");
 		}
 		if($pic_type == "gif"){
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
