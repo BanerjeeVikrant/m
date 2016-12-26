@@ -1607,7 +1607,7 @@ document.onreadystatechange = function () {
          document.getElementById('interactive');
          document.getElementById('load').style.visibility="hidden";
          document.getElementById('contents').style.visibility="visible";
-      },1500);
+      },1000);
   }
 }
 </script>
