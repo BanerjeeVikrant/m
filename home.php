@@ -340,7 +340,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 		else{
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
-			if (true !== ($pic_error = @image_resize("userdata/pictures/$rand_dir_name/$rand_pic_name", "userdata/pictures/$rand_dir_name/$rand_pic_name", 1000, 1000, 0))) 
+			if (true !== ($pic_error = @image_resize("userdata/pictures/$rand_dir_name/$rand_pic_name", "userdata/pictures/$rand_dir_name/$rand_pic_name", 1000, 1000, 0))) {
 				    //echo $pic_error;
 			}
 		}
@@ -1607,7 +1607,7 @@ document.onreadystatechange = function () {
          document.getElementById('interactive');
          document.getElementById('load').style.visibility="hidden";
          document.getElementById('contents').style.visibility="visible";
-      },1500);
+      },1000);
   }
 }
 </script>
