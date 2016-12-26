@@ -332,6 +332,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		$rand_pic_name = $rand_pic . "." . $pic_type;
 		echo "<h1>$rand_dir_name</h1>";
 		if (!file_exists("userdata/pictures/$rand_dir_name")){
+			echo "<h1>INside $rand_dir_name</h1>";
 			mkdir("userdata/pictures/$rand_dir_name");
 		}
 		if($pic_type == "gif"){
