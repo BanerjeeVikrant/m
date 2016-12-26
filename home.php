@@ -2053,6 +2053,7 @@ document.onreadystatechange = function () {
 
 	          		function deletepost(postid){
 	          			var link ='action/deletepost.php?id='+postid;
+	          			alert(link);
 	          			$.ajax({url: link, 
 	          				success: function() {
 	          					$("#profile-post-"+postid).slideUp(300);
