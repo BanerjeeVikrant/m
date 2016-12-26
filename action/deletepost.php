@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
 	$sql = "SELECT * FROM posts WHERE id='$id'";
 	$get = $conn->query($sql);
 	$backto = $get->fetch_assoc();
-	$goto =  $backto['user_posted_to'];
+	$goto =  $backto['added_by'];
 	$sql = "SELECT * FROM users WHERE username='$username'";
 	$get = $conn->query($sql);
 	$backto = $get->fetch_assoc();
