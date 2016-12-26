@@ -330,6 +330,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		$pic_name_explode = explode("/", $pic_name);
 		$pic_type = $pic_name_explode[1];
 		$rand_pic_name = $rand_pic . "." . $pic_type;
+		echo "<h1>$rand_dir_name</h1>";
 		if (!file_exists("userdata/pictures/$rand_dir_name")){
 			mkdir("userdata/pictures/$rand_dir_name");
 		}
