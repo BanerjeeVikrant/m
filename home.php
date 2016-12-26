@@ -2058,9 +2058,11 @@ document.onreadystatechange = function () {
 	          				success: function() {
 	          					$("#profile-post-"+postid).slideUp(300);
 	          					$("#anyreport").html("");
+	          					alert('success');
 	          				},
 	          				error: function() {
 	          					alert('not deleted');
+	          					alert('error');
 	          				}
 	          			});
 	          		}
