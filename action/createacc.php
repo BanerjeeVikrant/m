@@ -47,7 +47,7 @@ $t = time();
         
 
 $pswdmd5 = md5($pswd);
-$sql = "INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswdmd5', '$d', '', '', '', '', '', '$gender', '$dob', '0', '', '', '', '', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')";
+$sql = "INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswdmd5', '$d', '', '', '', '', '', '$gender', '$dob', '0', '', '', '', '', '0', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')";
 $conn->query($sql);
 
 
