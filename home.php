@@ -330,7 +330,9 @@ else if (isset($_FILES['pictureUpload'])) {
 		$pic_name_explode = explode("/", $pic_name);
 		$pic_type = $pic_name_explode[1];
 		$rand_pic_name = $rand_pic . "." . $pic_type;
-
+		if (!file_exists("userdata/pictures/$rand_dir_name")){
+			mkdir("userdata/pictures/$rand_dir_name");
+		}
 		if($pic_type == "gif"){
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
 		}
