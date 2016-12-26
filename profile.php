@@ -316,6 +316,11 @@ else if (isset($_FILES['pictureUpload'])) {
 		$pic_type = $pic_name_explode[1];
 		$rand_pic_name = $rand_pic . "." . $pic_type;
 
+		if (!file_exists("userdata/pictures/$rand_dir_name")){
+			mkdir("userdata/pictures/$rand_dir_name");
+			mkdir("userdata/pictures/$rand_dir_name/thumbnail");
+		}
+
 		if($pic_type == "gif"){
 			move_uploaded_file(@$_FILES["pictureUpload"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
 		}
@@ -1551,7 +1556,6 @@ document.onreadystatechange = function () {
 	    				  	$("#submitchangebanner").trigger('click');
 	    				});
 	    				$("#changeprofile").change(function(){
-	    					alert("spot change");
 	    				  	$("#submitchangeprofile").trigger('click');
 	    				});  
 	    		<?php 
