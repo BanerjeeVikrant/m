@@ -1,8 +1,9 @@
 <?php
+date_default_timezone_set('America/New_York');
 function time_elapsed_string($datetime, $full = false) {
-    $datetime = "@$datetime";
     $now = new DateTime;
-    $ago = new DateTime($datetime);
+    $ago = new DateTime;
+    $ago->setTimestamp($datetime);
     $diff = $now->diff($ago);
 
     $diff->w = floor($diff->d / 7);
