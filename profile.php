@@ -10,6 +10,9 @@ session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
 	$time = time();
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -109,6 +112,7 @@ if(isset($_GET['u'])){
 	if ($check->num_rows == 1) {
 
 		$get = $check->fetch_assoc();
+		$profileUserid = $get['id'];
 		$activatedornot = $get['activated'];
 		if($activatedornot == '0'){
 			exit("ERROR 5718 No User exits. <a href = 'profile.php?u=$username'>Your profile</a>");
@@ -269,7 +273,7 @@ if (isset($_POST['post'])) {
 		$added_by = $username;
 		
 
-		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', '', '', '', '0', '', '', '0')";
+		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '1', '', '$profileUserid', '', '', '', '', '0', '', '', '0')";
 		if ($conn->query($sqlcommand) === TRUE) {
 			$last_id = $conn->insert_id;
 			$words_array = explode(" ", $post);
@@ -331,7 +335,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			}
 		}
 
-		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '1', '', '$profileUser', '', 'userdata/pictures/$rand_dir_name/$rand_pic_name', '', '', '0', '', '', '0')";
+		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '1', '', '$profileUserid', '', 'userdata/pictures/$rand_dir_name/$rand_pic_name', '', '', '0', '', '', '0')";
 
 		if ($conn->query($sql) === TRUE) {
 			$last_id = $conn->insert_id;
@@ -363,7 +367,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 
 
-		$sql = "INSERT INTO photos VALUES ('', '$username', 'userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name', '$maxid')";
+		$sql = "INSERT INTO photos VALUES ('', '$usernameid', 'userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name', '$maxid')";
 		$profile_pic_query = $conn->query($sql);
 
 	}

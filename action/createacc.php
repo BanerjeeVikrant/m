@@ -38,6 +38,13 @@ $pswd = strip_tags(@$_POST['psw']);
 $pswd2 = strip_tags(@$_POST['psw2']);
 $dob = strip_tags(@$_POST['dob']);
 $gender = strip_tags(@$_POST['gender']);
+if($gender == "Male"){
+	$gender = 1;
+}
+else if($gender == "Female"){
+	$gender = 2;
+}
+
 $grade = strip_tags(@$_POST['grade']);
 $stuid = strip_tags(@$_POST['stuid']);
 $num = strip_tags(@$_POST['num']);

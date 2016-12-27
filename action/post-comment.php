@@ -4,6 +4,9 @@
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -13,7 +16,7 @@ $comment = $_POST['comment'];
 $comment = str_replace("<","&lt;",$comment);
 $comment = str_replace(">","&gt;",$comment);
 
-$sql = "INSERT INTO comments VALUES ('', '$comment', '$username')";
+$sql = "INSERT INTO comments VALUES ('', '$comment', '$usernameid')";
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
 } else {
@@ -24,6 +27,9 @@ $id = $_POST['id'];
 $post_check = $conn->query("SELECT * FROM posts WHERE id='$id'");
 $post_check_row = $post_check->fetch_assoc();
 $post_sender = $post_check_row['added_by'];
+$query = $conn->query("SELECT * FROM users WHERE username='$post_sender'");
+$row = $query->fetch_assoc();
+$post_senderid = $row['id'];
 $post_array = $post_check_row['commentsid'];
 $post_explode = explode(",",$post_array);
 $post_count = count($post_explode);
@@ -41,7 +47,7 @@ date_default_timezone_set("America/Los_Angeles");
 $date_added = date("Y/m/d");
 $time_added = time(); 
 
-$query = $conn->query("INSERT INTO notifications VALUES ('', '3', '$username', '$post_sender', '$last_id', '$id', '$time_added', '$date_added')");
+$query = $conn->query("INSERT INTO notifications VALUES ('', '3', '$usernameid', '$post_senderid', '$last_id', '$id', '$time_added', '$date_added')");
 
 echo "$comment";
 ?>
