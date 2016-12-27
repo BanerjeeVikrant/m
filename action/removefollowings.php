@@ -60,7 +60,7 @@ for ($i=0; $i < $followersArrayCount; $i++) {
 $followersNow = join(',',$followersArrayNow);
 
 
-$sql = "UPDATE users SET followers='$followersNow' WHERE username='$remove'";
+$sql = "UPDATE users SET followers='$followersNow' WHERE id='$remove'";
 
 $removeFollowersQuery = $conn->query($sql);
 ?>
