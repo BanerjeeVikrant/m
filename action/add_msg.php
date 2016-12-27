@@ -47,7 +47,7 @@ if (isset($_POST['sendmsg'])) {
 	$j = 0;
 
 	for ($i=0; $i < $dmfriendsArrayCount; $i++) {
-		if (strcasecmp($dmfriendsArray[$i], $sendingtoid) != 0) {
+		if ($dmfriendsArray[$i] != $sendingtoid) {
 			$dmfriendsArrayNow[$j++] = $dmfriendsArray[$i];
 		}
 	}
@@ -60,8 +60,7 @@ if (isset($_POST['sendmsg'])) {
 	}
 
 
-	$sql = "UPDATE users SET dmfriends='$dmfriendsNow1' WHERE username='$usernameid'";
-
+	$sql = "UPDATE users SET dmfriends='$dmfriendsNow1' WHERE id='$usernameid'";
 	$removeFriendsQuery = $conn->query($sql);
 
 
@@ -71,7 +70,9 @@ if (isset($_POST['sendmsg'])) {
 	$j = 0;
 
 	for ($i=0; $i < $dmfriends2ArrayCount; $i++) {
+		if ($dmfriends2Array[$i] != $usernameid) {
 		$dmfriends2ArrayNow[$j++] = $dmfriends2Array[$i];
+		}
 	}
 	$dmfriends2Now = join(',',$dmfriends2ArrayNow);
 
@@ -82,7 +83,7 @@ if (isset($_POST['sendmsg'])) {
 		$dmfriends2Now1 = $usernameid . "," . $dmfriends2Now;
 	}
 
-	$sql = "UPDATE users SET dmfriends='$dmfriends2Now1' WHERE username='$sendingtoid'";
+	$sql = "UPDATE users SET dmfriends='$dmfriends2Now1' WHERE id='$sendingtoid'";
 
 	$removeFriendsQuery = $conn->query($sql);
 }

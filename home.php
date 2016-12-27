@@ -2248,7 +2248,7 @@ document.onreadystatechange = function () {
 	          								disable_msg_update = true;
 	          								var msgText = $("#sendingText").val();
 	          								var sendingToId = $("#sendingText").attr("sending-to");	
-	          								$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function() {disable_msg_update = false;});	
+	          								$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function(data) {disable_msg_update = false;});	
 	          								$("#sendingText").val("");    	
 	          							}
 	          						});
@@ -2805,7 +2805,7 @@ document.onreadystatechange = function () {
 	          				disable_msg_update = true;
 	          				var msgText = $("#sendingText").val();
 	          				var sendingToId = $("#sendingText").attr("sending-to");	
-	          				$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function() {disable_msg_update = false;});	
+	          				$.post( "action/add_msg.php", { sendmsg: msgText, sendto: sendingToId }, function(data) {disable_msg_update = false;});	
 	          				$("#sendingText").val("");    	
 	          			}
 	          		});
