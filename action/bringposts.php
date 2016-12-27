@@ -362,7 +362,8 @@ function identifyTagsInMsg($msg) {
 
 
                         $commentShownBox
-                        <div class = 'old-comment-box'>";
+                        <div class = 'old-comment-box'>
+                        hidid";
                         for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
                             $value = $commentsArray[$i];
                             $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
