@@ -3,6 +3,9 @@
 ini_set('session.cookie_lifetime', 60 * 60 * 24 * 7);
 session_start();
 $username = $_SESSION['user_login'];
+$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+$row = $query->fetch_assoc();
+$usernameid = $row['id'];
 
 ?>
 <?php
@@ -30,7 +33,7 @@ $username = $_SESSION['user_login'];
         $name_array_explode = explode(",", $name_array);
     }
     foreach ($name_array_explode as $value) {
-        $result = $conn->query("SELECT * FROM users WHERE username='$value'");
+        $result = $conn->query("SELECT * FROM users WHERE id='$value'");
         $row = $result->fetch_assoc();
         if ( strcasecmp($row["username"],$username) !=0 ) {
                 $chat_profile_pic = $row["profile_pic"];
