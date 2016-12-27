@@ -365,6 +365,7 @@ function identifyTagsInMsg($msg) {
                         <div class = 'old-comment-box'>";
 
     					for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
+                            echo "<h1>Inside it works here</h1>";
                             $value = $commentsArray[$i];
     						$getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
     						$getCommentRow = $getCommentQuery->fetch_assoc();
@@ -374,6 +375,7 @@ function identifyTagsInMsg($msg) {
     						$getfetch = $getUser->fetch_assoc();
     						$userpic = $getfetch['profile_pic'];
                             $commentpostedbyusr = $getfetch['username'];
+                            echo "<h1>It also works here</h1>";
     						echo "                
     						<div style = 'position: relative;'>                        
     							<div class = 'comment-body'>
@@ -394,6 +396,7 @@ function identifyTagsInMsg($msg) {
                         </div>
                         ";
                         for ($i = max(0,$commentsCount - $defaultCommentsCount); $i < $commentsCount; $i++) {
+                            echo "<h1>It also also works here</h1>";
                             $value = $commentsArray[$i];
                             $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
                             $getCommentRow = $getCommentQuery->fetch_assoc();
@@ -403,6 +406,7 @@ function identifyTagsInMsg($msg) {
                             $getfetch = $getUser->fetch_assoc();
                             $userpic = $getfetch['profile_pic'];
                             $commentpostedbyusr = $getfetch['username'];
+                            echo "<h1>It also also also works here</h1>";
                             echo "                
                             <div style = 'position: relative;'>                        
                                 <div class = 'comment-body'>
