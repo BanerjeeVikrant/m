@@ -4,6 +4,9 @@
 session_start();
 if (isset($_SESSION['user_login'])) {
     $username = $_SESSION['user_login'];
+    $query = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $row = $query->fetch_assoc();
+    $usernameid = $row['id'];
 }
 else{
     $username = "";
@@ -15,7 +18,7 @@ else{
 
 $offset = $_GET['o'];
 
-$sql =  "SELECT * FROM notifications WHERE toUser='$username' AND fromUser != '$username' ORDER BY id DESC LIMIT $offset,20";
+$sql =  "SELECT * FROM notifications WHERE toUser='$usernameid' AND fromUser != '$usernameid' ORDER BY id DESC LIMIT $offset,20";
 
 $getposts = $conn->query($sql) or die(mysql_error());
 
@@ -30,7 +33,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $commentId = $row['comment_id'];
             $postId = $row['post_id'];
 
-            $getFrom = $conn->query("SELECT * FROM users WHERE username='$fromUser'");
+            $getFrom = $conn->query("SELECT * FROM users WHERE id='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
 
             $fromPic = $getInfo['profile_pic'];
