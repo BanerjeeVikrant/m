@@ -365,7 +365,7 @@ function identifyTagsInMsg($msg) {
     						$getCommentRow = $getCommentQuery->fetch_assoc();
     						$commentPost = $getCommentRow['comment'];
     						$commentpostedby =  $getCommentRow['from'];
-    						$getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
+    						$getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
     						$getfetch = $getUser->fetch_assoc();
     						$userpic = $getfetch['profile_pic'];
     						echo "                

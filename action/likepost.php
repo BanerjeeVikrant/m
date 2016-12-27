@@ -33,10 +33,10 @@ if ($check->num_rows == 1) {
 
 
 if($likedby == "" || $likedby == NULL){
-	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$username' WHERE id='$id'");
+	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$usernameid' WHERE id='$id'");
 }
 else{
-	$addedList = $likedby . "," . $username;
+	$addedList = $likedby . "," . $usernameid;
 	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$addedList' WHERE id='$id'");
 }
 
