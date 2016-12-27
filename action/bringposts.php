@@ -177,7 +177,7 @@ function identifyTagsInMsg($msg) {
     		else{
     			$numberLikes = "";
     		}
-    		if(in_array($username, $likedbyArray)){
+    		if(in_array($usernameid, $likedbyArray)){
     			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$id' class = 'liked' onclick = 'unlikePost($id);'></div></div>";
     		}
     		else{
@@ -232,6 +232,11 @@ function identifyTagsInMsg($msg) {
     				}
     				$date_added = $row['date_added'];
     				$added_by = $row['added_by'];
+
+                    $query = $conn->query("SELECT username FROM users WHERE id='$added_by'");
+                    $row = $query->fetch_assoc();
+                    $added_by_user = $row['username'];
+
     				$time_added = $row['time_added'];
     				$username_posted_to = $row['user_posted_to'];
     				$commentsid = $row['commentsid'];
@@ -279,7 +284,7 @@ function identifyTagsInMsg($msg) {
                         $admincode = '<font style="font-size: 9px;position: relative;top: 5px;left: -2px;color: #1d2d4a;">Help</font>';
                     }
 
-    				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
+    				$topName = "<a href = 'profile.php?u=$added_by_user' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
     				
 
     				$commentsArray = [];
