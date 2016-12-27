@@ -33,7 +33,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $commentId = $row['comment_id'];
             $postId = $row['post_id'];
 
-            $getFrom = $conn->query("SELECT * FROM users WHERE username='$fromUser'");
+            $getFrom = $conn->query("SELECT * FROM users WHERE id='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
 
             $fromPic = $getInfo['profile_pic'];
