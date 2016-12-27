@@ -363,33 +363,31 @@ function identifyTagsInMsg($msg) {
 
                         $commentShownBox
                         <div class = 'old-comment-box'>";
-
-    					for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
+                        for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
                             $value = $commentsArray[$i];
-    						$getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
-    						$getCommentRow = $getCommentQuery->fetch_assoc();
-    						$commentPost = $getCommentRow['comment'];
-    						$commentpostedby =  $getCommentRow['from'];
-    						$getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
-    						$getfetch = $getUser->fetch_assoc();
-    						$userpic = $getfetch['profile_pic'];
-                            $commentpostedbyusr = $getfetch['username'];
-    						echo "                
-    						<div style = 'position: relative;'>                        
-    							<div class = 'comment-body'>
-    								<div class = 'comments-img'></div>
-    								<div class = 'comment-area'>
-    									<div style = 'position: relative;'>
-    										<div class = 'commentPosted'>
-    											<a style='position: relative;' href = 'profile.php?u=$commentpostedbyusr'>$commentpostedbyusr</a>&nbsp;&nbsp;&nbsp;$commentPost
-    										</div>
-    									</div>
-    								</div>
-    							</div>
-    						</div>
-
-    						";
-    					}
+                            $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
+                            $getCommentRow = $getCommentQuery->fetch_assoc();
+                            $commentPost = $getCommentRow['comment'];
+                            $commentpostedby =  $getCommentRow['from'];
+                            $getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
+                            $getfetch = $getUser->fetch_assoc();
+                            $userpic = $getfetch['profile_pic'];
+                            $usr = $getfetch['username'];
+                            echo "                
+                            <div style = 'position: relative;'>                        
+                                <div class = 'comment-body'>
+                                    <div class = 'comments-img'></div>
+                                    <div class = 'comment-area'>
+                                        <div style = 'position: relative;'>
+                                            <div class = 'commentPosted'>
+                                                <a style='position: relative;' href = 'profile.php?u=$usr'>$usr</a>&nbsp;&nbsp;&nbsp;$commentPost
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ";
+                        }
                         echo "
                         </div>
                         ";
@@ -402,7 +400,7 @@ function identifyTagsInMsg($msg) {
                             $getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
                             $getfetch = $getUser->fetch_assoc();
                             $userpic = $getfetch['profile_pic'];
-                            $commentpostedbyusr = $getfetch['username'];
+                            $usr = $getfetch['username'];
                             echo "                
                             <div style = 'position: relative;'>                        
                                 <div class = 'comment-body'>
@@ -410,15 +408,15 @@ function identifyTagsInMsg($msg) {
                                     <div class = 'comment-area'>
                                         <div style = 'position: relative;'>
                                             <div class = 'commentPosted'>
-                                                <a style='position: relative;' href = 'profile.php?u=$commentpostedbyusr'>$commentpostedbyusr</a>&nbsp;&nbsp;&nbsp;$commentPost
+                                                <a style='position: relative;' href = 'profile.php?u=$usr'>$usr</a>&nbsp;&nbsp;&nbsp;$commentPost
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             ";
                         }
+
 
     					echo "        
     				</div>
