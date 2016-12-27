@@ -106,11 +106,14 @@ if($reported_ids->num_rows > 0) {
             }
             $date_added = $row['date_added'];
             $added_by = $row['added_by'];
+            $query = $conn->query("SELECT * FROM users WHERE id='$added_by'");
+            $row_fetch = $query->fetch_assoc();
+            $added_by_user = $row_fetch['username'];
             $time_added = $row['time_added'];
             $username_posted_to = $row['user_posted_to'];
             $commentsid = $row['commentsid'];
 
-            $sql = "SELECT * FROM users WHERE username='$added_by'"; 
+            $sql = "SELECT * FROM users WHERE id='$added_by'"; 
             $result = $conn->query($sql);
             $pic_row  = $result->fetch_assoc();
             $userpic =  $pic_row['profile_pic'];
@@ -139,7 +142,7 @@ if($reported_ids->num_rows > 0) {
             if ($admin) {
                 $admincode = '<font style="font-size: 9px;position: relative;top: 5px;left: -2px;color: #1d2d4a;">Help</font>';
             }
-            $topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
+            $topName = "<a href = 'profile.php?u=$added_by_user' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
             echo "
             <div class = 'profile-post-$id' style='display:inline-block;'>
             <div class = 'profile-post' homeid='$id'>

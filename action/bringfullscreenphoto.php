@@ -6,6 +6,9 @@ require "../system/helpers.php";
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+    $query = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $row = $query->fetch_assoc();
+    $usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -62,10 +65,10 @@ if(isset($_GET['id'])){
 		$photoSender = $row['username'];
 		$pic = "<img src = '$photo_link' class = 'posted-pic'></img>";
 
-		$getUser = $conn->query("SELECT * FROM users WHERE username='$photoSender'");
+		$getUser = $conn->query("SELECT * FROM users WHERE id='$photoSender'");
 		$getU = $getUser->fetch_assoc();
 
-		$time_added = 
+		$time_added = time();
 		$date_added = date("m/d/Y");
 		$userpic = $getU['profile_pic'];
 		$firstname = $getU['first_name'];
@@ -97,7 +100,7 @@ if(isset($_GET['id'])){
     		else{
     			$numberLikes = "";
     		}
-    		if(in_array($username, $likedbyArray)){
+    		if(in_array($usernameid, $likedbyArray)){
     			$userliked = "<div class = 'like-btn-div'><div id='like-btn-$postid' class = 'liked' onclick = 'unlikePost($postid);'></div></div>";
     		}
     		else{
@@ -153,9 +156,10 @@ if(isset($_GET['id'])){
     				$username_posted_to = $row['user_posted_to'];
     				$commentsid = $row['commentsid'];
 
-    				$sql = "SELECT * FROM users WHERE username='$added_by'"; 
+    				$sql = "SELECT * FROM users WHERE id='$added_by'"; 
     				$result = $conn->query($sql);
     				$pic_row  = $result->fetch_assoc();
+                    $added_by_user = $pic_row['username'];
     				$userpic =  $pic_row['profile_pic'];
     				$usersex = $pic_row['sex'];
                     $admin = $pic_row['admin'];
@@ -196,7 +200,7 @@ if(isset($_GET['id'])){
                         $admincode = '<font style="font-size: 9px;position: relative;top: 5px;left: -2px;color: #1d2d4a;">Help</font>';
                     }
 
-    				$topName = "<a href = 'profile.php?u=$added_by' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
+    				$topName = "<a href = 'profile.php?u=$added_by_user' class = 'samepostedby'>$userfirstname $userlastname $admincode</a>";
     				
 
     				$commentsArray = [];
@@ -286,9 +290,10 @@ if(isset($_GET['id'])){
     						$getCommentRow = $getCommentQuery->fetch_assoc();
     						$commentPost = $getCommentRow['comment'];
     						$commentpostedby =  $getCommentRow['from'];
-    						$getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
+    						$getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
     						$getfetch = $getUser->fetch_assoc();
     						$userpic = $getfetch['profile_pic'];
+                            $commentpostedby_user = $getfetch['username'];
     						echo "                
     						<div style = 'position: relative;'>                        
     							<div class = 'comment-body'>
@@ -296,7 +301,7 @@ if(isset($_GET['id'])){
     								<div class = 'comment-area'>
     									<div style = 'position: relative;'>
     										<div class = 'commentPosted'>
-    											<a style='position: relative;' href = 'profile.php?u=$commentpostedby'>$commentpostedby</a>&nbsp;&nbsp;&nbsp;$commentPost
+    											<a style='position: relative;' href = 'profile.php?u=$commentpostedby_user'>$commentpostedby_user</a>&nbsp;&nbsp;&nbsp;$commentPost
     										</div>
     									</div>
     								</div>
@@ -314,9 +319,10 @@ if(isset($_GET['id'])){
                             $getCommentRow = $getCommentQuery->fetch_assoc();
                             $commentPost = $getCommentRow['comment'];
                             $commentpostedby =  $getCommentRow['from'];
-                            $getUser = $conn->query("SELECT * FROM users WHERE username = '$commentpostedby'");
+                            $getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
                             $getfetch = $getUser->fetch_assoc();
                             $userpic = $getfetch['profile_pic'];
+                            $commentpostedby_user = $getfetch['username'];
                             echo "                
                             <div style = 'position: relative;'>                        
                                 <div class = 'comment-body'>
@@ -324,7 +330,7 @@ if(isset($_GET['id'])){
                                     <div class = 'comment-area'>
                                         <div style = 'position: relative;'>
                                             <div class = 'commentPosted'>
-                                                <a style='position: relative;' href = 'profile.php?u=$commentpostedby'>$commentpostedby</a>&nbsp;&nbsp;&nbsp;$commentPost
+                                                <a style='position: relative;' href = 'profile.php?u=$commentpostedby_user'>$commentpostedby_user</a>&nbsp;&nbsp;&nbsp;$commentPost
                                             </div>
                                         </div>
                                     </div>
