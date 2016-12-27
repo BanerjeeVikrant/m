@@ -4,6 +4,9 @@
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+    $query = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $row = $query->fetch_assoc();
+    $usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -28,6 +31,7 @@ if (isset($_GET['u'])) {
 	if ($check->num_rows == 1) {
 
 		$get = $check->fetch_assoc();
+        $profileUserid = $get['profileUserid'];
 		$activatedornot = $get['activated'];
 		if($activatedornot == '0'){
 			exit("ERROR 5718 No User exits. <a href = 'profile.php?u=$username'>Your profile</a>");
@@ -97,14 +101,14 @@ if (!isset($_GET['u'])) {
 	$yourfollowing_arr =  explode(',',$yourfollowing);
 	$yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
     if (!$group) {
-    	$sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$username' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,20";
+    	$sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,20";
     }
     else {
         $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,20";
     }
    
 } else {
-	$sql =  "SELECT * FROM posts WHERE (added_by = '$profileUser' AND posted_to = '1') OR (user_posted_to = '$profileUser') ORDER BY id DESC LIMIT $offset,20";
+	$sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,20";
 
 }
 $getposts = $conn->query($sql) or die(mysql_error());
