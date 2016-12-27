@@ -3,6 +3,9 @@
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -19,6 +22,7 @@ if (isset($_POST['sendmsg'])) {
 	$getSender = $conn->query("SELECT * FROM users WHERE id = '$sendto'");
 	$get = $getSender->fetch_assoc();
 	$sendingto = $get['username'];
+	$sendingtoid = $get['id'];
 	$dmfriends2 = $get['dmfriends'];
 
 	$getSender = $conn->query("SELECT * FROM users WHERE username = '$username'");
@@ -43,20 +47,20 @@ if (isset($_POST['sendmsg'])) {
 	$j = 0;
 
 	for ($i=0; $i < $dmfriendsArrayCount; $i++) {
-		if (strcasecmp($dmfriendsArray[$i], $sendingto) != 0) {
+		if (strcasecmp($dmfriendsArray[$i], $sendingtoid) != 0) {
 			$dmfriendsArrayNow[$j++] = $dmfriendsArray[$i];
 		}
 	}
 	$dmfriendsNow = join(',',$dmfriendsArrayNow);
 	if($dmfriendsNow == ""){
-		$dmfriendsNow1 = $sendingto;
+		$dmfriendsNow1 = $sendingtoid;
 	}
 	else{
-		$dmfriendsNow1 = $sendingto . "," . $dmfriendsNow;
+		$dmfriendsNow1 = $sendingtoid . "," . $dmfriendsNow;
 	}
 
 
-	$sql = "UPDATE users SET dmfriends='$dmfriendsNow1' WHERE username='$username'";
+	$sql = "UPDATE users SET dmfriends='$dmfriendsNow1' WHERE username='$usernameid'";
 
 	$removeFriendsQuery = $conn->query($sql);
 
@@ -67,20 +71,18 @@ if (isset($_POST['sendmsg'])) {
 	$j = 0;
 
 	for ($i=0; $i < $dmfriends2ArrayCount; $i++) {
-		if (strcasecmp($dmfriends2Array[$i], $username) != 0) {
-			$dmfriends2ArrayNow[$j++] = $dmfriends2Array[$i];
-		}
+		$dmfriends2ArrayNow[$j++] = $dmfriends2Array[$i];
 	}
 	$dmfriends2Now = join(',',$dmfriends2ArrayNow);
-	echo "<h1>$dmfriends2Now</h1>";
+
 	if($dmfriends2Now == ""){
-		$dmfriends2Now1 = $username;
+		$dmfriends2Now1 = $usernameid;
 	}
 	else{
-		$dmfriends2Now1 = $username . "," . $dmfriends2Now;
+		$dmfriends2Now1 = $usernameid . "," . $dmfriends2Now;
 	}
 
-	$sql = "UPDATE users SET dmfriends='$dmfriends2Now1' WHERE username='$sendingto'";
+	$sql = "UPDATE users SET dmfriends='$dmfriends2Now1' WHERE username='$sendingtoid'";
 
 	$removeFriendsQuery = $conn->query($sql);
 }
