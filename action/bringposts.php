@@ -236,7 +236,7 @@ function identifyTagsInMsg($msg) {
     				$username_posted_to = $row['user_posted_to'];
     				$commentsid = $row['commentsid'];
 
-    				$sql = "SELECT * FROM users WHERE username='$added_by'"; 
+    				$sql = "SELECT * FROM users WHERE id='$added_by'"; 
     				$result = $conn->query($sql);
     				$pic_row  = $result->fetch_assoc();
     				$userpic =  $pic_row['profile_pic'];

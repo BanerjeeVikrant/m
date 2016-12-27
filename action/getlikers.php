@@ -15,7 +15,10 @@ $likedbyArray = explode(",",$likedby);
 
 $likedbyFull = "<img src='img/liked-paw.png' width=18> <span class='likedby-names'>Liked by ";
 for ($i=0;$i<count($likedbyArray);$i++) {
-    $u = $likedbyArray[$i];
+    $user = $likedbyArray[$i];
+    $query = $conn->query("SELECT id FROM users WHERE id='$user'");
+    $row = $query->fetch_assoc();
+    $u = $row['id'];
     $likedbyFull = $likedbyFull . "<a style='color:black;font-style: italic' href='profile.php?u=$u'>" . $u . "</a>, ";
 }
 $likedbyFull = rtrim($likedbyFull, ", ");  //Trim ", " from end of string
