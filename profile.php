@@ -1300,7 +1300,10 @@ document.onreadystatechange = function () {
 	    				<button id = "follow" class = "unfollow" onclick="removeFollowing();">Unfollow</button>
 	    				';
 	    			}else{
-	    				echo $followersArray;
+	    				echo $followersArray[0];
+	    				echo $followersArray[1];
+	    				echo $followersArray[2];
+	    				echo $followersArray[3];
 	    				echo '
 	    				<button id = "follow" class = "follow" onclick="addFollowing();">Follow</button>
 	    				';
