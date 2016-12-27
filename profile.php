@@ -1357,7 +1357,7 @@ document.onreadystatechange = function () {
 	    			</div>
 	    			<div class="photo-cover">
 	    			<?php
-	    				$getphotos = $conn->query("SELECT * FROM photos WHERE id='$profileUserid' ORDER BY id DESC");
+	    				$getphotos = $conn->query("SELECT * FROM photos WHERE username='$profileUserid' ORDER BY id DESC");
 
 	    				if($getphotos->num_rows > 0) {
 	    					while ($row = $getphotos->fetch_assoc()) {
