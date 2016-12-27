@@ -31,7 +31,7 @@ if (isset($_GET['u'])) {
 	if ($check->num_rows == 1) {
 
 		$get = $check->fetch_assoc();
-        $profileUserid = $get['profileUserid'];
+        $profileUserid = $get['id'];
 		$activatedornot = $get['activated'];
 		if($activatedornot == '0'){
 			exit("ERROR 5718 No User exits. <a href = 'profile.php?u=$username'>Your profile</a>");
