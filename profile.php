@@ -1295,15 +1295,10 @@ document.onreadystatechange = function () {
 	    		<?php
 	    		if(strcasecmp($username,$profileUser) != 0) { // non profile user:  strings differ
 	    			if(in_array($usernameid, $followersArray)){
-	    				echo $followersArray;
 	    				echo '
 	    				<button id = "follow" class = "unfollow" onclick="removeFollowing();">Unfollow</button>
 	    				';
 	    			}else{
-	    				echo $followersArray[0];
-	    				echo $followersArray[1];
-	    				echo $followersArray[2];
-	    				echo $followersArray[3];
 	    				echo '
 	    				<button id = "follow" class = "follow" onclick="addFollowing();">Follow</button>
 	    				';
@@ -1719,7 +1714,7 @@ document.onreadystatechange = function () {
 
 	    		function removeFollowing() {
 
-	    			var text = <?php echo '"'.$profileUser.'"'; ?>;
+	    			var text = <?php echo '"'.$profileUserid.'"'; ?>;
 	    			var addurl = "action/removefollowings.php?rem="+text;
 
 	    			$.ajax({url: addurl, success: function(){

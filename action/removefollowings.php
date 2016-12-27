@@ -5,6 +5,9 @@ require "../system/connect.php";
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -39,7 +42,7 @@ $sql = "UPDATE users SET following='$followingNow' WHERE username='$username'";
 $removeFollowingQuery = $conn->query($sql);
 
 /*-----------------*/
-$check = $conn->query("SELECT * FROM users WHERE username='$remove'");
+$check = $conn->query("SELECT * FROM users WHERE id='$remove'");
 if ($check->num_rows == 1) {
 	$get = $check->fetch_assoc();
 	$followers = $get['followers'];
