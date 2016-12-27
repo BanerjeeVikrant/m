@@ -13,6 +13,9 @@ if (isset($_SESSION['user_login'])) {
 	$time = time();
 	$sql = "UPDATE users SET last_online_time = '$time', online = '1' WHERE username = '$username'";
 	$update = $conn->query($sql);
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -115,6 +118,7 @@ if ($check->num_rows == 1) {
 	}
 	$dmfriends =  $get['dmfriends'];
 	$dmfriendsArray = explode(",", $dmfriends);
+	$dmfriendsCount = count($dmfriendsArray);
 
 	$last_online_date = $get['last_online_date'];
 	$last_online_time = $get['last_online_time'];
@@ -205,7 +209,7 @@ if (isset($_POST['feedback'])) {
 if (isset($_POST['groupname'])) {
 	if ($admin) {
 		$name = @$_POST['groupname'];
-		$sqlcommand = "INSERT INTO groups VALUES ('$name', '$username', '',  '')";
+		$sqlcommand = "INSERT INTO groups VALUES ('$name', '$usernameid', '',  '')";
 		$query = $conn->query($sqlcommand);
 	} else {
 		echo "Permission denied";
@@ -223,7 +227,7 @@ if (isset($_POST['crushpost'])) {
 		$added_by = $username;
 		
 
-		$sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$added_by', '', '$time_added', '$date_added','')";
+		$sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$usernameid', '', '$time_added', '$date_added','')";
 		$query = $conn->query($sqlcommand);
 	}
 	header("Location: home.php?tab=c");
@@ -281,7 +285,7 @@ if (isset($_POST['post'])) {
 		$added_by = $username;
 		
 		//(`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`)
-		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', '', '', '', '0', '', '', '$view_group_id')";
+		$sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', '', '', '', '0', '', '', '$view_group_id')";
 		if ($conn->query($sqlcommand) === TRUE) {
 			$last_id = $conn->insert_id;
 			$words_array = explode(" ", $post);
@@ -345,7 +349,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			}
 		}
 
-		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$added_by', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$rand_pic_name', '', '', '0', '', '', '$view_group_id')";
+		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$rand_dir_name/$rand_pic_name', '', '', '0', '', '', '$view_group_id')";
 
 		if ($conn->query($sql) === TRUE) {
 			$last_id = $conn->insert_id;
@@ -377,7 +381,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		}
 
 
-		$sql = "INSERT INTO photos VALUES ('', '$username', 'userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name', '$maxid')";
+		$sql = "INSERT INTO photos VALUES ('', '$usernameid', 'userdata/pictures/$rand_dir_name/thumbnail/$rand_pic_name', '$maxid')";
 		$profile_pic_query = $conn->query($sql);
 
 	}
@@ -1851,7 +1855,11 @@ document.onreadystatechange = function () {
 	          	</div>
 	          </div>
 	          <div class="message-content">
-	          	<div class="add-people-tip">Add People</div>
+	          	<?php
+	          		if($dmfriendsCount < 5){
+	          			echo '<div class="add-people-tip">Add People</div>';
+	          		}
+	          	?>
 	          	<div class="add-people" id="add-people">
 	          		<div class="add-people-plus glyphicon glyphicon-plus"></div>
 	          	</div>
@@ -1889,6 +1897,7 @@ document.onreadystatechange = function () {
 	          		</div>
 	          	</div>
 	          	<a href="profile.php?u=<?php echo $username; ?>"><div class="sidebody-profiletab sidebody-tab">Profile</div></a>
+	          	<a href="settings.php"><div class="sidebody-profiletab sidebody-tab">Settings</div></a>
 	          	<div class="sidebody-feedbacktab sidebody-tab">Feedback</div>
 	          	<div class="sidebody-faqtab sidebody-tab">FAQ</div>
 	          	<a href="logout.php"><div class="sidebody-logouttab sidebody-tab">Logout</div></a>
@@ -2053,12 +2062,10 @@ document.onreadystatechange = function () {
 
 	          		function deletepost(postid){
 	          			var link ='action/deletepost.php?id='+postid;
-	          			alert(link);
 	          			$.ajax({url: link, 
 	          				success: function() {
 	          					$("#profile-post-"+postid).slideUp(300);
 	          					$("#anyreport").html("");
-	          					alert('success');
 	          				},
 	          				error: function() {
 	          					alert('not deleted');

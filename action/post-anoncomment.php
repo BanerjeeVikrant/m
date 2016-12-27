@@ -4,6 +4,9 @@
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -13,7 +16,7 @@ $comment = $_POST['comment'];
 $comment = str_replace("<","&lt;",$comment);
 $comment = str_replace(">","&gt;",$comment);
 
-$sql = "INSERT INTO anoncomments VALUES ('', '$comment', '$username')";
+$sql = "INSERT INTO anoncomments VALUES ('', '$comment', '$usernameid')";
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
 } else {

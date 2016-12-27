@@ -65,6 +65,7 @@ foreach ($followingArray as $value) {
 	        continue;
 	    }
 	}
+	if($followingCount != 0){
 	echo "
 		<a href='profile.php?u=$tusername'><div class='search-layer'>
 			<div style='position:relative;display: inline-block;'>
@@ -74,5 +75,6 @@ foreach ($followingArray as $value) {
 			<div class='search-time'>Last online 3h ago</div>
 		</div></a>
 	";
+	}
 }
 ?>

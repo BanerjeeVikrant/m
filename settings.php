@@ -18,16 +18,50 @@ if($username){
 		$lastname = $get['last_name'];
 		$bio = $get['bio'];
 		$sex = $get['sex'];
-		$interests = $get['interests'];
 		$dob = $get['dob'];
-		$relationship = $get['relationship'];
-		$midschool = $get['ms'];
-		$elemschool = $get['es'];
-			
 	} 
 
 }else{
-	die("You must be <a href = '/v2/socialnetwork/'>logged in.</a>");
+	header("Location: home.php");
+}
+$updateinfo = @$_POST['updateinfo'];	
+if ($updateinfo) {
+		$result = $conn->query("SELECT * FROM users WHERE username='$username'");
+		$row = $result->fetch_assoc();
+		$username = $get['username'];
+		$firstname = $get['first_name'];
+		$lastname = $get['last_name'];
+		$bio = $get['bio'];
+			
+		if($username != $_POST['username']){
+			$username = strip_tags(@$_POST['username']);
+
+			//anoncomment
+			//comments
+			//crush
+			//groups
+			//notification touser fromuser
+			//photos
+			//added_by
+			//post added_by user_posted_to liked_by*
+			//report
+		}
+		
+		if ($_POST['firstname']) {
+			$firstname = strip_tags(@$_POST['firstname']);
+		}
+		if ($_POST['lastname']) {
+			$lastname = strip_tags(@$_POST['lastname']);
+		}
+		if ($_POST['bio']) {
+			$bio = strip_tags(@$_POST['bio']);
+		}
+		
+	
+		//Submit the form to the database
+		$sql = "UPDATE users SET username='$username', first_name='$firstname', last_name='$lastname', bio='$bio' WHERE username='$username'";
+		$info_submit_query = $conn->query($sql);
+		echo "Your profile info has been updated!";
 }
 ?>
 <!DOCTYPE html>
@@ -122,20 +156,22 @@ if($username){
 		    border: 1px solid #b1afaf;
 		    margin-top: 5px;
 		}
-		span.subject-info {
-		    position: relative;
-		    left: 25px;
-		    top: 5px;
+		.subject-info {
+		    margin-top: 5px;
+		    margin-left: 5vw;
+		    width: 95vw;
 		}
 		textarea.bio {
 		    position: relative;
-		    top: 15px;
+		    top: 5px;
 		    width: 90vw;
 		    left: 5vw;
 		    height: 100px;
 		    padding-left: 15px;
 		    padding-top: 10px;
+		    padding: 10px;
 		    resize: none;
+		    border: 1px solid #b1afaf;
 		}
 		input.save-btn {
 		    position: relative;
@@ -148,6 +184,9 @@ if($username){
 		    border: 0;
 		    border-radius: 5px;
 		    font-size: 15px;
+		}
+		.info-bio {
+		    margin-top: 15px;
 		}
 	</style>
 
@@ -164,17 +203,16 @@ if($username){
 	</div>
 	<div style="height:75px"></div>
 	<form method="POST" action="#">
-		<span class="subject-info">Username</span>
+		<div class="subject-info">Username</div>
 		<input class="info info-username" type="text" name="username" value="<?php echo $username;?>">
-		<span class="subject-info">Firstname</span>
+		<div class="subject-info">Firstname</div>
 		<input class="info info-firstname" type="text" name="firstname" value="<?php echo $firstname;?>">
-		<span class="subject-info">Lastame</span>
+		<div class="subject-info">Lastame</div>
 		<input class="info info-lastname" type="text" name="lastname" value="<?php echo $lastname;?>">
-		<span class="subject-info">Interests</span>
-		<input class="info info-interests" type="text" name="interests" value="<?php echo $interests;?>">
+		<div class="subject-info info-bio">Bio</div>
 		<textarea name="bio" class="bio"><?php echo $bio;?></textarea>
 
-		<input type="submit" name="savechanges" class="save-btn" value="Save">
+		<input type="submit" name="updateinfo" class="save-btn" value="Save">
 	</form>
 </body>
 </html>

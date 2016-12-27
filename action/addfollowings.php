@@ -4,6 +4,9 @@ require "../system/connect.php";
 session_start();
 if (isset($_SESSION['user_login'])) {
 	$username = $_SESSION['user_login'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$username'");
+	$row = $query->fetch_assoc();
+	$usernameid = $row['id'];
 }
 else{
 	$username = "";
@@ -11,6 +14,9 @@ else{
 
 if (isset($_GET['addto'])) {
 	$addto = $_GET['addto'];
+	$query = $conn->query("SELECT * FROM users WHERE username='$addto'");
+	$row = $query->fetch_assoc();
+	$addtoid = $row['id'];
 }
 
 $check = $conn->query("SELECT * FROM users WHERE username='$username'");
@@ -52,9 +58,9 @@ date_default_timezone_set("America/Los_Angeles");
 $date_added = date("Y/m/d");
 $time_added = time(); 
 
-$check = $conn->query("SELECT * FROM notifications WHERE (toUser='$addto' AND fromUser='$username')");
+$check = $conn->query("SELECT * FROM notifications WHERE (toUser='$addtoid' AND fromUser='$usernameid')");
 if ($check->num_rows == 0) {
-	$query = $conn->query("INSERT INTO notifications VALUES ('', '1', '$username', '$addto', '', '', '$time_added', '$date_added')");
+	$query = $conn->query("INSERT INTO notifications VALUES ('', '1', '$usernameid', '$addtoid', '', '', '$time_added', '$date_added')");
 }
 
 ?>
