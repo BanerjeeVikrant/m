@@ -233,13 +233,13 @@ function identifyTagsInMsg($msg) {
     				$date_added = $row['date_added'];
     				$added_by = $row['added_by'];
 
+                    $time_added = $row['time_added'];
+                    $username_posted_to = $row['user_posted_to'];
+                    $commentsid = $row['commentsid'];
+
                     $query = $conn->query("SELECT username FROM users WHERE id='$added_by'");
                     $row = $query->fetch_assoc();
                     $added_by_user = $row['username'];
-
-    				$time_added = $row['time_added'];
-    				$username_posted_to = $row['user_posted_to'];
-    				$commentsid = $row['commentsid'];
 
     				$sql = "SELECT * FROM users WHERE id='$added_by'"; 
     				$result = $conn->query($sql);
@@ -247,8 +247,8 @@ function identifyTagsInMsg($msg) {
     				$userpic =  $pic_row['profile_pic'];
     				$usersex = $pic_row['sex'];
                     $admin = $pic_row['admin'];
-
-                    $timesincestr = time_elapsed_string($time_added);
+                    $timesincestr = time_elapsed_string($time_added)
+;
 
                     // $timesincestr = '';
                     // if ($dys_since) {
@@ -362,8 +362,7 @@ function identifyTagsInMsg($msg) {
 
 
                         $commentShownBox
-                        <div class = 'old-comment-box'>
-                        hidid";
+                        <div class = 'old-comment-box'>";
                         for ($i = 0; $i < $commentsCount - $defaultCommentsCount; $i++) {
                             $value = $commentsArray[$i];
                             $getCommentQuery = $conn->query("SELECT * FROM comments WHERE id='$value' LIMIT 1");
