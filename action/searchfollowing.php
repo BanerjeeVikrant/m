@@ -41,7 +41,7 @@ if(isset($_GET['u'])){
 	}
 }
 foreach ($followingArray as $value) {
-	$sql = "SELECT * FROM users WHERE username='$value'";
+	$sql = "SELECT * FROM users WHERE id='$value'";
 	$results = $conn->query($sql);
 	$row = $results->fetch_assoc();
 	$tusername = $row["username"];
