@@ -1294,7 +1294,7 @@ document.onreadystatechange = function () {
 	    		<!---Fixx THis-->
 	    		<?php
 	    		if(strcasecmp($username,$profileUser) != 0) { // non profile user:  strings differ
-	    			if(in_array($username, $followersArray)){
+	    			if(in_array($usernameid, $followersArray)){
 	    				echo '
 	    				<button id = "follow" class = "unfollow" onclick="removeFollowing();">Unfollow</button>
 	    				';
