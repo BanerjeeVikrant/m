@@ -53,7 +53,7 @@ $followersArrayCount = count($followersArray);
 $followersArrayNow = []; 
 $j = 0;
 for ($i=0; $i < $followersArrayCount; $i++) {
-	if ($followersArray[$i] != $username) {
+	if ($followersArray[$i] != $usernameid) {
 		$followersArrayNow[$j++] = $followersArray[$i];
 	}
 }
