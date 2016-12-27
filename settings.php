@@ -61,7 +61,7 @@ if ($updateinfo) {
 		//Submit the form to the database
 		$sql = "UPDATE users SET username='$username', first_name='$firstname', last_name='$lastname', bio='$bio' WHERE username='$username'";
 		$info_submit_query = $conn->query($sql);
-		echo "Your profile info has been updated!";
+		header("Location: home.php");
 }
 ?>
 <!DOCTYPE html>

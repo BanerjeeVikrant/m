@@ -888,6 +888,7 @@ else if (isset($_FILES['pictureUpload'])) {
 		    height: 53px;
 		    padding: 13px;
 		    border-bottom: 1px solid #d7d7d7;
+		    overflow: hidden;
 		}
 		.each-user-text {
 		    position: absolute;
