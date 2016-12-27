@@ -40,18 +40,18 @@ if ($check->num_rows == 1) {
 
 
 if($following == "" || $following == NULL){
-	$sqlcommand = $conn->query("UPDATE users SET following='$addto' WHERE username='$username'");
+	$sqlcommand = $conn->query("UPDATE users SET following='$addtoid' WHERE username='$username'");
 }
 else{
-	$addedList = $following . "," . $addto;
+	$addedList = $following . "," . $addtoid;
 	$sqlcommand = $conn->query("UPDATE users SET following='$addedList' WHERE username='$username'");
 }
 
 if($followers == "" || $followers == NULL){
-	$sqlcommand = $conn->query("UPDATE users SET followers='$username' WHERE username='$addto'");
+	$sqlcommand = $conn->query("UPDATE users SET followers='$usernameid' WHERE username='$addto'");
 }
 else{
-	$addedList = $followers . "," . $username;
+	$addedList = $followers . "," . $usernameid;
 	$sqlcommand = $conn->query("UPDATE users SET followers='$addedList' WHERE username='$addto'");
 }
 date_default_timezone_set("America/Los_Angeles");
