@@ -368,6 +368,7 @@ function identifyTagsInMsg($msg) {
     						$getUser = $conn->query("SELECT * FROM users WHERE id = '$commentpostedby'");
     						$getfetch = $getUser->fetch_assoc();
     						$userpic = $getfetch['profile_pic'];
+                            $commentpostedbyusr = $getfetch['username'];
     						echo "                
     						<div style = 'position: relative;'>                        
     							<div class = 'comment-body'>
@@ -375,7 +376,7 @@ function identifyTagsInMsg($msg) {
     								<div class = 'comment-area'>
     									<div style = 'position: relative;'>
     										<div class = 'commentPosted'>
-    											<a style='position: relative;' href = 'profile.php?u=$commentpostedby'>$commentpostedby</a>&nbsp;&nbsp;&nbsp;$commentPost
+    											<a style='position: relative;' href = 'profile.php?u=$commentpostedbyusr'>$commentpostedbyusr</a>&nbsp;&nbsp;&nbsp;$commentPost
     										</div>
     									</div>
     								</div>
