@@ -466,7 +466,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	    OneSignal.push(["init", {
 	      appId: "561e88fa-6f46-4294-979c-ac24ba05e828",
 	      autoRegister: false, /* Set to true to automatically prompt visitors */
-	      subdomainName: 'https://bruinskave.onesignal.com',   
+	      subdomainName: 'bruinskave.onesignal.com',   
 	      httpPermissionRequest: {
 	        enable: true
 	      },
