@@ -459,6 +459,22 @@ else if (isset($_FILES['pictureUpload'])) {
 	<!--bootstrap 3.3.6-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
+	  <script>
+	    var OneSignal = window.OneSignal || [];
+	    OneSignal.push(["init", {
+	      appId: "561e88fa-6f46-4294-979c-ac24ba05e828",
+	      autoRegister: false, /* Set to true to automatically prompt visitors */
+	      subdomainName: 'https://bruinskave.onesignal.com',   
+	      httpPermissionRequest: {
+	        enable: true
+	      },
+	      notifyButton: {
+	          enable: true /* Set to false to hide */
+	      }
+	    }]);
+	  </script>
 	<style type="text/css">
 		*{
 			font-family: 'PT Serif Caption';
@@ -1994,6 +2010,7 @@ document.onreadystatechange = function () {
 	          	    });
 	          	});
 
+
 	          	$(".reportedfor").hide();
 	          	$(".whywarned").hide();
 
@@ -2440,26 +2457,24 @@ document.onreadystatechange = function () {
 	          			$(".search-body").hide();
 	          		});
 	          		
-	          		$("#search").keydown(function(e){
-	          			if (e.keyCode == 13) {
-	          				var searchStr = $(this).val();
-	          				var usersurl = "action/searchusers.php";
-	          				var postsurl = "action/searchposts.php";
-	          				$.get(usersurl, {search:searchStr},
-	          					function(result){
-	          						$("#search-content").html(result);
-	          						$('.search-layer').click(function(){
-	          							var username = $(this).attr('user');
-	          							window.location.href = 'profile.php?u='+username;
-	          						});
-	          						$.get(postsurl, {search:searchStr},
-	          							function(posts){
-	          								$("#search-content").append(posts);
-	          							}
-	          						);
-	          					}
-	          				);
-	          			}
+	          		$("#search").keyup(function(){
+          				var searchStr = $(this).val();
+          				var usersurl = "action/searchusers.php";
+          				var postsurl = "action/searchposts.php";
+          				$.get(usersurl, {search:searchStr},
+          					function(result){
+          						$("#search-content").html(result);
+          						$('.search-layer').click(function(){
+          							var username = $(this).attr('user');
+          							window.location.href = 'profile.php?u='+username;
+          						});
+          						$.get(postsurl, {search:searchStr},
+          							function(posts){
+          								$("#search-content").append(posts);
+          							}
+          						);
+          					}
+          				);
 	          		});
 
 	          		$("#back-searchpeople").click(function(){

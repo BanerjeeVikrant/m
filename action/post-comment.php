@@ -27,7 +27,7 @@ $id = $_POST['id'];
 $post_check = $conn->query("SELECT * FROM posts WHERE id='$id'");
 $post_check_row = $post_check->fetch_assoc();
 $post_sender = $post_check_row['added_by'];
-$query = $conn->query("SELECT * FROM users WHERE username='$post_sender'");
+$query = $conn->query("SELECT * FROM users WHERE id='$post_sender'");
 $row = $query->fetch_assoc();
 $post_senderid = $row['id'];
 $post_array = $post_check_row['commentsid'];
