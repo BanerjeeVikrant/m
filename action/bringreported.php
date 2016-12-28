@@ -171,5 +171,4 @@ if($reported_ids->num_rows > 0) {
         }
     }
 }
-
 ?>

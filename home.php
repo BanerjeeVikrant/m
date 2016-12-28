@@ -1597,7 +1597,17 @@ else if (isset($_FILES['pictureUpload'])) {
 		    height:100%;
 		    position:fixed;
 		    z-index:9999;
-		    background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25)
+		    background:url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center #1d2d4a;
+		}
+		.logo-name{
+			color: white;
+			font-size: 35px;
+			width: 100%;
+			text-align: center;
+			margin-top: calc(50vh - 100px);
+		}
+		.logo-name-b {
+		    font-size: 58px;
 		}
 	</style>
 </head>
@@ -1612,11 +1622,11 @@ document.onreadystatechange = function () {
          document.getElementById('interactive');
          document.getElementById('load').style.visibility="hidden";
          document.getElementById('contents').style.visibility="visible";
-      },1000);
+      },500000);
   }
 }
 </script>
-	<div id="load"></div>
+	<div id="load"><div class="logo-name"><b class="logo-name-b">b</b>ruincave</div></div>
 	    <div id="contents">
 	          	<div id="anyreport">
 

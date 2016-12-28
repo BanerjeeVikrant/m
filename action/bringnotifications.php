@@ -35,7 +35,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
 
             $getFrom = $conn->query("SELECT * FROM users WHERE id='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
-
+            $fromUser_urname = $getInfo['username'];
             $fromPic = $getInfo['profile_pic'];
             $fromFirst = $getInfo['first_name'];
             $fromsex = $getInfo['sex'];
@@ -70,7 +70,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 <div class='fromPicNotification' style='background-image:url($fromPic);'></div>
                 </div>
                 <div class='notificationBox'>
-                    <a href='profile.php?u=$fromUser'><span class='notifier'>$fromFirst</span></a>
+                    <a href='profile.php?u=$fromUser_urname'><span class='notifier'>$fromFirst</span></a>
                     
                     <span class='notificationInfo'>$message</span>
                     <span class='notifier-time'>$notifierTime</span>

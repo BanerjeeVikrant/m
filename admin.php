@@ -1196,45 +1196,44 @@ if ($allowed) {
 	echo "<meta http-equiv=\"refresh\" content=\"0; url=/bkm\">";
 }
 ?>
-
-<script type="text/javascript">
-	function deletepost(postid){
-		var link ='action/deletepost.php?id='+postid;
-		$.ajax({url: link, 
-			success: function() {
-				$(".profile-post-"+postid).slideUp(300);
-				$(".options-tabs-"+postid).hide();
-			},
-			error: function() {
-				alert('not deleted');
-			}
-		});
-	}
-	function warnpost(postid){
-		var link ='action/warnpost.php?id='+postid+'&for='+;
-		$.ajax({url: link, 
-			success: function() {
-				$(".profile-post-"+postid).slideUp(300);
-				$(".options-tabs-"+postid).hide();
-			},
-			error: function() {
-				alert('did not work, try again');
-			}
-		});
-	}
-	function ignorepost(postid){
-		var link ='action/ignorepost.php?id='+postid;
-		$.ajax({url: link, 
-			success: function() {
-				$(".profile-post-"+postid).slideUp(300);
-				$(".options-tabs-"+postid).hide();
-			},
-			error: function() {
-				alert('did not work, try again');
-			}
-		});
-	}
+<script type='text/javascript'>
+    function deletepost(postid){
+    	alert(postid);
+        var link ='action/deletepost.php?id='+postid;
+        $.ajax({url: link, 
+            success: function() {
+                $('.profile-post-'+postid).slideUp(300);
+                $('.options-tabs-'+postid).hide();
+            },
+            error: function() {
+                alert('not deleted');
+            }
+        });
+    }
+    function warnpost(postid){
+        var link ='action/warnpost.php?id='+postid+'&for=1';
+        $.ajax({url: link, 
+            success: function() {
+                $('.profile-post-'+postid).slideUp(300);
+                $('.options-tabs-'+postid).hide();
+            },
+            error: function() {
+                alert('did not work, try again');
+            }
+        });
+    }
+    function ignorepost(postid){
+        var link ='action/ignorepost.php?id='+postid;
+        $.ajax({url: link, 
+            success: function() {
+                $('.profile-post-'+postid).slideUp(300);
+                $('.options-tabs-'+postid).hide();
+            },
+            error: function() {
+                alert('did not work, try again');
+            }
+        });
+    }
 </script>
-
 </body>
 </html>
