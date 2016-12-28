@@ -460,21 +460,6 @@ else if (isset($_FILES['pictureUpload'])) {
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
-	  <script>
-	    var OneSignal = window.OneSignal || [];
-	    OneSignal.push(["init", {
-	      appId: "561e88fa-6f46-4294-979c-ac24ba05e828",
-	      autoRegister: false, /* Set to true to automatically prompt visitors */
-	      subdomainName: 'bruinskave.onesignal.com',   
-	      httpPermissionRequest: {
-	        enable: true
-	      },
-	      notifyButton: {
-	          enable: true /* Set to false to hide */
-	      }
-	    }]);
-	  </script>
 	<style type="text/css">
 		*{
 			font-family: 'PT Serif Caption';
