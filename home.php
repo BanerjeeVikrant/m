@@ -1604,7 +1604,7 @@ else if (isset($_FILES['pictureUpload'])) {
 			font-size: 35px;
 			width: 100%;
 			text-align: center;
-			margin-top: calc(50vh - 100px);
+			margin-top: calc(50vh - 115px);
 		}
 		.logo-name-b {
 		    font-size: 58px;
