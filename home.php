@@ -24,7 +24,16 @@ if($username == ""){
 	echo "<meta http-equiv=\"refresh\" content=\"0; url=/bkm\">";
 }
 
+$ch = curl_init();
 
+curl_setopt($ch, CURLOPT_URL,"https://pushify.com/api/authenticate");
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, "email=vikrantbanerjee5@gmail.com&pass=VB123yoyo1D!");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$server_output = curl_exec ($ch);
+
+curl_close ($ch);
 
 if ($_SESSION['user_login']){
 	$username = $_SESSION['user_login'];
