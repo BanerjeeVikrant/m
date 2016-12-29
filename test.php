@@ -1,8 +1,6 @@
-
-
 <?php
 echo "hi1";
-
+/*
 $ch = curl_init();
 
 echo "hi2";
@@ -18,4 +16,5 @@ echo "h3"
 //echo "<script>alert(".$server_output.");";
 
 curl_close ($ch);
+*/
 ?>
