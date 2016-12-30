@@ -1,7 +1,7 @@
 <?php 
 	$servername = "localhost";
 	$username1 = "root";
-	$password = "H@ll054321";
+	$password = "";
 	$dbname = "bruincaveData";
 
 

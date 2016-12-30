@@ -39,30 +39,30 @@ if (isset($_FILES['changebanner'])) {
 	if (((@$_FILES["changebanner"]["type"]=="image/jpeg") || (@$_FILES["changebanner"]["type"]=="image/png") || (@$_FILES["changebanner"]["type"]=="image/gif"))&&(@$_FILES["changebanner"]["size"] < 10485760)) {
 
 		$rand_dir_name = $username;
+		$rand_pic = generateRandomString();
+		$pic_name = $_FILES["changebanner"]["type"];
+		$pic_name_explode = explode("/", $pic_name);
+		$pic_type = $pic_name_explode[1];
+		$rand_pic_name = $rand_pic . "." . $pic_type;
 
-
-		if (file_exists("userdata/pictures/$rand_dir_name/".@$_FILES["changebanner"]["name"])){
-
-			move_uploaded_file(@$_FILES["changebanner"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["changebanner"]["name"]);
-//echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["changebanner"]["name"];
-			$profile_pic_name = @$_FILES["changebanner"]["name"];
-
-			$sql = "UPDATE users SET bannerimg='userdata/pictures/$rand_dir_name/$profile_pic_name' WHERE username='$username'";
-			$conn->query($sql);
+		if (!file_exists("userdata/pictures/$rand_dir_name")){
+			mkdir("userdata/pictures/$rand_dir_name");
+			mkdir("userdata/pictures/$rand_dir_name/thumbnail");
 		}
 
-		else {
-			if (!file_exists("userdata/pictures/$rand_dir_name")){
-				mkdir("userdata/pictures/$rand_dir_name");
+		if($pic_type == "gif"){
+			move_uploaded_file(@$_FILES["changebanner"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
+		}
+		else{
+			move_uploaded_file(@$_FILES["changebanner"]["tmp_name"], "userdata/pictures/$rand_dir_name/$rand_pic_name");
+			if (true !== ($pic_error = @image_resize("userdata/pictures/$rand_dir_name/$rand_pic_name", "userdata/pictures/$rand_dir_name/$rand_pic_name", 1000, 1000, 0))) {
+				    //echo $pic_error;
 			}
-			move_uploaded_file(@$_FILES["changebanner"]["tmp_name"],"userdata/pictures/$rand_dir_name/".$_FILES["changebanner"]["name"]);
-//echo "Uploaded and stored in: userdata/pictures/$rand_dir_name/".@$_FILES["changebanner"]["name"];
-			$profile_pic_name = @$_FILES["changebanner"]["name"];
-			$sql = "UPDATE users SET bannerimg='userdata/pictures/$rand_dir_name/$profile_pic_name' WHERE username='$username'";
-
-			$conn->query($sql);
 		}
 
+
+		$sql = "UPDATE users SET bannerimg='userdata/pictures/$rand_dir_name/$rand_pic_name' WHERE username='$username'";
+		$conn->query($sql);
 
 	}
 }
