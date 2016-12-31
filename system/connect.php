@@ -1,8 +1,8 @@
 <?php 
 	$servername = "localhost";
 	$username1 = "root";
-	$password = "H@ll054321";
-	$dbname = "bruincaveData";
+	$password = "";
+	$dbname = "bruincavedata";
 
 
 	// Create connection
