@@ -82,7 +82,7 @@ if ($user_login != "" || $username !=  "") {
 		.logo-img{
 			height: 40px;
 			width: 40px;
-			background-image: url(img/paw-logo.png);
+			background-image: url(img/bruincaveMain.png);
 			display: inline-block;
 			position: absolute;
 			left: calc(50% - 22.5px);
