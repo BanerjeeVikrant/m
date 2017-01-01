@@ -462,6 +462,7 @@ else if (isset($_FILES['pictureUpload'])) {
 	<style type="text/css">
 		*{
 			font-family: 'PT Serif Caption';
+			-webkit-overflow-scrolling: touch
 		}
 		body{
 			overflow: hidden;
