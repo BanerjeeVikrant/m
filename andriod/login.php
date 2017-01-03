@@ -36,6 +36,7 @@
     if ($userCount == 1) {
         $response["success"] = true;  
     }
+    $response["test"] = ture;
     
     echo json_encode($response);
 ?>
