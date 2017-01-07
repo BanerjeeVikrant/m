@@ -81,11 +81,10 @@
                 "picture_added": "'.$picture_added.'",
                 "time_added":'.$time_added.'
             },
-}
 ';
         }
         echo "
-    ]
+    }]
 ";
     }
 
