@@ -83,9 +83,9 @@
             //$commentsid = $row['commentsid'];
             echo "
             {
-                'id': $id,
+                'id': '$id',
                 'body': '$body',
-                'likedby': $likedby,
+                'likedby': [$likedby],
                 'picture_added': '$picture_added',
                 'time_added': '$time_added'
             },
