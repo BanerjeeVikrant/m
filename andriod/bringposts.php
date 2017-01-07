@@ -85,7 +85,6 @@
             {
                 'id': '$id',
                 'body': '$body',
-                'likedby': [$likedby],
                 'picture_added': '$picture_added',
                 'time_added': '$time_added'
             },
