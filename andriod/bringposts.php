@@ -60,7 +60,7 @@
     if($getposts->num_rows > 0) {
         echo '
 
- <h1>   "home": [';
+    "home": [';
         while ($row = $getposts->fetch_assoc()) {
 
             $id =  -1;
@@ -86,13 +86,10 @@
 ';
         }
         echo "
-    ]</h1>
+    ]
 ";
     }
 
 
 ?>
-<h1>
-Hii
-</h1>
 
