@@ -58,7 +58,7 @@
 
     if($getposts->num_rows > 0) {
         echo '
-
+{
     "home": [';
         while ($row = $getposts->fetch_assoc()) {
 
@@ -82,6 +82,7 @@
                 "picture_added": "'.$picture_added.'",
                 "time_added":'.$time_added.'
             },
+}
 ';
         }
         echo "
