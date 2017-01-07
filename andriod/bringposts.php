@@ -11,7 +11,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    echo "hi";
 
     $offset = $_POST['o'];
     $username = $_POST['user'];
