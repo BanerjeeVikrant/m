@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -11,19 +11,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $ip = "";
-
-    // Without a proper internet server $ip is not going to work
-
-    if ($_SERVER['HTTP_CLIENT_IP']!="") {
-        $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } 
-    elseif ($_SERVER['HTTP_X_FORWARDED_FOR']!="") {
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-    else {
-        $ip = $_SERVER['REMOTE_ADDR'];
-    }
+    echo "hi";
 
     $offset = $_POST['o'];
     $username = $_POST['user'];
@@ -70,9 +58,9 @@
     $getposts = $conn->query($sql) or die(mysql_error());
 
     if($getposts->num_rows > 0) {
-        echo "
-{
-    'home': [";
+        echo '
+
+ <h1>   "home": [';
         while ($row = $getposts->fetch_assoc()) {
 
             $id =  -1;
@@ -87,21 +75,24 @@
             $picture_added = $row['picture'];
             $time_added = $row['time_added'];
             //$commentsid = $row['commentsid'];
-            echo "
+            echo '
             {
-                'id': '$id',
-                'body': '$body',
-                'likedby': [$likedby],
-                'picture_added': '$picture_added',
-                'time_added': '$time_added',
+                "id": "'.$id.'",
+                "body": "'.$body.'",
+                "likedby": ['.$likedby.'],
+                "picture_added": "'.$picture_added.'",
+                "time_added": ".'$time_added.'"
             },
-";
+';
         }
         echo "
-    ]
-}";
+    ]</h1>
+";
     }
 
 
-
 ?>
+<h1>
+Hii
+</h1>
+
