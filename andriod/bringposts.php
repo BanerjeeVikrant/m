@@ -84,9 +84,6 @@
             echo "
             {
                 'id': '$id',
-                'body': '$body',
-                'picture_added': '$picture_added',
-                'time_added': '$time_added'
             },
 ";
         }
