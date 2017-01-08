@@ -60,6 +60,7 @@
         echo '
 {
     "home": [';
+    $i = 0;
         while ($row = $getposts->fetch_assoc()) {
 
             $id =  -1;
@@ -74,17 +75,30 @@
             $picture_added = $row['picture'];
             $time_added = $row['time_added'];
             //$commentsid = $row['commentsid'];
-            echo '
-            {
-                "id":'.$id.',
-                "body": "'.$body.'",
-                "picture_added": "'.$picture_added.'",
-                "time_added":'.$time_added.'
-            },
-';
+            
+            if($i == 0){
+                echo '
+                {
+                    "id":'.$id.',
+                    "body": "'.$body.'",
+                    "picture_added": "'.$picture_added.'",
+                    "time_added":'.$time_added.'
+                }
+    ';          
+                $i = $i + 1;
+            }else{
+                echo '
+                ,{
+                    "id":'.$id.',
+                    "body": "'.$body.'",
+                    "picture_added": "'.$picture_added.'",
+                    "time_added":'.$time_added.'
+                }
+    ';
+            }
         }
         echo "
-    }]
+    ]}
 ";
     }
 
