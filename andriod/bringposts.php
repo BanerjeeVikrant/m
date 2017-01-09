@@ -11,7 +11,6 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    require "../system/helpers.php";
 
     $offset = $_POST['o'];
     $username = $_POST['user'];
@@ -91,9 +90,6 @@
             $userpic =  $pic_row['profile_pic'];
             $userfirstname = $pic_row['first_name'];
             $userlastname = $pic_row['last_name'];
-            $usersex = $pic_row['sex'];
-            $admin = $pic_row['admin'];
-            $timesincestr = time_elapsed_string($time_added);
             //$commentsid = $row['commentsid'];
             
             if($i == 0){
