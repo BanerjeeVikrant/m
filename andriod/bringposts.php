@@ -11,6 +11,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
+    require "../system/helpers.php";
 
     $offset = $_POST['o'];
     $username = $_POST['user'];
