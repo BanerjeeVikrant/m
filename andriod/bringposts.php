@@ -81,7 +81,7 @@
                 {
                     "id":'.$id.',
                     "body": "'.$body.'",
-                    "picture_added": "'.$picture_added.'",
+                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "time_added":'.$time_added.'
                 }
     ';          
@@ -91,7 +91,7 @@
                 ,{
                     "id":'.$id.',
                     "body": "'.$body.'",
-                    "picture_added": "'.$picture_added.'",
+                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "time_added":'.$time_added.'
                 }
     ';
