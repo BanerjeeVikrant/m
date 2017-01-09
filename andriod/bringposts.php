@@ -74,6 +74,25 @@
             $likedby = $row['liked_by'];
             $picture_added = $row['picture'];
             $time_added = $row['time_added'];
+            $date_added = $row['date_added'];
+            $added_by = $row['added_by'];
+
+            $username_posted_to = $row['user_posted_to'];
+            $commentsid = $row['commentsid'];
+
+            $query = $conn->query("SELECT username FROM users WHERE id='$added_by'");
+            $row = $query->fetch_assoc();
+            $added_by_user = $row['username'];
+
+            $sql = "SELECT * FROM users WHERE id='$added_by'"; 
+            $result = $conn->query($sql);
+            $pic_row  = $result->fetch_assoc();
+            $userpic =  $pic_row['profile_pic'];
+            $userfirstname = $pic_row['first_name'];
+            $userlastname = $pic_row['last_name'];
+            $usersex = $pic_row['sex'];
+            $admin = $pic_row['admin'];
+            $timesincestr = time_elapsed_string($time_added);
             //$commentsid = $row['commentsid'];
             
             if($i == 0){
@@ -82,6 +101,8 @@
                     "id":'.$id.',
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                    "name": "'.$userfirstname $userlastname.'",
                     "time_added":'.$time_added.'
                 }
     ';          
@@ -92,6 +113,8 @@
                     "id":'.$id.',
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                    "name": "'.$userfirstname $userlastname.'",
                     "time_added":'.$time_added.'
                 }
     ';
