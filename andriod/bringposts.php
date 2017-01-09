@@ -93,7 +93,7 @@
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname $userlastname.'",
+                    "name": "'.$userfirstname . " " . $userlastname.'",
                     "time_added":'.$time_added.'
                 }
     ';          
@@ -105,7 +105,7 @@
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname $userlastname.'",
+                    "name": "'.$userfirstname ." ".$userlastname.'",
                     "time_added":'.$time_added.'
                 }
     ';
