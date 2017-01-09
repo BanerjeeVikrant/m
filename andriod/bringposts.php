@@ -44,14 +44,14 @@
         $yourfollowing_arr =  explode(',',$yourfollowing);
         $yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
         if (!$group) {
-            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
+            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,20";
         }
         else {
-            $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,5";
+            $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,20";
         }
        
     } else {
-        $sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,5";
+        $sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,20";
 
     }
     $getposts = $conn->query($sql) or die(mysql_error());
@@ -72,7 +72,7 @@
             $id =  $row['id'];
             $body =  $row['body'];
             $likedby = $row['liked_by'];
-            $picture_added = $row['picture'];
+            $picture_added = "";
             $time_added = $row['time_added'];
             $timestr = time_elapsed_string($time_added);
             $added_by = $row['added_by'];
@@ -82,7 +82,7 @@
             $sql = "SELECT * FROM users WHERE id='$added_by'"; 
             $result = $conn->query($sql);
             $pic_row  = $result->fetch_assoc();
-            $userpic =  $pic_row['profile_pic'];
+            $userpic =  "";
             $userfirstname = $pic_row['first_name'];
             $userlastname = $pic_row['last_name'];
             //$commentsid = $row['commentsid'];
