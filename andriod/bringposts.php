@@ -10,7 +10,7 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+    include "../system/helpers.php";
 
     $offset = $_POST['o'];
     $username = $_POST['user'];
@@ -44,14 +44,14 @@
         $yourfollowing_arr =  explode(',',$yourfollowing);
         $yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
         if (!$group) {
-            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,20";
+            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
         }
         else {
-            $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,20";
+            $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,5";
         }
        
     } else {
-        $sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,20";
+        $sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,5";
 
     }
     $getposts = $conn->query($sql) or die(mysql_error());
@@ -74,6 +74,7 @@
             $likedby = $row['liked_by'];
             $picture_added = $row['picture'];
             $time_added = $row['time_added'];
+            $timestr = time_elapsed_string($time_added);
             $added_by = $row['added_by'];
             $username_posted_to = $row['user_posted_to'];
             $commentsid = $row['commentsid'];
@@ -94,7 +95,7 @@
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
                     "name": "'.$userfirstname . " " . $userlastname.'",
-                    "time_added":'.$time_added.'
+                    "time_added":"'.$timestr.'"
                 }
     ';          
                 $i = $i + 1;
@@ -106,7 +107,7 @@
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
                     "name": "'.$userfirstname ." ".$userlastname.'",
-                    "time_added":'.$time_added.'
+                    "time_added":"'.$timestr.'"
                 }
     ';
             }
