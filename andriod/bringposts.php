@@ -72,7 +72,8 @@
             $id =  $row['id'];
             $body =  $row['body'];
             $likedby = $row['liked_by'];
-            $picture_added = $row['picture'];
+            $picture_added = "";
+            //$picture_added = $row['picture'];
             $time_added = $row['time_added'];
             $timestr = time_elapsed_string($time_added);
             $added_by = $row['added_by'];
@@ -82,7 +83,8 @@
             $sql = "SELECT * FROM users WHERE id='$added_by'"; 
             $result = $conn->query($sql);
             $pic_row  = $result->fetch_assoc();
-            $userpic =  $pic_row['profile_pic'];
+            $userpic =  "";
+            //$userpic =  $pic_row['profile_pic'];
             $userfirstname = $pic_row['first_name'];
             $userlastname = $pic_row['last_name'];
             //$commentsid = $row['commentsid'];
