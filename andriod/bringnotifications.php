@@ -3,7 +3,7 @@
 <?php 
 
 $offset = $_POST['o'];
-$username = $_POST['post'];
+$username = $_POST['user'];
 $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 $row = $query->fetch_assoc();
 $usernameid = $row['id'];
