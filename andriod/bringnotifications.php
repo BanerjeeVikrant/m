@@ -83,6 +83,9 @@ $getposts = $conn->query($sql) or die(mysql_error());
     ';
             }
 
-        }     
+        }  
+echo "
+    ]}
+";   
     }
 ?>
