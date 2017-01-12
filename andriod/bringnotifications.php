@@ -58,6 +58,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     $fromPic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
                 }
             }
+            $mix = $fromFirst . " " . $message . " " . $notifierTime;
             $fromPic = "";
             if($i == 0){
                 echo '
@@ -77,7 +78,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "id":'.$id.',
                     "body": "'.$message.'",
                     "fromPic": "http://www.bruincave.com/m/'.$fromPic.'",
-                    "fromFirst": "'.$fromFirst.'",
+                    "fromFirst": "'.$mix.'",
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
                 }
