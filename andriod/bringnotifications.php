@@ -30,10 +30,14 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $getFrom = $conn->query("SELECT * FROM users WHERE id='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
             $fromUser_urname = $getInfo['username'];
-            $fromPic = "http://www.bruincave.com/m/" . $getInfo['profile_pic'];
+            $fromPic = $getInfo['profile_pic'];
+            if($fromPic == "" || $fromPic == NULL){
+
+            }else{
+                $fromPic = "http://www.bruincave.com/m/" . $fromPic;
+            }
             $fromFirst = $getInfo['first_name'];
             $fromsex = $getInfo['sex'];
-
             $getFrom = $conn->query("SELECT * FROM comments WHERE id='$commentId'");
             $getInfo = $getFrom->fetch_assoc();
 
