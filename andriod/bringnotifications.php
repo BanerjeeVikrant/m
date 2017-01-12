@@ -30,7 +30,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $getFrom = $conn->query("SELECT * FROM users WHERE id='$fromUser'");
             $getInfo = $getFrom->fetch_assoc();
             $fromUser_urname = $getInfo['username'];
-            $fromPic = $getInfo['profile_pic'];
+            $fromPic = "http://www.bruincave.com/m/" . $getInfo['profile_pic'];
             $fromFirst = $getInfo['first_name'];
             $fromsex = $getInfo['sex'];
 
@@ -59,13 +59,12 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 }
             }
             $mix = $fromFirst . " " . $message . " " . $notifierTime;
-            $fromPic = "";
             if($i == 0){
                 echo '
                 {
                     "id":'.$id.',
                     "body": "'.$message.'",
-                    "fromPic": "http://www.bruincave.com/m/'.$fromPic.'",
+                    "fromPic": "'.$fromPic.'",
                     "fromFirst": "'.$fromFirst.'",
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
@@ -77,7 +76,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 ,{
                     "id":'.$id.',
                     "body": "'.$message.'",
-                    "fromPic": "http://www.bruincave.com/m/'.$fromPic.'",
+                    "fromPic": "'.$fromPic.'",
                     "fromFirst": "'.$mix.'",
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
