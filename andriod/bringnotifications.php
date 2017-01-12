@@ -58,6 +58,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     $fromPic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
                 }
             }
+            $fromPic = "";
             if($i == 0){
                 echo '
                 {
