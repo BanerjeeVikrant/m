@@ -39,7 +39,7 @@
     }
             echo '
 {
-    "home": [';
+    "usersMsg": [';
     $i = 0;
     foreach ($name_array_explode as $value) {
         $result = $conn->query("SELECT * FROM users WHERE id='$value'");
