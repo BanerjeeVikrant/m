@@ -106,13 +106,13 @@
                     "id":'.$chat_userid.',
                     "body": "'.$lasttext.'",
                     "fromPic": "'.$chat_profile_pic.'",
-                    "name": "'.$chat_first_name ." ".$chat_first_name.'"
+                    "name": "'.$chat_first_name." ".$chat_last_name.'"
                 }
     ';
             }
         } 
-    echo "
+    }
+echo "
     ]}
 ";
-    }
 ?>
