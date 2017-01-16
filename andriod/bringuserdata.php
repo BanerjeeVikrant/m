@@ -84,10 +84,10 @@
                     "lastname": "'.$yourlastname.'",
                     "bannerpic": "'.$yourbannerpic.'",
                     "userpic": "'.$yourprofilepic.'",
-                    "name": "'.$yourfirstname. " " .$yourlastname.'",
+                    "name": "'.$yourfirstname. " " .$yourlastname.'"
                 }  
     ]
-}   
+}
 {
     "profileuserdata": [
                 {
@@ -97,7 +97,7 @@
                     "lastname": "'.$lastname.'",
                     "bannerpic": "'.$bannerpic.'",
                     "userpic": "'.$profilepic.'",
-                    "name": "'.$firstname. " " .$lastname.'",
+                    "name": "'.$firstname. " " .$lastname.'"
                 }
     ]
 }
