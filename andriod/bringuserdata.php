@@ -93,11 +93,11 @@
                 {
 
                     "id":'.$id.',
-                    "body": "'.$body.'",
-                    "picture_added": "'.$picture_added.'",
+                    "firstname": "'.$firstname.'",
+                    "lastname": "'.$lastname.'",
+                    "bannerpic": "'.$bannerpic.'",
                     "userpic": "'.$profilepic.'",
-                    "name": "'.$userfirstname ." ".$userlastname.'",
-                    "time_added":"'.$timestr.'"
+                    "name": "'.$firstname. " " .$lastname.'",
                 }
     ]
 }
