@@ -17,7 +17,7 @@
     $profileUser = $_POST['puser'];
     $group = $_POST['group'];
 
-    if ($profileUser) {
+    if ($profileUser != "") {
         $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
         if ($check->num_rows == 1) {
 
@@ -28,7 +28,10 @@
             $followers = $get['followers'];        
             $following = $get['following'];
         }
+    }else{
+        $profileUser  == "";
     }
+
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
 
@@ -40,10 +43,10 @@
         $yourfollowing = $getuser['following'];
     }
 
-    if (!isset($profileUser)) {
+    if ($profileUser == "") {
         $yourfollowing_arr =  explode(',',$yourfollowing);
         $yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
-        if (!$group) {
+        if ($group == 0) {
             $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
         }
         else {
