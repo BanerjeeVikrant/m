@@ -87,7 +87,7 @@
                     "name": "'.$yourfirstname. " " .$yourlastname.'"
                 }  
     ]
-}
+},
 {
     "profileuserdata": [
                 {
