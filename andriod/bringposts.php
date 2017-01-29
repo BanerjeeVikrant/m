@@ -36,6 +36,7 @@
     if ($checkme->num_rows == 1) {
 
         $getuser = $checkme->fetch_assoc();
+        $yourid = $getuser['id'];
         $yourfirstname = $getuser['first_name'];
         $yourlastname = $getuser['last_name'];
         $yourprofilepic = $getuser['profile_pic'];
@@ -47,7 +48,7 @@
         $yourfollowing_arr =  explode(',',$yourfollowing);
         $yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
         if ($group == 0) {
-            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
+            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
         }
         else {
             $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,5";
@@ -99,7 +100,7 @@
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname . " " . $userlastname.'",
+                    "name": "'.$userfirstname." ".$userlastname.'",
                     "time_added":"'.$timestr.'"
                 }
     ';          
@@ -111,7 +112,7 @@
                     "body": "'.$body.'",
                     "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                     "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname ." ".$userlastname.'",
+                    "name": "'.$userfirstname." ".$userlastname.'",
                     "time_added":"'.$timestr.'"
                 }
     ';
