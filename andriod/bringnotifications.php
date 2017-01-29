@@ -8,7 +8,7 @@ $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 $row = $query->fetch_assoc();
 $usernameid = $row['id'];
 
-$sql =  "SELECT * FROM notifications WHERE toUser='$usernameid' AND fromUser != '$usernameid' ORDER BY id DESC LIMIT $offset,20";
+$sql =  "SELECT * FROM notifications WHERE toUser='$usernameid' AND fromUser != '$usernameid' ORDER BY id DESC LIMIT $offset,5";
 
 $getposts = $conn->query($sql) or die(mysql_error());
 

@@ -14,7 +14,7 @@
 
     $offset = $_POST['o'];
 
-    $sql =  "SELECT * FROM crush ORDER BY id DESC LIMIT $offset,20";
+    $sql =  "SELECT * FROM crush ORDER BY id DESC LIMIT $offset,5";
 
     $getposts = $conn->query($sql) or die(mysql_error());
 
