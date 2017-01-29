@@ -100,7 +100,7 @@ if ($checkme->num_rows == 1) {
 if (!isset($_GET['u'])) {
 	$yourfollowing_arr =  explode(',',$yourfollowing);
 	$yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
-    if (!$group) {
+    if ($group == 0) {
     	$sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$usernameid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,20";
     }
     else {
