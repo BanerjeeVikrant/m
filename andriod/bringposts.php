@@ -81,7 +81,7 @@
                 continue;
             }
             $picture_added = "";
-            //$picture_added = $row['picture'];
+            $picture_added = $row['picture'];
             $time_added = $row['time_added'];
             $timestr = time_elapsed_string($time_added);
             $added_by = $row['added_by'];
@@ -92,7 +92,8 @@
             $result = $conn->query($sql);
             $pic_row  = $result->fetch_assoc();
             $userpic =  "";
-            //$userpic =  $pic_row['profile_pic'];
+            $userpic =  $pic_row['profile_pic'];
+            
             $userfirstname = $pic_row['first_name'];
             $userlastname = $pic_row['last_name'];
             //$commentsid = $row['commentsid'];
