@@ -76,6 +76,10 @@
             $id =  $row['id'];
             $body =  $row['body'];
             $likedby = $row['liked_by'];
+            $hidden_post = $row['hidden'];
+            if($hidden_post == '1'){
+                continue;
+            }
             $picture_added = "";
             //$picture_added = $row['picture'];
             $time_added = $row['time_added'];
