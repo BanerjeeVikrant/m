@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$username = $_POST['profileUser'];
+$profileUser = $_POST['profileUser'];
 $str = $_POST['s'];
 
 function startsWith($haystack, $needle){
