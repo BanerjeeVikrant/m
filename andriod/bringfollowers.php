@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$profileUser = $_POST['profileUser'];
+$username = $_POST['profileUser'];
 $str = $_POST['s'];
 
 function startsWith($haystack, $needle){
@@ -19,7 +19,7 @@ function startsWith($haystack, $needle){
  return (strcasecmp(substr($haystack, 0, $length),$needle) == 0);
 }
 
-$check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
+$check = $conn->query("SELECT * FROM users WHERE username='$username'");
 if ($check->num_rows == 1) {
 
 	$get = $check->fetch_assoc();
