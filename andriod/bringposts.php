@@ -17,6 +17,11 @@
     $profileUser = $_POST['puser'];
     $group = $_POST['group'];
 
+    echo $offset;
+    echo $username;
+    echo $profileUsero;
+    echo $group;
+
     if ($profileUser != "") {
         $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
         if ($check->num_rows == 1) {
@@ -97,32 +102,47 @@
             $userfirstname = $pic_row['first_name'];
             $userlastname = $pic_row['last_name'];
             //$commentsid = $row['commentsid'];
-            
-            if($i == 0){
-                echo '
-                {
-                    "id":'.$id.',
-                    "body": "'.$body.'",
-                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
-                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname." ".$userlastname.'",
-                    "time_added":"'.$timestr.'"
+
+            $post = $conn->query("SELECT * FROM posts WHERE id='$id'");
+            $get_post = $post->fetch_assoc();
+
+            $commentsid = $get_post["commentsid"];
+
+            $commentsid_array = explode(",", $commentsid);
+
+                if($i == 0){
+                    /*echo '
+                    {
+                        "id":'.$id.',
+                        "body": "'.$body.'",
+                        "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                        "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                        "name": "'.$userfirstname." ".$userlastname.'",
+                        "time_added":"'.$timestr.'"
+                    ';  */
+                    $bodys = "";        
+                    foreach ($commentsid_array as $value) {
+                        $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
+                        $get_comment = $comemnt->fetch_assoc();
+
+                        $body = $get_comment['comment'];
+                        $from = $get_comment['from'];
+
+                        if($bodys != ""){
+                            $bodys = $bodys.",".$body; 
+                        }
+                        else{
+                            $bodys = $body;
+                        }
+
+                    }
+                    echo $bodys;
+
+                    $i = $i + 1;
+                }else{
+                    
                 }
-    ';          
-                $i = $i + 1;
-            }else{
-                echo '
-                ,{
-                    "id":'.$id.',
-                    "body": "'.$body.'",
-                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
-                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname." ".$userlastname.'",
-                    "time_added":"'.$timestr.'"
-                }
-    ';
-            }
-        }
+                
         echo "
     ]}
 ";
