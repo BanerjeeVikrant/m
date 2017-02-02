@@ -82,7 +82,7 @@ foreach ($followersArray as $value) {
 				"id":'.$tid.',
 		 		"username":"'.$tusername.'",
 				"profilepic":"http://www.bruincave.com/m/'.$tprofilepic.'",
-				"name":"'.$tfirstname." ".$tlastname.'"
+				"name":"'.$tfirstname." ".$tlastname.'",
 				"time":"'.$ttime.'"
 			}
 			';
@@ -93,7 +93,7 @@ foreach ($followersArray as $value) {
 				"id":'.$tid.',
 		 		"username":"'.$tusername.'",
 				"profilepic":"http://www.bruincave.com/m/'.$tprofilepic.'",
-				"name":"'.$tfirstname." ".$tlastname.'"
+				"name":"'.$tfirstname." ".$tlastname.'",
 				"time":"'.$ttime.'"
 			}
 			';
