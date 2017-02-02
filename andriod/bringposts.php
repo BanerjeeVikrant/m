@@ -146,7 +146,7 @@
                 echo'
                     "comments":"'.$bodys.'",
                     "froms":"'.$froms.'"
-                    ';      
+                    }';      
 
                 $i = $i + 1;
             }else{
@@ -187,7 +187,7 @@
                 echo'
                     "comments":"'.$bodys.'",
                     "froms":"'.$froms.'"
-                    ';
+                    }';
             }
         }
                 
