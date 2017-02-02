@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -17,16 +17,12 @@
     $profileUser = $_POST['puser'];
     $group = $_POST['group'];
 
-    echo $offset;
-    echo $username;
-    echo $profileUsero;
-    echo $group;
-
     if ($profileUser != "") {
         $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
         if ($check->num_rows == 1) {
 
             $get = $check->fetch_assoc();
+            $profileUserid = $get['id'];
             $firstname = $get['first_name'];
             $lastname = $get['last_name'];
             $profilepic = $get['profile_pic'];
@@ -110,44 +106,94 @@
 
             $commentsid_array = explode(",", $commentsid);
 
-                if($i == 0){
-                    /*echo '
-                    {
-                        "id":'.$id.',
-                        "body": "'.$body.'",
-                        "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
-                        "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                        "name": "'.$userfirstname." ".$userlastname.'",
-                        "time_added":"'.$timestr.'"
-                    ';  */
-                    $bodys = "";        
-                    foreach ($commentsid_array as $value) {
-                        $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
-                        $get_comment = $comemnt->fetch_assoc();
+            if($i == 0){
+                echo '{
+                    "id":'.$id.',
+                    "body": "'.$body.'",
+                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                    "name": "'.$userfirstname." ".$userlastname.'",
+                    "time_added":"'.$timestr.'",
+                ';  
+                $bodys = "";    
+                $froms = "";
 
-                        $body = $get_comment['comment'];
-                        $from = $get_comment['from'];
+                foreach ($commentsid_array as $value) {
+                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
 
-                        if($bodys != ""){
-                            $bodys = $bodys.",".$body; 
-                        }
-                        else{
-                            $bodys = $body;
-                        }
+                    $get_comment = $comment->fetch_assoc();
+
+                    $body = $get_comment['comment'];
+                    $from = $get_comment['from'];
+
+                    if($bodys != ""){
+                        $bodys = $bodys.",'".$body."'"; 
+                    }
+                    else{
+
+                        $bodys = "'".$body."'";
+                    }
+                    if($froms != ""){
+                        $froms = $froms.",'".$from."'"; 
+                    }
+                    else{
+
+                        $froms = "'".$from."'";
 
                     }
-                    echo $bodys;
 
-                    $i = $i + 1;
-                }else{
-                    
                 }
+                echo'
+                    "comments":"'.$bodys.'",
+                    "froms":"'.$froms.'"
+                    ';      
+
+                $i = $i + 1;
+            }else{
+                echo ',{
+                    "id":'.$id.',
+                    "body": "'.$body.'",
+                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                    "name": "'.$userfirstname." ".$userlastname.'",
+                    "time_added":"'.$timestr.'",
+                ';  
+                $bodys = "";    
+                $froms = "";
+                foreach ($commentsid_array as $value) {
+                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
+                    $get_comment = $comment->fetch_assoc();
+
+                    $body = $get_comment['comment'];
+                    $from = $get_comment['from'];
+
+                    if($bodys != ""){
+                        $bodys = $bodys.",'".$body."'"; 
+                    }
+                    else{
+
+                        $bodys = "'".$body."'";
+                    }
+                    if($froms != ""){
+                        $froms = $froms.",'".$from."'"; 
+                    }
+                    else{
+
+                        $froms = "'".$from."'";
+
+                    }
+
+                }
+                echo'
+                    "comments":"'.$bodys.'",
+                    "froms":"'.$froms.'"
+                    ';
+            }
+        }
                 
         echo "
     ]}
 ";
     }
-
-
 ?>
 

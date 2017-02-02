@@ -11,6 +11,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+include "../system/helpers.php";
+
 $username = $_POST['profileUser'];
 $str = $_POST['s'];
 
@@ -19,7 +21,7 @@ function startsWith($haystack, $needle){
  return (strcasecmp(substr($haystack, 0, $length),$needle) == 0);
 }
 
-$check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
+$check = $conn->query("SELECT * FROM users WHERE username='$username'");
 if ($check->num_rows == 1) {
 
 	$get = $check->fetch_assoc();
@@ -57,6 +59,7 @@ foreach ($followingArray as $value) {
 	$tprofilepic = $row["profile_pic"];
 	$tlastonline_date = $row["last_online_date"];
 	$tlastonline_time = $row["last_online_time"];
+	$ttime = time_elapsed_string($tlastonline_time);
 	$tsex = $row['sex'];
 	if($tprofilepic == "" || $tprofilepic == NULL){
 		if($tsex == "1"){
@@ -67,8 +70,8 @@ foreach ($followingArray as $value) {
 		}
 	}
 	$chat_both_name = $tfirstname . " " . $tlastname;
-	if (isset($_POST['s'])) {
-	    if (! (startsWith($tfirstname, $_POST['s']) || startsWith($tlastname, $_POST['s']) || startsWith($tusername, $_POST['s']) || startsWith($chat_both_name, $_POST['s']) ) ) {
+	if (isset($str)) {
+	    if (! (startsWith($tfirstname, $str) || startsWith($tlastname, $str) || startsWith($tusername, $str) || startsWith($chat_both_name, $str) ) ) {
 	        continue;
 	    }
 	}
@@ -79,8 +82,8 @@ foreach ($followingArray as $value) {
 				"id":'.$tid.',
 		 		"username":"'.$tusername.'",
 				"profilepic":"http://www.bruincave.com/m/'.$tprofilepic.'",
-				"firstname":"'.$tfirstname.'",
-				"lastname":"'.$tlastname.'"
+				"name":"'.$tfirstname." ".$tlastname.'"
+				"time":"'.$ttime.'"
 			}
 			';
 			$i = $i + 1;
@@ -90,8 +93,8 @@ foreach ($followingArray as $value) {
 				"id":'.$tid.',
 		 		"username":"'.$tusername.'",
 				"profilepic":"http://www.bruincave.com/m/'.$tprofilepic.'",
-				"firstname":"'.$tfirstname.'",
-				"lastname":"'.$tlastname.'"
+				"name":"'.$tfirstname." ".$tlastname.'"
+				"time":"'.$ttime.'"
 			}
 			';
 	    }

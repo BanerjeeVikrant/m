@@ -11,6 +11,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+include "../system/helpers.php";
+
 $username = $_POST['profileUser'];
 $str = $_POST['s'];
 
@@ -68,8 +70,8 @@ foreach ($followersArray as $value) {
 		}
 	}
 	$chat_both_name = $tfirstname . " " . $tlastname;
-	if (isset($_POST['s'])) {
-	    if (! (startsWith($tfirstname, $_POST['s']) || startsWith($tlastname, $_POST['s']) || startsWith($tusername, $_POST['s']) || startsWith($chat_both_name, $_POST['s']) ) ) {
+	if (isset($str)) {
+	    if (! (startsWith($tfirstname, $str) || startsWith($tlastname, $str) || startsWith($tusername, $str) || startsWith($chat_both_name, $str) ) ) {
 	        continue;
 	    }
 	}
