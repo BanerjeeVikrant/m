@@ -63,7 +63,7 @@
                 }
                 $chat_both_name = $chat_first_name . " " . $chat_last_name;
                 if (isset($_POST['s'])) {
-                    if (! (startsWith($chat_first_name, $_GET['s']) || startsWith($chat_last_name, $_GET['s']) || startsWith($chat_user_name, $_GET['s']) || startsWith($chat_both_name, $_GET['s']) ) ) {
+                    if (! (startsWith($chat_first_name, $_POST['s']) || startsWith($chat_last_name, $_POST['s']) || startsWith($chat_user_name, $_POST['s']) || startsWith($chat_both_name, $_POST['s']) ) ) {
                         continue;
                     }
                 }
