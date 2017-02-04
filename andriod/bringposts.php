@@ -57,7 +57,6 @@
        
     } else {
         $sql =  "SELECT * FROM posts WHERE (added_by = '$profileUserid' AND posted_to = '1') OR (user_posted_to = '$profileUserid') ORDER BY id DESC LIMIT $offset,5";
-
     }
     $getposts = $conn->query($sql) or die(mysql_error());
 
@@ -106,89 +105,40 @@
 
             $commentsid_array = explode(",", $commentsid);
 
-            if($i == 0){
-                echo '{
-                    "id":'.$id.',
-                    "body": "'.$body.'",
-                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
-                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname." ".$userlastname.'",
-                    "time_added":"'.$timestr.'",
-                ';  
-                $bodys = "";    
-                $froms = "";
-
-                foreach ($commentsid_array as $value) {
-                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
-
-                    $get_comment = $comment->fetch_assoc();
-
-                    $body = $get_comment['comment'];
-                    $from = $get_comment['from'];
-
-                    if($bodys != ""){
-                        $bodys = $bodys.",'".$body."'"; 
-                    }
-                    else{
-
-                        $bodys = "'".$body."'";
-                    }
-                    if($froms != ""){
-                        $froms = $froms.",'".$from."'"; 
-                    }
-                    else{
-
-                        $froms = "'".$from."'";
-
-                    }
-
-                }
-                echo'
-                    "comments":"'.$bodys.'",
-                    "froms":"'.$froms.'"
-                    }';      
-
-                $i = $i + 1;
-            }else{
-                echo ',{
-                    "id":'.$id.',
-                    "body": "'.$body.'",
-                    "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
-                    "userpic": "http://www.bruincave.com/m/'.$userpic.'",
-                    "name": "'.$userfirstname." ".$userlastname.'",
-                    "time_added":"'.$timestr.'",
-                ';  
-                $bodys = "";    
-                $froms = "";
-                foreach ($commentsid_array as $value) {
-                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
-                    $get_comment = $comment->fetch_assoc();
-
-                    $body = $get_comment['comment'];
-                    $from = $get_comment['from'];
-
-                    if($bodys != ""){
-                        $bodys = $bodys.",'".$body."'"; 
-                    }
-                    else{
-
-                        $bodys = "'".$body."'";
-                    }
-                    if($froms != ""){
-                        $froms = $froms.",'".$from."'"; 
-                    }
-                    else{
-
-                        $froms = "'".$from."'";
-
-                    }
-
-                }
-                echo'
-                    "comments":"'.$bodys.'",
-                    "froms":"'.$froms.'"
-                    }';
+            if($i != 0){
+                echo ',';
             }
+            echo '{
+                "id":'.$id.',
+                "body": "'.$body.'",
+                "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
+                "userpic": "http://www.bruincave.com/m/'.$userpic.'",
+                "name": "'.$userfirstname." ".$userlastname.'",
+                "time_added":"'.$timestr.'",
+            ';  
+            $commentsArr = "";
+
+            foreach ($commentsid_array as $value) {
+                $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
+
+                $get_comment = $comment->fetch_assoc();
+
+                $body = $get_comment['comment'];
+                $from = $get_comment['from'];
+                if ($commentsArr != "") {
+                    $commentsArr = $commentsArr.",";
+                }
+                $commentsArr .= "
+                                {
+                                  '$body',
+                                  '$from'
+                                }";
+            }
+            echo'
+                "comments": ["'.$commentsArr.'
+                            ]';      
+
+            $i = $i + 1;
         }
                 
         echo "
