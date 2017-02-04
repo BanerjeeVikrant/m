@@ -130,8 +130,8 @@
                 }
                 $commentsArr .= "
                                 {
-                                  '$body',
-                                  '$from'
+                                  'body':'$body',
+                                  'from':'$from'
                                 }";
             }
             echo'
