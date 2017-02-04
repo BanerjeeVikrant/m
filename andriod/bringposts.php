@@ -135,7 +135,7 @@
                                 }";
             }
             echo'
-                "comments": ["'.$commentsArr.'
+                "comments": ['.$commentsArr.'
                             ]';      
 
             $i = $i + 1;
