@@ -119,20 +119,25 @@
             $commentsArr = "";
 
             foreach ($commentsid_array as $value) {
-                $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
+                if ($value != '') {
+                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
 
-                $get_comment = $comment->fetch_assoc();
+                    $get_comment = $comment->fetch_assoc();
 
-                $body = $get_comment['comment'];
-                $from = $get_comment['from'];
-                if ($commentsArr != "") {
-                    $commentsArr = $commentsArr.",";
-                }
-                $commentsArr .= "
-                                {
-                                  'body':'$body',
-                                  'from':'$from'
-                                }";
+                    $body = $get_comment['comment'];
+                    $from = $get_comment['from'];
+                    if ($commentsArr != "") {
+                        $commentsArr = $commentsArr.",";
+                    }
+                    if ($body != "") {
+
+                        $commentsArr .= "
+                                        {
+                                          'body':'$body',
+                                          'from':'$from'
+                                        }";
+                    }
+                 }
             }
             echo'
                 "comments": ['.$commentsArr.'
