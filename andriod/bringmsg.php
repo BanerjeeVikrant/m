@@ -17,15 +17,24 @@ $offset_id = $_POST['o'];
 $me = $_POST['me'];
 $friend = $_POST['friend'];
 
-$results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friend' AND toUser='$me') OR (fromUser='$me' AND toUser='$friend')) AND (id > '$offset_id') ORDER BY id DESC LIMIT 15");
+$findMeId = $conn->query("SELECT * FROM users WHERE username='$me'");
+$findMeId_get = $findMeId->fetch_assoc();
+$meId = $findMeId_get['id'];
+
+$findFriendId = $conn->query("SELECT * FROM users WHERE username='$friend'");
+$findFriendId_get = $findFriendId->fetch_assoc();
+$friendId = $findFriendId_get['id'];
+
+$results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friendId' AND toUser='$meId') OR (fromUser='$meId' AND toUser='$friendId')) AND (id > '$offset_id') ORDER BY id DESC LIMIT 15");
 
 $n = 0;
 echo '
 {
-    "messagessend": [';
+    "messages": [';
 for($i=0; $i<$results->num_rows; $i++) {
     $row = $results->fetch_assoc();
     $message = $row['message'];
+    $userpic = "";
     $side = -1; //left or right
 
     if($n == 0){
