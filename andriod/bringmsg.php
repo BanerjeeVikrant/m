@@ -20,6 +20,9 @@ $friend = $_POST['friend'];
 $results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friend' toUser='$me') OR (fromUser='$me' toUser='$friend')) AND (id > '$offset_id') ORDER BY id DESC LIMIT 15");
 
 $n = 0;
+echo '
+{
+    "messagessend": [';
 for($i=0; $i<$results->num_rows; $i++) {
     $row = $results->fetch_assoc();
     $message = $row['message'];
@@ -44,6 +47,9 @@ for($i=0; $i<$results->num_rows; $i++) {
         ';
     }
 }
+echo "
+    ]}
+";  
 
 
 
