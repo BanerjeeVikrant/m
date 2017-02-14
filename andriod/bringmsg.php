@@ -24,6 +24,7 @@ $meId = $findMeId_get['id'];
 $findFriendId = $conn->query("SELECT * FROM users WHERE username='$friend'");
 $findFriendId_get = $findFriendId->fetch_assoc();
 $friendId = $findFriendId_get['id'];
+$userpic = "http://www.bruincave.com/m/" . $findFriendId_get['profile_pic'];
 
 $results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friendId' AND toUser='$meId') OR (fromUser='$meId' AND toUser='$friendId')) AND (id > '$offset_id') ORDER BY id DESC LIMIT 15");
 
@@ -32,10 +33,23 @@ echo '
 {
     "messages": [';
 for($i=0; $i<$results->num_rows; $i++) {
+    $side = -1;
+
     $row = $results->fetch_assoc();
     $message = $row['message'];
-    $userpic = "";
-    $side = -1; //left or right
+    $fromUser = $row['fromUser'];
+    $toUser = $row['toUser'];
+
+    
+    if($fromUser == $friendId){
+        $side = 1;
+    }
+    else{
+        $side = 0;
+    }
+    
+
+
 
     if($n == 0){
         echo '
