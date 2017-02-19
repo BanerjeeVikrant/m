@@ -26,7 +26,9 @@ $findFriendId_get = $findFriendId->fetch_assoc();
 $friendId = $findFriendId_get['id'];
 $userpic = "http://www.bruincave.com/m/" . $findFriendId_get['profile_pic'];
 
-$results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friendId' AND toUser='$meId') OR (fromUser='$meId' AND toUser='$friendId')) AND (id > '$offset_id') ORDER BY id ASC LIMIT 15");
+/*$results = $conn->query("SELECT * FROM messages WHERE ((fromUser='$friendId' AND toUser='$meId') OR (fromUser='$meId' AND toUser='$friendId')) AND (id > '$offset_id') ORDER BY id ASC LIMIT 15");*/
+
+$results = $conn->query("SELECT * FROM messages WHERE 1 ORDER BY id ASC LIMIT 15");
 
 $n = 0;
 echo '
