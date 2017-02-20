@@ -134,7 +134,7 @@
                 "userpic": "http://www.bruincave.com/m/'.$userpic.'",
                 "name": "'.$userfirstname." ".$userlastname.'",
                 "time_added":"'.$timestr.'",
-                "likedByMe":"'.$likedByMe.'",
+                "likedByMe":'.$likedByMe.',
                 
             ';  
             $commentsArr = "";
