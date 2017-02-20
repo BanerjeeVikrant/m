@@ -146,7 +146,12 @@
                     $get_comment = $comment->fetch_assoc();
 
                     $body = $get_comment['comment'];
-                    $from = $get_comment['from'];
+                    $from_ = $get_comment['from'];
+
+                    $query = $conn->query("SELECT * FROM users WHERE id='$from_'");
+                    $row = $query->fetch_assoc();
+                    $from = $row['username'];
+
                     if ($commentsArr != "") {
                         $commentsArr = $commentsArr.",";
                     }
