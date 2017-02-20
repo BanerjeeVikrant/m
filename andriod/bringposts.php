@@ -76,6 +76,25 @@
             $id =  $row['id'];
             $body =  $row['body'];
             $likedby = $row['liked_by'];
+            $likedbyArray = explode(",",$likedby);
+            $countLikes = count($likedbyArray);
+            
+            if($countLikes > 1){
+                $numberLikes = "<span class='count-likes'>$countLikes likes</span>";
+            }
+            else if($countLikes == 1){
+                $numberLikes = "<span class='count-likes'>$countLikes like</span>";
+            }
+            else{
+                $numberLikes = "";
+            }
+
+            if(in_array($usernameid, $likedbyArray)){
+                $likedByMe = true;
+            }else{
+                $likedByMe = false;
+            }
+
             $hidden_post = $row['hidden'];
             if($hidden_post == '1'){
                 continue;
@@ -115,6 +134,8 @@
                 "userpic": "http://www.bruincave.com/m/'.$userpic.'",
                 "name": "'.$userfirstname." ".$userlastname.'",
                 "time_added":"'.$timestr.'",
+                "likedByMe":"'.$likedByMe.'",
+                
             ';  
             $commentsArr = "";
 
