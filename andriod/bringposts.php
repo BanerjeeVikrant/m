@@ -90,9 +90,9 @@
             }
 
             if(in_array($usernameid, $likedbyArray)){
-                $likedByMe = true;
+                $likedByMe = 1;
             }else{
-                $likedByMe = false;
+                $likedByMe = 0;
             }
 
             $hidden_post = $row['hidden'];
