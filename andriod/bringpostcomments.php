@@ -36,12 +36,10 @@ foreach ($commentsid_array as $value) {
 	$row = $query->fetch_assoc();
 	$from = $row['username'];
 
-	$from = 12;
-
 	if($i == 0){
 		echo '
 		{
-			
+			"body:""'.$body.'",
 			"from:""'.$from.'"
 		}
 		';
@@ -49,7 +47,7 @@ foreach ($commentsid_array as $value) {
 	}else{
 		echo '
 		,{
-			
+			"body:""'.$body.'",
 			"from:""'.$from.'"
 		}
 		';
