@@ -41,7 +41,7 @@ foreach ($commentsid_array as $value) {
 	if($i == 0){
 		echo '
 		{
-			"body:""'.$body.'",
+			
 			"from:""'.$from.'"
 		}
 		';
@@ -49,7 +49,7 @@ foreach ($commentsid_array as $value) {
 	}else{
 		echo '
 		,{
-			"body:""'.$body.'",
+			
 			"from:""'.$from.'"
 		}
 		';
