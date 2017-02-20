@@ -39,16 +39,14 @@ foreach ($commentsid_array as $value) {
 	if($i == 0){
 		echo '
 		{
-			"body:""'.$body.'",
-			"from:""'.$from.'"
+			
 		}
 		';
 		$i++;
 	}else{
 		echo '
 		,{
-			"body:""'.$body.'",
-			"from:""'.$from.'"
+			
 		}
 		';
 	}
