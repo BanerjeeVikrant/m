@@ -27,7 +27,7 @@ echo '
 $i = 0;
 foreach ($commentsid_array as $value) {
 	$comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
-	$get_comment = $comemnt->fetch_assoc();
+	$get_comment = $comment->fetch_assoc();
 
 	$body = $get_comment['comment'];
 	$from_ = $get_comment['from'];
