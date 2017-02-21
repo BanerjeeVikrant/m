@@ -79,17 +79,12 @@
             $likedbyArray = explode(",",$likedby);
             $countLikes = count($likedbyArray);
             
-            if($countLikes > 1){
-                $numberLikes = "<span class='count-likes'>$countLikes likes</span>";
+            if($countLikes > 3){
+                $moreThanThreeLiker = 1;
+            }else{
+                $moreThanThreeLiker = 0;
             }
-            else if($countLikes == 1){
-                $numberLikes = "<span class='count-likes'>$countLikes like</span>";
-            }
-            else{
-                $numberLikes = "";
-            }
-
-            if(in_array($usernameid, $likedbyArray)){
+            if(in_array($yourid, $likedbyArray)){
                 $likedByMe = 1;
             }else{
                 $likedByMe = 0;
@@ -124,6 +119,14 @@
 
             $commentsid_array = explode(",", $commentsid);
 
+            $commentsid_arrayCount = count($commentsid_array);
+
+            if($commentsid_arrayCount > 3){
+                $moreThanThreeComments = 1;
+            }else{
+                $moreThanThreeComments = 0;
+            }
+
             if($i != 0){
                 echo ',';
             }
@@ -134,7 +137,10 @@
                 "userpic": "http://www.bruincave.com/m/'.$userpic.'",
                 "name": "'.$userfirstname." ".$userlastname.'",
                 "time_added":"'.$timestr.'",
+                "moreThanThreeComments":'.$moreThanThreeComments.',
                 "likedByMe":'.$likedByMe.',
+                "moreThanThreeLiker":'.$moreThanThreeLiker.',
+                "likedby":"'.$likedby.'",
                 
             ';  
             $commentsArr = "";
