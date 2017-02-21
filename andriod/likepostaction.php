@@ -15,36 +15,50 @@
     $id = $_POST['postid'];
     $username = $_POST['username'];
 
-    $query = $conn->query("SELECT * FROM users WHERE id='$username'");
+    $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 	$row_id = $query->fetch_assoc();
 	$usernameid = $row_id['id'];
 
     $check = $conn->query("SELECT * FROM posts WHERE id='$id'");
     if ($check->num_rows == 1) {
-
     	$get = $check->fetch_assoc();
+
+    	$likedby = $get['liked_by'];
+    	$likedbyArray = explode(",", $likedby);
+    	$likedbyArrayCount = count($likedbyArray);
+    	$likedbyArrayNow = []; 
 
     	$added_by = $get['added_by'];
 
     	$query = $conn->query("SELECT * FROM users WHERE id='$added_by'");
     	$row = $query->fetch_assoc();
+
     	$added_byid = $row['id'];
-
-    	$likedby = $get['liked_by'];
-
     }
 
+    if(in_array($usernameid, $likedbyArray)){
+    	$j = 0;
+    	for ($i=0; $i < $likedbyArrayCount; $i++) {
+    		if ($likedbyArray[$i] != $usernameid) {
+    			$likedbyArrayNow[$j++] = $likedbyArray[$i];
+    		}
+    	}
+    	$likedbyNow = join(',',$likedbyArrayNow);
+    	$sql = "UPDATE posts SET liked_by='$likedbyNow' WHERE id='$id'";
+    	$removeLikeQuery = $conn->query($sql);
+    	$response["success"] = true; 
+    }else{
+	    if($likedby == "" || $likedby == NULL){
+	    	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$usernameid' WHERE id='$id'");
+	    }
+	    else{
+	    	$addedList = $likedby . "," . $usernameid;
+	    	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$addedList' WHERE id='$id'");
+	    }
 
-    if($likedby == "" || $likedby == NULL){
-    	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$usernameid' WHERE id='$id'");
-    }
-    else{
-    	$addedList = $likedby . "," . $usernameid;
-    	$sqlcommand = $conn->query("UPDATE posts SET liked_by='$addedList' WHERE id='$id'");
-    }
+    	$response["success"] = true;  
+	}
 
-    $response["success"] = true;  
-    
     echo json_encode($response);
 
 
