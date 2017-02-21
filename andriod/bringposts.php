@@ -81,6 +81,8 @@
             
             if($countLikes > 3){
                 $moreThanThreeLiker = 1;
+            }else if($countLikes == 0){
+                $moreThanThreeLiker = 2;
             }else{
                 $moreThanThreeLiker = 0;
             }
@@ -141,6 +143,7 @@
                 "likedByMe":'.$likedByMe.',
                 "moreThanThreeLiker":'.$moreThanThreeLiker.',
                 "likedby":"'.$likedby.'",
+                "likesCount":'.$countLikes.',
                 
             ';  
             $commentsArr = "";
