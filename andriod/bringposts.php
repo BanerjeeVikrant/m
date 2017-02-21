@@ -81,7 +81,7 @@
             
             if($countLikes > 3){
                 $moreThanThreeLiker = 1;
-            }else if($countLikes == 0){
+            }else if($countLikes == 1 && $likedby == ""){
                 $moreThanThreeLiker = 2;
             }else{
                 $moreThanThreeLiker = 0;
