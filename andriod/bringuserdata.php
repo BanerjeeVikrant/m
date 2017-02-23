@@ -13,8 +13,9 @@
     include "../system/helpers.php";
 
     $username = $_POST['user'];
-    $profileUser = $_POST['puser'];
+    //$profileUser = $_GET['puser'];
 
+/*
     if ($profileUser) {
         $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
         if ($check->num_rows == 1) {
@@ -45,18 +46,19 @@
             $bannerpic = "http://www.bruincave.com/m/" . $bannerpic;
         }
     }
+    */
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
 
         $getuser = $checkme->fetch_assoc();
-        $yourid = $get['id'];
+        $yourid = $getuser['id'];
         $yourfirstname = $getuser['first_name'];
         $yourlastname = $getuser['last_name'];
         $yourprofilepic = $getuser['profile_pic'];
         $yourbannerpic = $getuser['bannerimg'];
         $yourfollowers = $getuser['followers'];
         $yourfollowing = $getuser['following'];
-        $yoursex = $get['sex'];
+        $yoursex = $getuser['sex'];
         if($yourprofilepic == "" || $yourprofilepic == NULL){
             if($yoursex == "1"){
                 $yourprofilepic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
@@ -87,7 +89,11 @@
                     "name": "'.$yourfirstname. " " .$yourlastname.'"
                 }  
     ]
-},
+}
+
+';
+/*
+
 {
     "profileuserdata": [
                 {
@@ -101,7 +107,7 @@
                 }
     ]
 }
-';
+*/
 
 
 ?>
