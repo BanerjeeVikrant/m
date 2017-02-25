@@ -82,7 +82,10 @@
     }else{
         $moreThanThreeComments = 0;
     }
-
+echo '
+{
+    "post": 
+    [';
 
     echo '{
                 "id":'.$id.',
@@ -98,6 +101,11 @@
                 "likesCount":'.$countLikes.'
                 
             }';  
+
+echo "
+    ]
+}
+";
 
 ?>
 
