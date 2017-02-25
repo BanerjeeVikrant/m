@@ -63,6 +63,7 @@
     $pic_row  = $result->fetch_assoc();
     $userpic =  "";
     $userpic =  $pic_row['profile_pic'];
+    $added_by_username = $pic_row['username'];
     
     $userfirstname = $pic_row['first_name'];
     $userlastname = $pic_row['last_name'];
@@ -98,7 +99,8 @@ echo '
                 "likedByMe":'.$likedByMe.',
                 "moreThanThreeLiker":'.$moreThanThreeLiker.',
                 "likedby":"'.$likedby.'",
-                "likesCount":'.$countLikes.'
+                "likesCount":'.$countLikes.',
+                "username":"'.$added_by_username.'"
                 
             }';  
 
