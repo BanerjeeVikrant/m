@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "";
+    $password = "H@ll054321";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,8 +12,8 @@
     }
     include "../system/helpers.php";
 
-    $postid = $_GET['postid'];
-    $username = $_GET['u'];
+    $postid = $_POST['postid'];
+    $username = $_POST['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
@@ -21,10 +21,6 @@
         $getuser = $checkme->fetch_assoc();
         $yourid = $getuser['id'];
     }
-
-
-
-
 
     $sql = "SELECT * FROM posts WHERE id='$postid'";
     $getposts = $conn->query($sql);
