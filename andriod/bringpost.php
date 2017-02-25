@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,8 +12,8 @@
     }
     include "../system/helpers.php";
 
-    $postid = $_POST['postid'];
-    $username = $_POST['u'];
+    $postid = $_GET['postid'];
+    $username = $_GET['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
@@ -100,9 +100,48 @@ echo '
                 "moreThanThreeLiker":'.$moreThanThreeLiker.',
                 "likedby":"'.$likedby.'",
                 "likesCount":'.$countLikes.',
-                "username":"'.$added_by_username.'"
+                "username":"'.$added_by_username.'",
                 
-            }';  
+            ';  
+
+            $commentsArr = "";
+
+            foreach ($commentsid_array as $value) {
+                if ($value != '') {
+                    $comment = $conn->query("SELECT * FROM comments WHERE id='$value'");
+
+                    $get_comment = $comment->fetch_assoc();
+
+                    $body = $get_comment['comment'];
+                    $from_ = $get_comment['from'];
+
+                    $query = $conn->query("SELECT * FROM users WHERE id='$from_'");
+                    $row = $query->fetch_assoc();
+                    $user = $row['username'];
+                    $fromFirst = $row['first_name'];
+                    $fromLast = $row['last_name'];
+                    $from = $fromFirst." ".$fromLast;
+                    $pic = $row['profile_pic'];
+
+                    if ($commentsArr != "") {
+                        $commentsArr = $commentsArr.",";
+                    }
+                    if ($body != "") {
+
+                        $commentsArr .= "
+                                        {
+                                          'body':'$body',
+                                          'from':'$from',
+                                          'username':'$username',
+                                          'pic':'http://www.bruincave.com/m/$pic'
+                                        }";
+                    }
+                 }
+            }
+            echo'
+                "comments": ['.$commentsArr.'
+                            ]
+            }'; 
 
 echo "
     ]
