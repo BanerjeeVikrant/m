@@ -36,6 +36,7 @@ for($i=0; $i<$results->num_rows; $i++) {
     $side = -1;
 
     $row = $results->fetch_assoc();
+    $id = $row['id'];
     $message = $row['message'];
     $fromUser = $row['fromUser'];
     $toUser = $row['toUser'];
@@ -54,6 +55,7 @@ for($i=0; $i<$results->num_rows; $i++) {
     if($n == 0){
         echo '
             {
+                "id":'.$id.',
                 "message":"'.$message.'",
                 "side":"'.$side.'",
                 "userpic":"'.$userpic.'"
@@ -63,6 +65,7 @@ for($i=0; $i<$results->num_rows; $i++) {
     } else {
         echo '
             ,{
+                "id":'.$id.',
                 "message":"'.$message.'",
                 "side":"'.$side.'",
                 "userpic":"'.$userpic.'"
