@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "";
+    $password = "H@ll054321";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -11,10 +11,10 @@
         die("Connection failed: " . $conn->connect_error);
     }
     include "../system/helpers.php";
-    $post = $_GET['post'];
-    $username = $_GET['u'];
-    $view_group_id = $_GET['group'];
-    $profileUser = $_GET['puser'];
+    $post = $_POST['post'];
+    $username = $_POST['u'];
+    $view_group_id = $_POST['group'];
+    $profileUser = $_POST['puser'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
