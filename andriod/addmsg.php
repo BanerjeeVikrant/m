@@ -23,7 +23,7 @@
 
     $toUser = $_POST['touser'];
 
-    $checkUser = $conn->query("SELECT * FROM users WHERE username='$toUser'");
+    $checkUser = $conn->query("SELECT * FROM users WHERE id='$toUser'");
     if ($checkme->num_rows == 1) {
         $getuser = $checkUser->fetch_assoc();
         $sendto = $getuser['id'];

@@ -21,7 +21,7 @@ $findMeId = $conn->query("SELECT * FROM users WHERE username='$me'");
 $findMeId_get = $findMeId->fetch_assoc();
 $meId = $findMeId_get['id'];
 
-$findFriendId = $conn->query("SELECT * FROM users WHERE username='$friend'");
+$findFriendId = $conn->query("SELECT * FROM users WHERE id='$friend'");
 $findFriendId_get = $findFriendId->fetch_assoc();
 $friendId = $findFriendId_get['id'];
 $userpic = "http://www.bruincave.com/m/" . $findFriendId_get['profile_pic'];
