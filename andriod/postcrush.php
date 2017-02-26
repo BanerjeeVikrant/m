@@ -14,7 +14,7 @@
 
     $post = $_POST['post'];
     $username = $_POST['u'];
-    
+
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
         $getuser = $checkme->fetch_assoc();
@@ -30,5 +30,8 @@
         $sqlcommand = "INSERT INTO crush VALUES ('', '$post', '$usernameid', '', '$time_added', '$date_added','')";
         $query = $conn->query($sqlcommand);
     }
+
+    $response["success"] = true; 
+    echo json_encode($response);
 
 ?>
