@@ -97,6 +97,7 @@
 
     $removeFriendsQuery = $conn->query($sql);
 
-
+    $response["success"] = true; 
+    echo json_encode($response);
 
 ?>
