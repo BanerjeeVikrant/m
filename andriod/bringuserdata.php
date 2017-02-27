@@ -58,6 +58,7 @@
         $yourbannerpic = $getuser['bannerimg'];
         $yourfollowers = $getuser['followers'];
         $yourfollowing = $getuser['following'];
+        $yourbio = $getuser['bio'];
         $yoursex = $getuser['sex'];
         if($yourprofilepic == "" || $yourprofilepic == NULL){
             if($yoursex == "1"){
@@ -84,6 +85,7 @@
                     "id":'.$yourid.',
                     "firstname": "'.$yourfirstname.'",
                     "lastname": "'.$yourlastname.'",
+                    "bio": "'.$yourbio.'",
                     "bannerpic": "'.$yourbannerpic.'",
                     "userpic": "'.$yourprofilepic.'",
                     "name": "'.$yourfirstname. " " .$yourlastname.'"
