@@ -65,6 +65,11 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $mix = $fromFirst . " " . $message . " " . $notifierTime;
             if($i == 0){
                 echo '
+                ,
+                    ';
+                $i++;
+            }
+            echo '
                 {
                     "id":'.$id.',
                     "body": "'.$message.'",
@@ -73,19 +78,8 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
                 }
-    ';          
-                $i = $i + 1;
-            }else{
-                echo '
-                ,{
-                    "id":'.$id.',
-                    "body": "'.$message.'",
-                    "fromPic": "'.$fromPic.'",
-                    "fromFirst": "'.$mix.'",
-                    "from_user":"'.$fromUser_urname.'",
-                    "time_added":"'.$notifierTime.'"
-                }
-    ';
+                ';      
+                
             }
 
         }  
