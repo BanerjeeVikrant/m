@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,7 +12,7 @@
     }
     include "../system/helpers.php";
 
-    $postid = $_POST['postid'];
+    $postid = $_GET['postid'];
 
     $sql =  "SELECT * FROM crush WHERE id='$postid'";
 
@@ -25,6 +25,8 @@
         $row = $getposts->fetch_assoc();
             $id = $row['id'];
             $body = $row['body'];
+            $commentsid = $row['commentsid'];
+            $commentsid_array = explode(",", $commentsid);
             $time_added = time_elapsed_string($row['time_added']);
 
             
@@ -32,10 +34,38 @@
                 {
                     "id":'.$id.',
                     "body": "'.$body.'",
-                    "time_added":"'.$time_added.'"
-                }
-    ';
+                    "time_added":"'.$time_added.'",
+
+                ';  
+
+            $commentsArr = "";
+
+            foreach ($commentsid_array as $value) {
+                if ($value != '') {
+                    $comment = $conn->query("SELECT * FROM anoncomments WHERE id='$value'");
+
+                    $get_comment = $comment->fetch_assoc();
+
+                    $body = $get_comment['comment'];
+
+
+                    if ($commentsArr != "") {
+                        $commentsArr = $commentsArr.",";
+                    }
+                    if ($body != "") {
+
+                        $commentsArr .= "
+                                        {
+                                          'body':'$body'
+                                        }";
+                    }
+                 }
             }
+            echo'
+                "comments": ['.$commentsArr.'
+                            ]
+            }'; 
+    }
         
  echo "
     ]}

@@ -26,6 +26,10 @@
         while ($row = $getposts->fetch_assoc()) {
             $id = $row['id'];
             $body = $row['body'];
+            $commentsid = $row['commentsid'];
+            $commentsid_array = explode(",", $commentsid);
+            $commentsid_count = count($commentsid_array);
+
             $time_added = time_elapsed_string($row['time_added']);
 
             if($i == 0){
@@ -33,7 +37,8 @@
                 {
                     "id":'.$id.',
                     "body": "'.$body.'",
-                    "time_added":"'.$time_added.'"
+                    "time_added":"'.$time_added.'",
+                    "commentscount":'.$commentsid_count.'
                 }
     ';          
                 $i = $i + 1;
@@ -42,7 +47,8 @@
                 ,{
                     "id":'.$id.',
                     "body": "'.$body.'",
-                    "time_added":"'.$time_added.'"
+                    "time_added":"'.$time_added.'",
+                    "commentscount":'.$commentsid_count.'
                 }
     ';
             }
