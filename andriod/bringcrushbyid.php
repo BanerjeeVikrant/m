@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "";
+    $password = "H@ll054321";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,7 +12,7 @@
     }
     include "../system/helpers.php";
 
-    $postid = $_GET['postid'];
+    $postid = $_POST['postid'];
 
     $sql =  "SELECT * FROM crush WHERE id='$postid'";
 

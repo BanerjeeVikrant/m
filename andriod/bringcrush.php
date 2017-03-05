@@ -28,7 +28,11 @@
             $body = $row['body'];
             $commentsid = $row['commentsid'];
             $commentsid_array = explode(",", $commentsid);
-            $commentsid_count = count($commentsid_array);
+            $commentsid_count = 0;
+
+            if($commentsid != ""){
+                $commentsid_count = count($commentsid_array);
+            }
 
             $time_added = time_elapsed_string($row['time_added']);
 
