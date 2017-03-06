@@ -35,7 +35,12 @@ echo '
                 $findMessage = $conn->query("SELECT * FROM messages WHERE id='$postid'");
                 if($findMessage->num_rows > 0) {
                     while ($row = $findMessage->fetch_assoc()) {
-                        $fromuser = $row['fromUser'];
+                        $fromuserid = $row['fromUser'];
+                        $query = $conn->query("SELECT * FROM users WHERE id='$fromuserid'");
+                        $query_fetch = $query->fetch_assoc();
+                        $fromuser = $query_fetch['username'];
+                        $fromprofile_pic = $query_fetch['profile_pic'];
+
                         $touser = $row['toUser'];
                         $message = $row['message'];
                         $time = $row['time'];
@@ -48,7 +53,8 @@ echo '
 
                         echo '
                         {
-                            "fromuser":'.$fromuser.',
+                            "fromuser":"'.$fromuser.'",
+                            "frompic":"'.$fromprofile_pic .'",
                             "touser": "'.$touser.'",
                             "message":"'.$message.'",
                             "time":"'.$time.'"
