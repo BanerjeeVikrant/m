@@ -53,7 +53,7 @@
         }
     }
 
-    $liveNotifyEditQuery = $conn->query("INSERT INTO liveNotify VALUES('', '0', '$last_id')");
+    $liveNotifyEditQuery = $conn->query("INSERT INTO liveNotify VALUES('', '0', '$last_id', '$usernameid')");
 
 
     $dmfriendsArray = explode(",",$dmfriends);
