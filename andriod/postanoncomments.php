@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "";
+    $password = "H@ll054321";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,9 +12,9 @@
     }
     include "../system/helpers.php";
 
-	$username = $_GET['u'];
-	$id = $_GET['id'];
-	$comment = $_GET['c'];
+	$username = $_POST['u'];
+	$id = $_POST['id'];
+	$comment = $_POST['c'];
 
 
 	$checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
