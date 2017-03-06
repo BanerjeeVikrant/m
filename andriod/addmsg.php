@@ -21,7 +21,7 @@
         $usernameid = $getuser['id'];
     }
 
-    $toUser = $_GET['touser'];
+    $toUser = $_POST['touser'];
 
     $checkUser = $conn->query("SELECT * FROM users WHERE id='$toUser'");
     if ($checkme->num_rows == 1) {
