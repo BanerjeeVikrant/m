@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,8 +12,8 @@
     }
     include "../system/helpers.php";
 
-    $msg = $_POST['message'];
-    $username = $_POST['u'];
+    $msg = $_GET['message'];
+    $username = $_GET['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
@@ -21,7 +21,7 @@
         $usernameid = $getuser['id'];
     }
 
-    $toUser = $_POST['touser'];
+    $toUser = $_GET['touser'];
 
     $checkUser = $conn->query("SELECT * FROM users WHERE id='$toUser'");
     if ($checkme->num_rows == 1) {
@@ -47,8 +47,13 @@
     $msg = str_replace(">","&gt;",$msg);
 
     if ($msg) {
-        $getUser = $conn->query("INSERT INTO messages VALUES('', '$id', '$sendto', '$msg', '$time')");
+        $getUser = "INSERT INTO messages VALUES('', '$id', '$sendto', '$msg', '$time')";
+        if ($conn->query($getUser) === TRUE) {
+            $last_id = $conn->insert_id;
+        }
     }
+
+    $liveNotifyEditQuery = $conn->query("INSERT INTO liveNotify VALUES('', '0', '$last_id')");
 
 
     $dmfriendsArray = explode(",",$dmfriends);

@@ -1,0 +1,70 @@
+<?php
+    $servername = "localhost";
+    $username1 = "root";
+    $password = "H@ll054321";
+    $dbname = "bruincaveData";
+
+    // Create connection
+    $conn = new mysqli($servername, $username1, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    include "../system/helpers.php";
+
+    $username = $_POST['u'];
+
+    $query = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $fetch_info = $query->fetch_assoc();
+    $usernameid = $fetch_info['id'];
+
+    $sql =  "SELECT * FROM livenotify WHERE notifyUser='$usernameid'";
+
+    $getposts = $conn->query($sql) or die(mysql_error());
+    $i = 0;
+echo '
+{
+    "notifyInfo": [';
+
+    if($getposts->num_rows > 0) {
+        while ($row = $getposts->fetch_assoc()) {
+            $id = $row['id'];
+            $type = $row['about'];
+            $postid = $row['postid'];
+            if($type == 0){
+                $findMessage = $conn->query("SELECT * FROM messages WHERE id='$postid'");
+                if($findMessage->num_rows > 0) {
+                    while ($row = $findMessage->fetch_assoc()) {
+                        $fromuser = $row['fromUser'];
+                        $touser = $row['toUser'];
+                        $message = $row['message'];
+                        $time = $row['time'];
+
+                        if($i != 0){
+                            echo ',';
+                        }else{
+                            $i = $i + 1;
+                        }
+
+                        echo '
+                        {
+                            "fromuser":'.$fromuser.',
+                            "touser": "'.$touser.'",
+                            "message":"'.$message.'",
+                            "time":"'.$time.'"
+                        }';  
+                    }
+                }
+            }
+        }
+    }     
+        
+ echo "
+    ]}
+";
+
+$deleteNotifyQuery = $conn->query("DELETE FROM livenotify WHERE notifyUser='$usernameid'");
+
+    
+
+?>
