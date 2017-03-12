@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,10 +12,11 @@
     }
     include "../system/helpers.php";
 
-    $offset = $_POST['o'];
-    $username = $_POST['user'];
-    $profileUser = $_POST['puser'];
-    $group = $_POST['group'];
+    $type = $_GET['type'];
+    $offset = $_GET['o'];
+    $username = $_GET['user'];
+    $profileUser = $_GET['puser'];
+    $group = $_GET['group'];
 
     if ($profileUser != "") {
         $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
@@ -49,7 +50,11 @@
         $yourfollowing_arr =  explode(',',$yourfollowing);
         $yourfollowing_quoted = "'".implode("','",$yourfollowing_arr)."'";
         if ($group == 0) {
-            $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
+            if($type == 0){
+                $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
+            }else{
+                $sql = "SELECT * FROM posts WHERE 1 AND post_group = '0' ORDER BY id DESC LIMIT $offset,5";
+            }
         }
         else {
             $sql = "SELECT * FROM posts WHERE (post_group = '$group') ORDER BY id DESC LIMIT $offset,5";
