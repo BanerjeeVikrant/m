@@ -52,9 +52,9 @@
         if ($group == 0) {
             echo $type."::::";
             if($type == 0){
-                $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,100";
+                $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
             }else{
-                $sql = "SELECT * FROM posts WHERE (post_group = '0') ORDER BY id DESC LIMIT $offset,100";
+                $sql = "SELECT * FROM posts WHERE (post_group = '0') ORDER BY id DESC LIMIT $offset,5";
             }
         }
         else {
