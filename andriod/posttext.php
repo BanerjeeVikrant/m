@@ -20,6 +20,7 @@
     if ($checkme->num_rows == 1) {
         $getuser = $checkme->fetch_assoc();
         $usernameid = $getuser['id'];
+        $usernameclass = $getuser['grade'];
     }
 
     $checkyou = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
@@ -36,9 +37,9 @@
         
         //(`id`, `body`, `date_added`, `time_added`, `added_by`, `posted_to`, `tags`, `user_posted_to`, `commentsid`, `picture`, `video`, `youtubevideo`, `hidden`, `hidden_by`, `liked_by`, `post_group`)
         if($profileUser == ""){
-            $sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', '', '', '', '0', '', '', '$view_group_id')";
+            $sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', '', '', '$usernameclass', '0', '', '', '$view_group_id')";
         }else{
-            $sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '1', '', '$profileUserid', '', '', '', '', '0', '', '', '0')";
+            $sqlcommand = "INSERT INTO posts VALUES ( '', '$post', '$date_added', '$time_added', '$usernameid', '1', '', '$profileUserid', '', '', '', '$usernameclass', '0', '', '', '0')";
         }
         if ($conn->query($sqlcommand) === TRUE) {
             $last_id = $conn->insert_id;
