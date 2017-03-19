@@ -149,6 +149,7 @@
             }
             echo '{
                 "id":'.$id.',
+                "userid":'.$added_by.',
                 "body": "'.$body.'",
                 "picture_added": "http://www.bruincave.com/m/'.$picture_added.'",
                 "userpic": "http://www.bruincave.com/m/'.$userpic.'",
