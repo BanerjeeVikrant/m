@@ -72,7 +72,7 @@ if($type == 0){
         $query = $conn->query("INSERT INTO notifications VALUES ('', '1', '$usernameid', '$addtoid', '', '', '$time_added', '$date_added')");
     }
 
-    $response["success"] = true; 
+    $response["success"] = false; 
     echo json_encode($response);
 }else{
     $remove = $_POST['puser'];
