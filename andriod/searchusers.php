@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "";
+    $password = "H@ll054321";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -11,8 +11,8 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $search = $_GET["s"];
-    $username = $_GET['user'];
+    $search = $_POST["s"];
+    $username = $_POST['user'];
     $results = $conn->query("SELECT * FROM users WHERE username='$username'");
     $rowget = $results->fetch_assoc();
     $usernameid = $rowget['id'];
