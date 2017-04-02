@@ -52,12 +52,14 @@
     }
     $results_a = $conn->query($sql);
     $rows = [];
-    while ($row = $results_a->fetch_assoc()) {
-        $id_user = $row["id"];
-        if(in_array($id_user, $name_array_explode)){
-            
-        }else{
-            $rows[] = $id_user;
+    if($search != ""){
+        while ($row = $results_a->fetch_assoc()) {
+            $id_user = $row["id"];
+            if(in_array($id_user, $name_array_explode)){
+                
+            }else{
+                $rows[] = $id_user;
+            }
         }
     }
 
@@ -110,13 +112,12 @@
                     $chat_first_name = $chat_first_name;
                     $chat_last_name = $chat_last_name;
                 }
-                else{
+                else if($lastPostid < $lastPostid2){
                     $lasttext = "You:" . $lastPost2;
                     $backgroundColorUpdate = "";
                 }
-
-                if($lastPost2 == ""){
-                    $lasttext == "Start Conversation!";
+                else{
+                    $lasttext = "Start Conversation!";
                 }
 
             if($i == 0){
