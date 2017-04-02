@@ -2,7 +2,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -15,10 +15,11 @@
 	$lastPost = "";
 	$s = "";
 	$offset = 0;
-	if (isset($_POST['o'])) {
-	   $offset = $_POST['o'];
+    $search = $_GET['s'];
+	if (isset($_GET['o'])) {
+	   $offset = $_GET['o'];
 	}
-    $username = $_POST['user'];
+    $username = $_GET['user'];
 	function startsWith($haystack, $needle){
 	 $length = strlen($needle);
 	 return (strcasecmp(substr($haystack, 0, $length),$needle) == 0);
@@ -37,11 +38,36 @@
     if($name_array != ""){
         $name_array_explode = explode(",", $name_array);
     }
+
+    $results = $conn->query("SELECT * FROM users WHERE username='$username'");
+    $rowget = $results->fetch_assoc();
+    $usernameid = $rowget['id'];
+    $search_parts = explode(" ", $search);
+    if (count($search_parts) == 1) {
+        $sql = "SELECT * FROM users WHERE (username LIKE '$search%') OR (first_name LIKE '$search%') OR (last_name LIKE '$search%')";
+    } else {
+        $exp_first_name = $search_parts[0];
+        $exp_last_name = $search_parts[1];
+        $sql = "SELECT * FROM users WHERE (first_name LIKE '$exp_first_name%') AND (last_name LIKE '$exp_last_name%')";
+    }
+    $results_a = $conn->query($sql);
+    $rows = [];
+    while ($row = $results_a->fetch_assoc()) {
+        $id_user = $row["id"];
+        if(in_array($id_user, $name_array_explode)){
+            
+        }else{
+            $rows[] = $id_user;
+        }
+    }
+
+    $array_merged = array_merge($name_array_explode, $rows);
+
             echo '
 {
     "usersMsg": [';
     $i = 0;
-    foreach ($name_array_explode as $value) {
+    foreach ($array_merged as $value) {
         $result = $conn->query("SELECT * FROM users WHERE id='$value'");
         $row = $result->fetch_assoc();
         if ( strcasecmp($row["username"],$username) !=0 ) {
@@ -62,8 +88,8 @@
                     $chat_profile_pic = "http://www.bruincave.com/m/" . $chat_profile_pic;
                 }
                 $chat_both_name = $chat_first_name . " " . $chat_last_name;
-                if (isset($_POST['s'])) {
-                    if (! (startsWith($chat_first_name, $_POST['s']) || startsWith($chat_last_name, $_POST['s']) || startsWith($chat_user_name, $_POST['s']) || startsWith($chat_both_name, $_POST['s']) ) ) {
+                if (isset($_GET['s'])) {
+                    if (! (startsWith($chat_first_name, $_GET['s']) || startsWith($chat_last_name, $_GET['s']) || startsWith($chat_user_name, $_GET['s']) || startsWith($chat_both_name, $_GET['s']) ) ) {
                         continue;
                     }
                 }
@@ -80,17 +106,20 @@
                 $lastPostid2 = $get['id'];
 
                 if($lastPostid > $lastPostid2){
-                    $lasttext = "<b>".$lastPost."</b>";
-                    $chat_first_name = "<b>".$chat_first_name;
-                    $chat_last_name = $chat_last_name."</b>";
-                    $backgroundColorUpdate = "style='background-color:white;'";
+                    $lasttext = $lastPost;
+                    $chat_first_name = $chat_first_name;
+                    $chat_last_name = $chat_last_name;
                 }
                 else{
                     $lasttext = "You:" . $lastPost2;
                     $backgroundColorUpdate = "";
                 }
 
-                if($i == 0){
+                if($lastPost2 == ""){
+                    $lasttext == "Start Conversation!";
+                }
+
+            if($i == 0){
                 echo '
                 {
                     "id":'.$chat_userid.',
@@ -112,6 +141,7 @@
             }
         } 
     }
+
 echo "
     ]}
 ";
