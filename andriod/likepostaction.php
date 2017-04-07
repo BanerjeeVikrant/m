@@ -59,6 +59,16 @@
     	$response["success"] = true;  
 	}
 
+    date_default_timezone_set("America/Los_Angeles");
+    $date_added = date("Y/m/d");
+    $time_added = time(); 
+
+    $check = $conn->query("SELECT * FROM notifications WHERE (type='2' AND fromUser='$usernameid' AND toUser='$added_by' AND post_id='$id')");
+    if ($check->num_rows == 0) {
+        $query = $conn->query("INSERT INTO notifications VALUES ('', '2', '$usernameid', '$added_by', '', '$id', '$time_added', '$date_added')");
+    }
+
+
     echo json_encode($response);
 
 

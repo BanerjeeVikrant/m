@@ -46,10 +46,10 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $notifierTime = time_elapsed_string($time_added);
 
             if($type == '1'){
-                $message = "started following you.";   
+                $message = "added you to Favorites";   
             }
             else if($type == '2'){
-                $message = "liked your post.";
+                $message = "roared on your post.";
             }
             else if($type == '3'){
                 $message =  "commented: $comment";
