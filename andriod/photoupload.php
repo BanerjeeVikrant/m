@@ -37,7 +37,9 @@ if(isset($_POST['image'])){
 		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
 
 		if ($conn->query($sql) === TRUE) {
-			echo "should work";
+			$response["success"] = true;  
+			echo json_encode($response);
+
 		}else{
 			echo "didnt work";
 		}
@@ -46,8 +48,4 @@ if(isset($_POST['image'])){
 	echo "image_not_in";
 	exit;
 }
-
-$response["success"] = true;  
-echo json_encode($response);
-
 ?>
