@@ -113,7 +113,7 @@
                     $chat_last_name = $chat_last_name;
                 }
                 else if($lastPostid < $lastPostid2){
-                    $lasttext = "You:" . $lastPost2;
+                    $lasttext = "You: " . $lastPost2;
                     $backgroundColorUpdate = "";
                 }
                 else{
