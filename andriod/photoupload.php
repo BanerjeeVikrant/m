@@ -35,10 +35,11 @@ if(isset($_POST['image'])){
 	$image = $_POST['image'];
 	if(file_put_contents($path, base64_decode($image)) != false){
 		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
+		$response["success"] = true;  
+			echo json_encode($response);
 
 		if ($conn->query($sql) === TRUE) {
-			$response["success"] = true;  
-			echo json_encode($response);
+			
 
 		}else{
 			echo "didnt work";
