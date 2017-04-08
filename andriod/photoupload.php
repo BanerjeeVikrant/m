@@ -26,21 +26,27 @@ if(isset($_POST['image'])){
 	$time_added = time();
 
 	$upload_folder = "../userdata/pictures/$username";
-	echo $upload_folder;
 	if (!file_exists("../userdata/pictures/$username")){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "$upload_folder/$id.jpeg";
+	$path = "$upload_folder/$id.jpg";
 	$image = $_POST['image'];
 	if(file_put_contents($path, base64_decode($image)) != false){
 		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '', '0', '', '', '0')";
 
-		$conn->query($sql);
+		if ($conn->query($sql) === TRUE) {
+			echo "should work";
+		}else{
+			echo "didnt work";
+		}
 	}
 }else{
 	echo "image_not_in";
 	exit;
 }
+
+$response["success"] = true;  
+echo json_encode($response);
 
 ?>
