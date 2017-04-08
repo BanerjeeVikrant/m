@@ -4,6 +4,17 @@ $username1 = "root";
 $password = "H@ll054321";
 $dbname = "bruincaveData";
 
+function base64_to_jpeg($base64_string, $output_file) {
+    $ifp = fopen($output_file, "wb"); 
+
+    $data = explode(',', $base64_string);
+
+    fwrite($ifp, base64_decode($data[1])); 
+    fclose($ifp); 
+
+    return $output_file; 
+}
+
 // Create connection
 $conn = new mysqli($servername, $username1, $password, $dbname);
 // Check connection
@@ -33,21 +44,19 @@ if(isset($_POST['image'])){
 	}
 	$path = "$upload_folder/$id.jpg";
 	$image = $_POST['image'];
-	if(file_put_contents($path, base64_decode($image)) != false){
-		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
+
+	base64_to_jpeg($image, $path);
+	
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
+
+	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
-			echo json_encode($response);
-
-		if ($conn->query($sql) === TRUE) {
-			
-
-		}else{
-			echo "didnt work";
-		}
+		echo json_encode($response);
 	}else{
-		$response["success"] = file_put_contents($path, base64_decode($image));
+		$response["success"] = false;  
 		echo json_encode($response);
 	}
+
 }else{
 	echo "image_not_in";
 	exit;
