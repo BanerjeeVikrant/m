@@ -44,6 +44,9 @@ if(isset($_POST['image'])){
 		}else{
 			echo "didnt work";
 		}
+	}else{
+		$response["success"] = file_put_contents($path, base64_decode($image));
+		echo json_encode($response);
 	}
 }else{
 	echo "image_not_in";
