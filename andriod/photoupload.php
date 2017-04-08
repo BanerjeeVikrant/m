@@ -14,6 +14,7 @@ $username = $_POST['u'];
 $results = $conn->query("SELECT * FROM users WHERE username='$username'");
 $rowget = $results->fetch_assoc();
 $usernameid = $rowget['id'];
+$usernamegrade = $rowget['grade'];
 
 $post = $_POST['caption'];
 
@@ -33,7 +34,7 @@ if(isset($_POST['image'])){
 	$path = "$upload_folder/$id.jpg";
 	$image = $_POST['image'];
 	if(file_put_contents($path, base64_decode($image)) != false){
-		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '', '0', '', '', '0')";
+		$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
 
 		if ($conn->query($sql) === TRUE) {
 			echo "should work";
