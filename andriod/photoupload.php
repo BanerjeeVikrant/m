@@ -25,10 +25,11 @@ if(isset($_POST['image'])){
 	$added_by = $username;
 	$time_added = time();
 
-	$upload_folder = "userdata/pictures/$username";
-	if (!file_exists("userdata/pictures/$username")){
-		mkdir("userdata/pictures/$username");
-		mkdir("userdata/pictures/$username/thumbnail");
+	$upload_folder = "../userdata/pictures/$username";
+	echo $upload_folder;
+	if (!file_exists("../userdata/pictures/$username")){
+		mkdir("../userdata/pictures/$username");
+		mkdir("../userdata/pictures/$username/thumbnail");
 	}
 	$path = "$upload_folder/$id.jpeg";
 	$image = $_POST['image'];
