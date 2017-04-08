@@ -42,12 +42,12 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "$upload_folder/$id.jpg";
+	$path = "$id.jpg";
 	$image = $_POST['image'];
 
 	base64_to_jpeg($image, $path);
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
