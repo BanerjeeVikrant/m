@@ -1,15 +1,13 @@
 <?php
 $servername = "localhost";
 $username1 = "root";
-$password = "H@ll054321";
+$password = "";
 $dbname = "bruincaveData";
 
 function base64_to_jpeg($base64_string, $output_file) {
     $ifp = fopen($output_file, "wb"); 
 
-    $data = explode(',', $base64_string);
-
-    fwrite($ifp, base64_decode($data[1])); 
+    fwrite($ifp, base64_decode($base64_string)); 
     fclose($ifp); 
 
     return $output_file; 
@@ -21,15 +19,15 @@ $conn = new mysqli($servername, $username1, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$username = $_POST['u'];
+$username = $_GET['u'];
 $results = $conn->query("SELECT * FROM users WHERE username='$username'");
 $rowget = $results->fetch_assoc();
 $usernameid = $rowget['id'];
 $usernamegrade = $rowget['grade'];
 
-$post = $_POST['caption'];
+$post = $_GET['caption'];
 
-if(isset($_POST['image'])){
+if(isset($_GET['image'])){
 	$now = DateTime::createFromFormat('U.u', microtime(true));
 	$id = $now->format('YmdHisu');
 	date_default_timezone_set("America/Los_Angeles");
@@ -43,7 +41,7 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
 	$path = "$id.jpg";
-	$image = $_POST['image'];
+	$image = $_GET['image'];
 
 	base64_to_jpeg($image, $path);
 	

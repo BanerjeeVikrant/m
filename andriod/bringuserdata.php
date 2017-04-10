@@ -58,6 +58,7 @@
         $yourfollowing = $getuser['following'];
         $yourbio = $getuser['bio'];
         $yoursex = $getuser['sex'];
+        $yourgrade = $getuser['grade'];
 
         $yourfollowers_array = explode(",", $yourfollowers);
 
@@ -95,6 +96,7 @@
                     "firstname": "'.$yourfirstname.'",
                     "lastname": "'.$yourlastname.'",
                     "bio": "'.$yourbio.'",
+                    "grade": "'.$yourgrade.'",
                     "bannerpic": "'.$yourbannerpic.'",
                     "userpic": "'.$yourprofilepic.'",
                     "name": "'.$yourfirstname. " " .$yourlastname.'",
