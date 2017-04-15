@@ -40,7 +40,7 @@ if(isset($_GET['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "$id.jpg";
+	$path = "../userdata/pictures/$username/$id.jpg";
 	$image = $_GET['image'];
 
 	base64_to_jpeg($image, $path);
