@@ -38,9 +38,11 @@
     $d = date("m/d/y");
     $t = time();
 
+    $pswd_md5 = md5($pswd);
 
 
-    $statement = $conn->query("INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswd', '$d', '', '', '', '', '', '', '$dob', '0', '', '', '', '', '0', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')");
+
+    $statement = $conn->query("INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswd_md5', '$d', '', '', '', '', '', '', '$dob', '0', '', '', '', '', '0', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')");
 
     
     $response = array();
