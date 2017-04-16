@@ -38,7 +38,9 @@ echo '
                         $fromuserid = $row['fromUser'];
                         $query = $conn->query("SELECT * FROM users WHERE id='$fromuserid'");
                         $query_fetch = $query->fetch_assoc();
-                        $fromuser = $query_fetch['username'];
+                        $fromid = $query_fetch['id'];
+                        $fromuser = $query_fetch['first_name'];
+                        $fullfromuser = $query_fetch['first_name']." ".$query_fetch['last_name'];
                         $fromprofile_pic = $query_fetch['profile_pic'];
 
                         $touser = $row['toUser'];
@@ -53,7 +55,9 @@ echo '
 
                         echo '
                         {
+                            "fromid":'.$fromid.',
                             "fromuser":"'.$fromuser.'",
+                            "fullfromuser":"'.$fullfromuser.'",
                             "frompic":"'.$fromprofile_pic .'",
                             "touser": "'.$touser.'",
                             "message":"'.$message.'",
