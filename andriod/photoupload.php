@@ -31,7 +31,7 @@ if(isset($_GET['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/$id.jpg";
+	$path = "../userdata/pictures/$username/$randomtest.jpg";
 	$image = '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEB
 AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAAkACQDASIA
@@ -78,7 +78,7 @@ NDbQysxt4CsMbBI4AhRQB/a0HI9Py+vof8TyeTzkoooA/9k=
 
     file_put_contents($path, $data );
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/randomtest.jpg', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
