@@ -4,17 +4,6 @@ $username1 = "root";
 $password = "H@ll054321";
 $dbname = "bruincaveData";
 
-function base64_to_jpeg($base64_string, $output_file) {
-    $ifp = fopen($output_file, "w"); 
-
-    $data = explode(',', $base64_string);
-
-    fwrite($ifp, base64_decode($data[0])); 
-    fclose($ifp); 
-
-    return $output_file; 
-}
-
 // Create connection
 $conn = new mysqli($servername, $username1, $password, $dbname);
 // Check connection
@@ -42,13 +31,15 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "$id.jpeg";
+	$path = "../userdata/pictures/$username/$id.jpeg";
 	$image = $_POST['image'];
 
-	$imageData = base64_decode($image);
-	$source = imagecreatefromstring($imageData);
-	$rotate = imagerotate($source, 0, 0); // if want to rotate the image
-	$imageSave = imagejpeg($rotate,$path,100);
+	$ext='jpeg';
+	$imagestrng = trim( str_replace('data:image/'.$ext.';base64,', "", $imagestrng ) );
+	$imgstring = str_replace( ' ', '+', $imgstring );
+    $data = base64_decode( $imgstring );
+
+    file_put_contents($path, $data );
 	
 	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpeg', '', '$usernamegrade', '0', '', '', '0')";
 
@@ -64,4 +55,5 @@ if(isset($_POST['image'])){
 	echo "image_not_in";
 	exit;
 }
+
 ?>
