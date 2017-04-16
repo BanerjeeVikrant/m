@@ -31,7 +31,7 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "http://www.bruincave.com/m/userdata/pictures/ssdf/blah.jpg";
+	$path = "../userdata/pictures/ssdf/texttt.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
@@ -41,7 +41,7 @@ if(isset($_POST['image'])){
 
     file_put_contents($path, $data );
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpeg', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', '$image', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
