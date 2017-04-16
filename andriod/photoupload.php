@@ -35,9 +35,9 @@ if(isset($_POST['image'])){
 	$image = $_POST['image'];
 
 	$ext='jpeg';
-	$imagestrng = trim( str_replace('data:image/'.$ext.';base64,', "", $imagestrng ) );
-	$imgstring = str_replace( ' ', '+', $imgstring );
-    $data = base64_decode( $imgstring );
+	$imagestrng = trim( str_replace('data:image/'.$ext.';base64,', "", $image ) );
+	$imagestrng = str_replace( ' ', '+', $imagestrng );
+    $data = base64_decode( $imagestrng );
 
     file_put_contents($path, $data );
 	
