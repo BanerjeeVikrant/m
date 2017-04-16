@@ -5,7 +5,7 @@ $password = "H@ll054321";
 $dbname = "bruincaveData";
 
 function base64_to_jpeg($base64_string, $output_file) {
-    $ifp = fopen($output_file, "wb"); 
+    $ifp = fopen($output_file, "w"); 
 
     fwrite($ifp, base64_decode($base64_string)); 
     fclose($ifp); 
