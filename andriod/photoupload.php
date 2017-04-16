@@ -31,7 +31,7 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/";
+	$path = "http://www.bruincave.com/m/userdata/pictures/ssdf/blah.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
