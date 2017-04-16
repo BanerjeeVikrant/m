@@ -42,7 +42,7 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/$id.jpeg";
+	$path = "$id.jpeg";
 	$image = $_POST['image'];
 
 	$imageData = base64_decode($image);
