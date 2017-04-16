@@ -9,7 +9,7 @@ function base64_to_jpeg($base64_string, $output_file) {
 
     $data = explode(',', $base64_string);
 
-    fwrite($ifp, base64_decode($data[1])); 
+    fwrite($ifp, base64_decode($data[0])); 
     fclose($ifp); 
 
     return $output_file; 
@@ -42,12 +42,15 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/$id.jpg";
+	$path = "../userdata/pictures/$username/$id.jpeg";
 	$image = $_POST['image'];
 
-	base64_to_jpeg($image, $path);
+	$imageData = base64_decode($image);
+	$source = imagecreatefromstring($imageData);
+	$rotate = imagerotate($source, 0, 0); // if want to rotate the image
+	$imageSave = imagejpeg($rotate,$path,100);
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpeg', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
