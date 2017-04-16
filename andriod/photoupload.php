@@ -31,17 +31,15 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$username");
 		mkdir("../userdata/pictures/$username/thumbnail");
 	}
-	$path = "../userdata/pictures/ssdf/texttt.jpg";
+	$path = "../userdata/pictures/$username/$id.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
-	$imagestrng = trim( str_replace('data:image/'.$ext.';base64,', "", $image ) );
-	$imagestrng = str_replace( ' ', '+', $imagestrng );
-    $data = base64_decode( $imagestrng );
+    $data = base64_decode( $image );
 
     file_put_contents($path, $data );
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', '$image', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
