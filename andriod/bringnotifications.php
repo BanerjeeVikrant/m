@@ -69,6 +69,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "id":'.$id.',
                     "body": "'.$message.'",
                     "fromPic": "'.$fromPic.'",
+                    "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
@@ -81,6 +82,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "id":'.$id.',
                     "body": "'.$message.'",
                     "fromPic": "'.$fromPic.'",
+                    "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
                     "from_user":"'.$fromUser_urname.'",
                     "time_added":"'.$notifierTime.'"
