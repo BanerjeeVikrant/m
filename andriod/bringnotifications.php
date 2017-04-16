@@ -72,7 +72,8 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
                     "from_user":"'.$fromUser_urname.'",
-                    "time_added":"'.$notifierTime.'"
+                    "time_added":"'.$notifierTime.'",
+                    "type":'.$type.'
                 }
     ';          
                 $i = $i + 1;
@@ -85,7 +86,8 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
                     "from_user":"'.$fromUser_urname.'",
-                    "time_added":"'.$notifierTime.'"
+                    "time_added":"'.$notifierTime.'",
+                    "type":'.$type.'
                 }
     ';
             }
