@@ -54,6 +54,8 @@
 
     $query = $conn->query("INSERT INTO notifications VALUES ('', '3', '$usernameid', '$post_senderid', '$last_id', '$id', '$time_added', '$date_added')");
 
+    $liveNotifyEditQuery = $conn->query("INSERT INTO livenotify VALUES('', '1', '$id', '$post_sender')");
+
     echo "$comment";
 
 ?>
