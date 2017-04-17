@@ -41,7 +41,7 @@ echo '
                         $fromid = $query_fetch['id'];
                         $fromuser = $query_fetch['first_name'];
                         $fullfromuser = $query_fetch['first_name']." ".$query_fetch['last_name'];
-                        $fromprofile_pic = $query_fetch['profile_pic'];
+                        $fromprofile_pic = "http://www.bruincave.com/m/".$query_fetch['profile_pic'];
 
                         $touser = $row['toUser'];
                         $message = $row['message'];
