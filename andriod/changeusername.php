@@ -18,8 +18,6 @@ $usernameNow = $_POST['newu'];
 $sql = "UPDATE users SET username='$usernameNow' WHERE username='$username'";
 $query = $conn->query($sql);
 
-if ($userCount == 1) {
-        $response["success"] = true;  
-    } 
-    echo json_encode($response);
+$response["success"] = true;  
+echo json_encode($response);
 ?>

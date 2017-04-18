@@ -20,8 +20,6 @@ $password_md5 = md5($password);
 $sql = "UPDATE users SET password='$password_md5' WHERE username='$username'";
 $query = $conn->query($sql);
 
-if ($userCount == 1) {
-        $response["success"] = true;  
-    } 
-    echo json_encode($response);
+$response["success"] = true;  
+echo json_encode($response);
 ?>
