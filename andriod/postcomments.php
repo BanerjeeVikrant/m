@@ -56,6 +56,5 @@
 
     $liveNotifyEditQuery = $conn->query("INSERT INTO livenotify VALUES('', '1', '$id', '$post_sender')");
 
-    echo "$comment";
 
 ?>
