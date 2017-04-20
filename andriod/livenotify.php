@@ -81,7 +81,7 @@ echo '
                     $fullfromuser = $rows['first_name']." ".$rows['last_name'];
                     $fromprofile_pic = "http://www.bruincave.com/m/".$rows['profile_pic'];
 
-                    $message = "commented: \"".$comment."\" on your post";
+                    $message = "commented: ".$comment;
                     $time = "";
 
                 }
