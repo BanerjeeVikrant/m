@@ -31,6 +31,7 @@ echo '
             $id = $row['id'];
             $type = $row['about'];
             $postid = $row['postid'];
+            $touser = $row['notifyUser'];
             if($type == 0){
                 $findMessage = $conn->query("SELECT * FROM messages WHERE id='$postid'");
                 if($findMessage->num_rows > 0) {
@@ -55,6 +56,7 @@ echo '
 
                         echo '
                         {
+                            "type":'.$type.',
                             "fromid":'.$fromid.',
                             "fromuser":"'.$fromuser.'",
                             "fullfromuser":"'.$fullfromuser.'",
@@ -65,7 +67,39 @@ echo '
                         }';  
                     }
                 }
+                $deleteNotifyQuery = $conn->query("DELETE FROM livenotify WHERE notifyUser='$usernameid' AND id='$id' AND about='$type'");
+            } else if($type == 1){
+                $findComment = $conn->query("SELECT * FROM comments WHERE id='$postid'");
+                if($findComment->num_rows > 0) {
+                    $row = $findComment->fetch_assoc();
+                    $fromid = $row['from'];
+                    $comment = $row['comment'];
+
+                    $findUser = $conn->query("SELECT * FROM users WHERE id='$fromid'");
+                    $rows = $findUser->fetch_assoc();
+                    $fromuser = $rows['first_name'];
+                    $fullfromuser = $rows['first_name']." ".$rows['last_name'];
+                    $fromprofile_pic = "http://www.bruincave.com/m/".$rows['profile_pic'];
+
+                    $message = "replied:".$comment;
+                    $time = "";
+
+                }
+                echo '
+                {
+                    "type":'.$type.',
+                    "fromid":'.$fromid.',
+                    "fromuser":"'.$fromuser.'",
+                    "fullfromuser":"'.$fullfromuser.'",
+                    "frompic":"'.$fromprofile_pic .'",
+                    "touser": "'.$touser.'",
+                    "message":"'.$message.'",
+                    "time":"'.$time.'"
+                }'; 
+
+                $deleteNotifyQuery = $conn->query("DELETE FROM livenotify WHERE notifyUser='$usernameid' AND id='$id' AND about='$type'"); 
             }
+
         }
     }     
         
@@ -73,7 +107,6 @@ echo '
     ]}
 ";
 
-$deleteNotifyQuery = $conn->query("DELETE FROM livenotify WHERE notifyUser='$usernameid'");
 
     
 
