@@ -52,9 +52,11 @@
     $date_added = date("Y/m/d");
     $time_added = time(); 
 
+    $array_list = $last_id.",".$id;
+
     $query = $conn->query("INSERT INTO notifications VALUES ('', '3', '$usernameid', '$post_senderid', '$last_id', '$id', '$time_added', '$date_added')");
 
-    $liveNotifyEditQuery = $conn->query("INSERT INTO livenotify VALUES('', '1', '$id', '$post_sender')");
+    $liveNotifyEditQuery = $conn->query("INSERT INTO livenotify VALUES('', '1', '$array_list', '$post_sender')");
 
 
 ?>

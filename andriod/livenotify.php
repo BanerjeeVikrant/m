@@ -75,6 +75,11 @@ echo '
                     $fromid = $row['from'];
                     $comment = $row['comment'];
 
+                    $postid_array = explode(",", $postid);
+
+                    $commentpostid = $postid_array[0];
+                    $postinsertedid = $postid_array[1];
+
                     $findUser = $conn->query("SELECT * FROM users WHERE id='$fromid'");
                     $rows = $findUser->fetch_assoc();
                     $fromuser = $rows['first_name'];
@@ -88,7 +93,8 @@ echo '
                 echo '
                 {
                     "type":'.$type.',
-                    "fromid":'.$postid.',
+                    "commentpostid":'.$commentpostid.',
+                    "postinsertedid":'.$postinsertedid.',
                     "fromuser":"'.$fromuser.'",
                     "fullfromuser":"'.$fullfromuser.'",
                     "frompic":"'.$fromprofile_pic .'",
