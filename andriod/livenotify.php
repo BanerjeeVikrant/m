@@ -88,7 +88,7 @@ echo '
                 echo '
                 {
                     "type":'.$type.',
-                    "fromid":'.$fromid.',
+                    "fromid":'.$postid.',
                     "fromuser":"'.$fromuser.'",
                     "fullfromuser":"'.$fullfromuser.'",
                     "frompic":"'.$fromprofile_pic .'",
