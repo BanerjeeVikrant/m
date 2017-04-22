@@ -39,7 +39,7 @@ if(isset($_POST['image'])){
 
     file_put_contents($path, $data );
 	
-	$sql = "INSERT INTO feedback_table VALUES ('', 'usernameid', '', 'userdata/pictures/$username/$id.jpg')";
+	$sql = "INSERT INTO feedback_table VALUES ('', '$usernameid', '$post', 'userdata/pictures/$username/$id.jpg')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
