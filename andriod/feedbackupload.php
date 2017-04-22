@@ -37,15 +37,16 @@ if(isset($_POST['image'])){
 	$ext='jpeg';
     $data = base64_decode( $image );
 
-    file_put_contents($path, $data );
+    file_put_contents($path, $data);
 	
 	$sql = "INSERT INTO feedback_table VALUES ('', '$usernameid', '$post', 'userdata/pictures/$username/$id.jpg')";
+
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
 		echo json_encode($response);
 	}else{
-		$response["success"] = false;  
+		$response["success"] = $sql;  
 		echo json_encode($response);
 	}
 
