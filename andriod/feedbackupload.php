@@ -43,7 +43,7 @@ if(isset($_POST['image'])){
 
 
 	if ($conn->query($sql) === TRUE) {
-		$response["success"] = true;  
+		$response["success"] = "true";  
 		echo json_encode($response);
 	}else{
 		$response["success"] = $sql;  
