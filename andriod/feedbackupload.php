@@ -18,7 +18,7 @@ $usernamegrade = $rowget['grade'];
 
 $post = $_POST['caption'];
 
-if(isset($_POST['image'])){
+if($_POST['image'] != ""){
 	$now = DateTime::createFromFormat('U.u', microtime(true));
 	$id = $now->format('YmdHisu');
 	date_default_timezone_set("America/Los_Angeles");
@@ -41,18 +41,18 @@ if(isset($_POST['image'])){
 	
 	$sql = "INSERT INTO feedback_table VALUES ('', '$usernameid', '$post', 'userdata/pictures/$username/$id.jpg')";
 
-
-	if ($conn->query($sql) === TRUE) {
-		$response["success"] = "true";  
-		echo json_encode($response);
-	}else{
-		$response["success"] = $sql;  
-		echo json_encode($response);
-	}
-
 }else{
-	echo "image_not_in";
-	exit;
+	$sql = "INSERT INTO feedback_table VALUES ('', '$usernameid', '$post', '')";
+}
+
+
+
+if ($conn->query($sql) === TRUE) {
+	$response["success"] = "true";  
+	echo json_encode($response);
+}else{
+	$response["success"] = $sql;  
+	echo json_encode($response);
 }
 
 ?>
