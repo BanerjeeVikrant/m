@@ -128,7 +128,7 @@ echo '
                                         {
                                           'body':'$body',
                                           'from':'$from',
-                                          'username':'$username',
+                                          'username':'$user',
                                           'pic':'http://www.bruincave.com/m/$pic'
                                         }";
                     }
