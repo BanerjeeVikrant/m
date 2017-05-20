@@ -58,5 +58,6 @@
 
     $liveNotifyEditQuery = $conn->query("INSERT INTO livenotify VALUES('', '1', '$array_list', '$post_sender')");
 
-
+    $response["success"] = true;  
+    echo json_encode($response);
 ?>
