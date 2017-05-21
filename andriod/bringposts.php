@@ -98,9 +98,9 @@
                 $fetch = $query->fetch_assoc();
                 $username = $fetch['username'];
                 if($likedbynames != ""){
-                    $likedbynames = $likedbynames.", ".$username;
+                    $likedbynames =$likedbynames.", ".$username;
                 }else{
-                    $likedbynames = $username;
+                    $likedbynames =$username;
                 }
             }
             $countLikes = count($likedbyArray);
