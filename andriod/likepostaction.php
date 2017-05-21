@@ -12,7 +12,7 @@
     }
     include "../system/helpers.php";
 
-    $id = Number($_POST['postid']);
+    $id = $_POST['postid'];
     $username = $_POST['username'];
 
     $query = $conn->query("SELECT * FROM users WHERE username='$username'");
