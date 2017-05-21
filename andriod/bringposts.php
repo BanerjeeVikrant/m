@@ -92,6 +92,14 @@
             $body =  $row['body'];
             $likedby = $row['liked_by'];
             $likedbyArray = explode(",",$likedby);
+            $likedbynames = "";
+            foreach ($likedbyArray as $value) {
+                $query = $conn->query("SELECT * FROM users WHERE id='$value'");
+                $fetch = $query->fetch_assoc();
+                $username = $fetch['username'];
+
+                $likedbynames = $likedbynames.", ".$username;
+            }
             $countLikes = count($likedbyArray);
             
             if($countLikes > 3){
@@ -158,7 +166,7 @@
                 "moreThanThreeComments":'.$moreThanThreeComments.',
                 "likedByMe":'.$likedByMe.',
                 "moreThanThreeLiker":'.$moreThanThreeLiker.',
-                "likedby":"'.$likedby.'",
+                "likedby":"'.$likedbynames.'",
                 "likesCount":'.$countLikes.',
                 
             ';  
