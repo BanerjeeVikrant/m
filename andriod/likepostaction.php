@@ -12,8 +12,8 @@
     }
     include "../system/helpers.php";
 
-    $id = $_GET['postid'];
-    $username = $_GET['username'];
+    $id = Number($_POST['postid']);
+    $username = $_POST['username'];
 
     $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 	$row_id = $query->fetch_assoc();
