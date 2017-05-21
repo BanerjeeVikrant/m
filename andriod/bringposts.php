@@ -94,11 +94,13 @@
             $likedbyArray = explode(",",$likedby);
             $likedbynames = "";
             foreach ($likedbyArray as $value) {
-                $query = $conn->query("SELECT * FROM users WHERE id='$value'");
-                $fetch = $query->fetch_assoc();
-                $username = $fetch['username'];
+                if($value != ""){
+                    $query = $conn->query("SELECT * FROM users WHERE id='$value'");
+                    $fetch = $query->fetch_assoc();
+                    $username = $fetch['username'];
 
-                $likedbynames = $likedbynames.", ".$username;
+                    $likedbynames = $likedbynames.", ".$username;
+                }
             }
             $countLikes = count($likedbyArray);
             
