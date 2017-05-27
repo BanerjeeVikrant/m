@@ -42,6 +42,9 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $getInfo = $getFrom->fetch_assoc();
 
             $comment = $getInfo['comment'];
+            $comment = str_replace("&apos;","'",$comment);
+            $comment = str_replace("&lt;","<",$comment);
+            $comment = str_replace("&gt;",">",$comment);
 
             $notifierTime = time_elapsed_string($time_added);
 

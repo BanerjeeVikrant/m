@@ -12,6 +12,10 @@
     }
     include "../system/helpers.php";
     $post = $_POST['post'];
+    $post = str_replace("'","&apos;",$post);
+    $post = str_replace("<","&lt;",$post);
+    $post = str_replace(">","&gt;",$post);
+    
     $username = $_POST['u'];
     $view_group_id = $_POST['group'];
     $profileUser = $_POST['puser'];

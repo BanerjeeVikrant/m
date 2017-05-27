@@ -13,6 +13,9 @@
     include "../system/helpers.php";
 
     $post = $_POST['post'];
+    $post = str_replace("'","&apos;",$post);
+    $post = str_replace("<","&lt;",$post);
+    $post = str_replace(">","&gt;",$post);
     $username = $_POST['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");

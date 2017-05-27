@@ -17,6 +17,9 @@ $usernameid = $rowget['id'];
 $usernamegrade = $rowget['grade'];
 
 $post = $_POST['caption'];
+$post = str_replace("'","&apos;",$post);
+$post = str_replace("<","&lt;",$post);
+$post = str_replace(">","&gt;",$post);
 
 if(isset($_POST['image'])){
 	$now = DateTime::createFromFormat('U.u', microtime(true));

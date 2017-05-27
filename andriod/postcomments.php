@@ -15,6 +15,9 @@
 	$username = $_POST['u'];
 	$id = $_POST['id'];
 	$comment = $_POST['c'];
+    $comment = str_replace("'","&apos;",$comment);
+    $comment = str_replace("<","&lt;",$comment);
+    $comment = str_replace(">","&gt;",$comment);
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {

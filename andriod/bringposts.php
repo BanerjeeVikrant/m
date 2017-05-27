@@ -90,6 +90,10 @@
 
             $id =  $row['id'];
             $body =  $row['body'];
+            $body = str_replace("&apos;","'",$body);
+            $body = str_replace("&lt;","<",$body);
+            $body = str_replace("&gt;",">",$body);
+            
             $likedby = $row['liked_by'];
             $likedbyArray = explode(",",$likedby);
             $likedbynames = "";
