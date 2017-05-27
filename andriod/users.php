@@ -119,6 +119,10 @@
                 else{
                     $lasttext = "Start Conversation!";
                 }
+                
+                $lasttext = str_replace("&apos;","'",$lasttext);
+                $lasttext = str_replace("&lt;","<",$lasttext);
+                $lasttext = str_replace("&gt;",">",$lasttext);
 
             if($i == 0){
                 echo '
