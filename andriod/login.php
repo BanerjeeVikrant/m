@@ -35,7 +35,6 @@
     $userCount = $result->num_rows;
     if ($userCount == 1) {
         $response["success"] = true;  
-    }
-    
+    } 
     echo json_encode($response);
 ?>
