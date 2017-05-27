@@ -26,12 +26,12 @@ if(isset($_POST['image'])){
 	$added_by = $username;
 	$time_added = time();
 
-	$upload_folder = "../userdata/pictures/$username";
-	if (!file_exists("../userdata/pictures/$username")){
-		mkdir("../userdata/pictures/$username");
-		mkdir("../userdata/pictures/$username/thumbnail");
+	$upload_folder = "../userdata/pictures/$usernameid";
+	if (!file_exists("../userdata/pictures/$usernameid")){
+		mkdir("../userdata/pictures/$usernameid");
+		mkdir("../userdata/pictures/$usernameid/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/$id.jpg";
+	$path = "../userdata/pictures/$usernameid/$id.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
@@ -39,7 +39,7 @@ if(isset($_POST['image'])){
 
     file_put_contents($path, $data );
 	
-	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$username/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
+	$sql = "INSERT INTO posts VALUES ('', '$post', '$date_added', '$time_added', '$usernameid', '0', '', '', '', 'userdata/pictures/$usernameid/$id.jpg', '', '$usernamegrade', '0', '', '', '0')";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
