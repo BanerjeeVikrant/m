@@ -186,7 +186,9 @@
                     $get_comment = $comment->fetch_assoc();
 
                     $body = $get_comment['comment'];
-                    
+                    $body = str_replace("&apos;","'",$body);
+                    $body = str_replace("&lt;","<",$body);
+                    $body = str_replace("&gt;",">",$body);
                     $from_ = $get_comment['from'];
 
                     $query = $conn->query("SELECT * FROM users WHERE id='$from_'");
@@ -198,11 +200,11 @@
                     }
                     if ($body != "") {
 
-                        $commentsArr .= "
+                        $commentsArr .= '
                                         {
-                                          'body':'$body',
-                                          'from':'$from'
-                                        }";
+                                          "body":"'.$body.'",
+                                          "from":"'.$from.'"
+                                        }';
                     }
                  }
             }

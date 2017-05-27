@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "";
     $dbname = "bruincaveData";
 
     // Create connection
@@ -12,14 +12,16 @@
     }
     include "../system/helpers.php";
 
-    $postid = $_POST['postid'];
-    $username = $_POST['u'];
+    $postid = $_GET['postid'];
+    $username = $_GET['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
 
         $getuser = $checkme->fetch_assoc();
         $yourid = $getuser['id'];
+    }else{
+        $yourid = "";
     }
 
     $sql = "SELECT * FROM posts WHERE id='$postid'";
@@ -142,13 +144,13 @@ echo '
                     }
                     if ($body != "") {
 
-                        $commentsArr .= "
+                        $commentsArr .= '
                                         {
-                                          'body':'$body',
-                                          'from':'$from',
-                                          'username':'$user',
-                                          'pic':'http://www.bruincave.com/m/$pic'
-                                        }";
+                                          "body":"'.$body.'",
+                                          "from":"'.$from.'",
+                                          "username":"'.$user.'",
+                                          "pic":"http://www.bruincave.com/m/'.$pic.'"
+                                        }';
                     }
                  }
             }
