@@ -38,6 +38,10 @@ for($i=0; $i<$results->num_rows; $i++) {
     $row = $results->fetch_assoc();
     $id = $row['id'];
     $message = $row['message'];
+    $message = str_replace("&apos;","'",$message);
+    $message = str_replace("&lt;","<",$message);
+    $message = str_replace("&gt;",">",$message);
+
     $fromUser = $row['fromUser'];
     $toUser = $row['toUser'];
 
