@@ -26,12 +26,12 @@ if(isset($_POST['image'])){
 	$added_by = $username;
 	$time_added = time();
 
-	$upload_folder = "../userdata/pictures/$username";
-	if (!file_exists("../userdata/pictures/$username")){
-		mkdir("../userdata/pictures/$username");
-		mkdir("../userdata/pictures/$username/thumbnail");
+	$upload_folder = "../userdata/pictures/$usernameid";
+	if (!file_exists("../userdata/pictures/$usernameid")){
+		mkdir("../userdata/pictures/$usernameid");
+		mkdir("../userdata/pictures/$usernameid/thumbnail");
 	}
-	$path = "../userdata/pictures/$username/$id.jpg";
+	$path = "../userdata/pictures/$usernameid/$id.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
@@ -39,7 +39,7 @@ if(isset($_POST['image'])){
 
     file_put_contents($path, $data );
 	
-	$sql = "UPDATE users SET profile_pic='userdata/pictures/$username/$id.jpg' WHERE username='$username'";
+	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' WHERE username='$username'";
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
