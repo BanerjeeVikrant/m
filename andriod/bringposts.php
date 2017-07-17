@@ -52,6 +52,7 @@
         if ($group == 0) {
             if($type == 0){
                 $sql = "SELECT * FROM posts WHERE ((added_by IN ($yourfollowing_quoted) AND posted_to = '0') OR (added_by = '$yourid' AND posted_to = '0') AND (post_group = '0')) ORDER BY id DESC LIMIT $offset,5";
+                echo $sql;
             }
             else if($type == 1){
                 $sql = "SELECT * FROM posts WHERE post_group = '0' AND from_class = '9' ORDER BY id DESC LIMIT $offset,5";
