@@ -19,7 +19,7 @@
     $group = $_GET['group'];
 
     if ($profileUser != "") {
-        $check = $conn->query("SELECT * FROM users WHERE id='$profileUser'");
+        $check = $conn->query("SELECT * FROM users WHERE username='$profileUser'");
         if ($check->num_rows == 1) {
 
             $get = $check->fetch_assoc();
@@ -34,7 +34,7 @@
         $profileUser  == "";
     }
 
-    $checkme = $conn->query("SELECT * FROM users WHERE id='$username'");
+    $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
 
         $getuser = $checkme->fetch_assoc();
