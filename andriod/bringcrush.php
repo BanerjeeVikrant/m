@@ -46,7 +46,7 @@
                     "id":'.$id.',
                     "body": "'.$body.'",
                     "time_added":"'.$time_added.'",
-                    "commentscount":'.$commentsid_count.'
+                    "commentscount":"'.$commentsid_count.'"
                 }
     ';          
                 $i = $i + 1;
@@ -56,7 +56,7 @@
                     "id":'.$id.',
                     "body": "'.$body.'",
                     "time_added":"'.$time_added.'",
-                    "commentscount":'.$commentsid_count.'
+                    "commentscount":"'.$commentsid_count.'"
                 }
     ';
             }
