@@ -51,7 +51,7 @@
                     if ($body != "") {
 
                         $commentsArr .= "
-                                        ,{
+                                        {
                                           'body':'$body'
                                         }";
                     }
