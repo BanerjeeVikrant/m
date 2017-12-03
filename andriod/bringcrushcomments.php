@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 include "../system/helpers.php";
 
-$crushid = $_GET['crushid'];
+$crushid = $_POST['crushid'];
 
 $post = $conn->query("SELECT * FROM crush WHERE id='$crushid'");
 $get_post = $post->fetch_assoc();
