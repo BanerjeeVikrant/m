@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 }
 include "../system/helpers.php";
 
+//it should be get
 $crushid = $_GET['crushid'];
 
 $post = $conn->query("SELECT * FROM crush WHERE id='$crushid'");
