@@ -10,9 +10,8 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    include "../system/helpers.php";
 
-    $postid = $_POST['postid'];
+    $postid = $_GET['postid'];
 
     $sql =  "SELECT * FROM crush WHERE id='$postid'";
 
