@@ -49,10 +49,10 @@
                     }
                     if ($body != "") {
 
-                        $commentsArr .= "
+                        $commentsArr .= '
                                         {
-                                          'body':'$body'
-                                        }";
+                                          "body": "'.$body.'"
+                                        }';
                     }
                  }
             }
