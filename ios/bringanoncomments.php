@@ -11,7 +11,7 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $postid = $_GET['postid'];
+    $postid = $_POST['postid'];
 
     $sql =  "SELECT * FROM crush WHERE id='$postid'";
 
