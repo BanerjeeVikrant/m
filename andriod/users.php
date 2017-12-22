@@ -15,11 +15,11 @@
 	$lastPost = "";
 	$s = "";
 	$offset = 0;
-    $search = $_GET['s'];
-	if (isset($_GET['o'])) {
-	   $offset = $_GET['o'];
+    $search = $_POST['s'];
+	if (isset($_POST['o'])) {
+	   $offset = $_POST['o'];
 	}
-    $username = $_GET['user'];
+    $username = $_POST['user'];
 	function startsWith($haystack, $needle){
 	 $length = strlen($needle);
 	 return (strcasecmp(substr($haystack, 0, $length),$needle) == 0);
@@ -90,8 +90,8 @@
                     $chat_profile_pic = "http://www.bruincave.com/m/" . $chat_profile_pic;
                 }
                 $chat_both_name = $chat_first_name . " " . $chat_last_name;
-                if (isset($_GET['s'])) {
-                    if (! (startsWith($chat_first_name, $_GET['s']) || startsWith($chat_last_name, $_GET['s']) || startsWith($chat_user_name, $_GET['s']) || startsWith($chat_both_name, $_GET['s']) ) ) {
+                if (isset($_POST['s'])) {
+                    if (! (startsWith($chat_first_name, $_POST['s']) || startsWith($chat_last_name, $_POST['s']) || startsWith($chat_user_name, $_POST['s']) || startsWith($chat_both_name, $_POST['s']) ) ) {
                         continue;
                     }
                 }
