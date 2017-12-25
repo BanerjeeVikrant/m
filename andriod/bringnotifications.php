@@ -2,8 +2,8 @@
 <?php include '../system/helpers.php';?>
 <?php 
 
-$offset = $_GET['o'];
-$username = $_GET['user'];
+$offset = $_POST['o'];
+$username = $_POST['user'];
 $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 $row = $query->fetch_assoc();
 $usernameid = $row['id'];
@@ -65,12 +65,12 @@ $getposts = $conn->query($sql) or die(mysql_error());
                     $fromPic = "http://www4.csudh.edu/Assets/CSUDH-Sites/History/images/Faculty-Profile-Pictures/Faculty%20Female%20Default%20Profile%20Picture.jpg";
                 }
             }
-            $mix = $fromFirst . " " . $message . " " . $notifierTime;
+            $mix = $fromFirst . " " . $message;
             if($i == 0){
                 echo '
                 {
                     "id":'.$id.',
-                    "body": "'.$fromFirst.' '.$message.'",
+                    "body": "'.$mix.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
@@ -84,7 +84,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 echo '
                 ,{
                     "id":'.$id.',
-                    "body": "'.$fromFirst.' '.$message.'",
+                    "body": "'.$mix.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
