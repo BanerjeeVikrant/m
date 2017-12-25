@@ -52,13 +52,13 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 $message = "added you to Favorites";   
             }
             else if($type == '2'){
-                $message = "roared on your post.";
+                $message = "roared at your post.";
             }
             else if($type == '3'){
                 $message =  "commented: $comment";
             }
             if($fromPic == "" || $fromPic == NULL){
-                if($fromsex == "1"){
+                if($fromsex == "0"){
                     $fromPic = "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg";
                 }
                 else{
@@ -70,7 +70,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 echo '
                 {
                     "id":'.$id.',
-                    "body": "'.$message.'",
+                    "body": "'$fromFirst.' '.$message.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
@@ -84,7 +84,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 echo '
                 ,{
                     "id":'.$id.',
-                    "body": "'.$message.'",
+                    "body": "'$fromFirst.' '.$message.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
