@@ -70,7 +70,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 echo '
                 {
                     "id":'.$id.',
-                    "body": "'$fromFirst.' '.$message.'",
+                    "body": "'$fromFirst $message.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
@@ -84,7 +84,7 @@ $getposts = $conn->query($sql) or die(mysql_error());
                 echo '
                 ,{
                     "id":'.$id.',
-                    "body": "'$fromFirst.' '.$message.'",
+                    "body": "'$fromFirst $message.'",
                     "fromPic": "'.$fromPic.'",
                     "postid":'.$postId.',
                     "fromFirst": "'.$fromFirst.'",
