@@ -2,8 +2,8 @@
 <?php include '../system/helpers.php';?>
 <?php 
 
-$offset = $_POST['o'];
-$username = $_POST['user'];
+$offset = $_GET['o'];
+$username = $_GET['user'];
 $query = $conn->query("SELECT * FROM users WHERE username='$username'");
 $row = $query->fetch_assoc();
 $usernameid = $row['id'];
