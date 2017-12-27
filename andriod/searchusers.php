@@ -54,7 +54,16 @@
             $followersList = $row["followers"];
 
             $followersList_array = explode(",", $followersList);
-
+            $grade = $row['grade'];
+            if($grade == 9){
+                $grade = "Freshman";
+            }else if($grade == 10){
+                $grade = "Sophomore";
+            }else if($grade == 11){
+                $grade = "Junior";
+            }else if($grade == 12){
+                $grade = "Senior";
+            }
             if(in_array($usernameid, $followersList_array)){
                 $followingUser = 1;
             } else {
@@ -78,6 +87,7 @@
                     "id":'.$id.',
                     "fromPic": "'.$profilepic.'",
                     "name": "'.$firstname." ".$lastname.'",
+                    "class": "'.$grade.'",
                     "following":'.$followingUser.'
                 }
     ';          
@@ -88,6 +98,7 @@
                     "id":'.$id.',
                     "fromPic": "'.$profilepic.'",
                     "name": "'.$firstname." ".$lastname.'",
+                    "class": "'.$grade.'",
                     "following":'.$followingUser.'
                 }
     ';
