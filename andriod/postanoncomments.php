@@ -12,9 +12,9 @@
     }
     include "../system/helpers.php";
 
-	$username = $_POST['u'];
-	$id = $_POST['id'];
-	$comment = $_POST['c'];
+	$username = $_GET['u'];
+	$id = $_GET['id'];
+	$comment = $_GET['c'];
 
 
 	$checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
@@ -28,9 +28,9 @@
 	if ($conn->query($sql) === TRUE) {
 	    $last_id = $conn->insert_id;
 	    $success = true;
-	   echo '{"info": [{"success":'.$success.'}]}'; 
+	   	echo '{"info": [{"success":'.$success.'}]}'; 
 	} else {
-	    //echo "Error: " . $sql . "<br>" . $conn->error;
+	    echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 
 	$post_check = $conn->query("SELECT * FROM crush WHERE id='$id'");
