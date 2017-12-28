@@ -30,11 +30,11 @@
 	    $success = true;
 	    echo '
 		{
-		    "login": [';
+		    "success": [';
 		    
 		                echo '
 		                {
-		                    "loginError":'.$success.'
+		                    "successError":'.$success.'
 		                }
 		    ';          
 		 echo "
