@@ -28,20 +28,9 @@
 	if ($conn->query($sql) === TRUE) {
 	    $last_id = $conn->insert_id;
 	    $success = true;
-	    echo '
-		{
-		    "success": [';
-		    
-		                echo '
-		                {
-		                    "successError":'.$success.'
-		                }
-		    ';          
-		 echo "
-		    ]}
-		";	
+	   echo '{"info": [{"success":'.$success.'}]}'; 
 	} else {
-	    echo "Error: " . $sql . "<br>" . $conn->error;
+	    //echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 
 	$post_check = $conn->query("SELECT * FROM crush WHERE id='$id'");
