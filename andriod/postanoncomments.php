@@ -27,6 +27,19 @@
 	$sql = "INSERT INTO anoncomments VALUES ('', '$comment', '$usernameid')";
 	if ($conn->query($sql) === TRUE) {
 	    $last_id = $conn->insert_id;
+	    $success = true;
+	    echo '
+		{
+		    "login": [';
+		    
+		                echo '
+		                {
+		                    "loginError":'.$success.'
+		                }
+		    ';          
+		 echo "
+		    ]}
+		";	
 	} else {
 	    echo "Error: " . $sql . "<br>" . $conn->error;
 	}
@@ -47,9 +60,4 @@
 		$sql = "UPDATE crush SET commentsid='$post_array' WHERE id='$id'";
 		$add_query = $conn->query($sql);
 	}
-	date_default_timezone_set("America/Los_Angeles");
-	$date_added = date("Y/m/d");
-	$time_added = time(); 
-
-	echo "$comment";
 ?>
