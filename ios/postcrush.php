@@ -12,8 +12,8 @@
     }
     include "../system/helpers.php";
 
-    $post = $_POST['post'];
-    $username = $_POST['u'];
+    $post = $_GET['post'];
+    $username = $_GET['u'];
 
     $checkme = $conn->query("SELECT * FROM users WHERE username='$username'");
     if ($checkme->num_rows == 1) {
