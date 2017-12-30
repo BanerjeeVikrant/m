@@ -28,7 +28,7 @@
 	if ($conn->query($sql) === TRUE) {
 	    $last_id = $conn->insert_id;
 	    $success = true;
-	   	echo '{"info": [{"success":'.$success.'}]}'; 
+	   	echo '{"info": [{"successError":'.$success.'}]}'; 
 	} else {
 	    echo "Error: " . $sql . "<br>" . $conn->error;
 	}
