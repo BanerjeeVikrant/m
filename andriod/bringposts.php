@@ -107,7 +107,12 @@
                     $likedbynames =$username;
                 }
             }
-            $countLikes = count($likedbyArray);
+            if($likedbyArray[0] == ""){
+                $countLikes = 0
+            } else {
+                $countLikes = count($likedbyArray);
+            }
+
             
             if($countLikes > 3){
                 $moreThanThreeLiker = 1;
@@ -151,7 +156,12 @@
 
             $commentsid_array = explode(",", $commentsid);
 
-            $commentsid_arrayCount = count($commentsid_array);
+            if($commentsid_array[0] == ""){
+                $commentsid_arrayCount = 0;
+            }else{
+                $commentsid_arrayCount = count($commentsid_array);
+            }
+
 
             if($commentsid_arrayCount > 3){
                 $moreThanThreeComments = 1;
