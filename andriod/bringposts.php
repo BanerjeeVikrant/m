@@ -108,7 +108,7 @@
                 }
             }
             if($likedbyArray[0] == ""){
-                $countLikes = 0
+                $countLikes = 0;
             } else {
                 $countLikes = count($likedbyArray);
             }
