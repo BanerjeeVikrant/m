@@ -44,7 +44,7 @@
     }else{
         $grade = 12;
     }
-    
+
     $d = date("m/d/y");
     $t = time();
 
@@ -54,6 +54,7 @@
 
     $statement = $conn->query("INSERT INTO users VALUES ('', '$usr', '$fn', '$ln', '$stuid', '$pswd_md5', '$d', '', '', '', '', '', '', '$dob', '0', '', '', '', '', '0', '$grade', '$ip', '$ip', '$ip', '1', '$d', '$t', '0', '1', '', '')");
 
+$success = true;
     
 echo '
 {
