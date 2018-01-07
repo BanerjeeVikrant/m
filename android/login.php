@@ -1,5 +1,5 @@
 <?php
-include "/m/connect.php";
+include "/android/connect.php";
 
     // Create connection
     $conn = new mysqli($servername, $username1, $password, $dbname);
