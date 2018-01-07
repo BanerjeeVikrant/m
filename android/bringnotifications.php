@@ -1,6 +1,8 @@
-<?php include '../system/connect.php';?>
+
 <?php include '../system/helpers.php';?>
 <?php 
+
+include "connect.php";
 
 $offset = $_POST['o'];
 $username = $_POST['user'];

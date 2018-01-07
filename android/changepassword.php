@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username1 = "root";
-$password = "H@ll054321";
-$dbname = "bruincaveData";
+include "connect.php";
 
 // Create connection
 $conn = new mysqli($servername, $username1, $password, $dbname);

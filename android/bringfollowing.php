@@ -1,8 +1,5 @@
 <?php 
-$servername = "localhost";
-$username1 = "root";
-$password = "H@ll054321";
-$dbname = "bruincaveData";
+include "connect.php";
 
 // Create connection
 $conn = new mysqli($servername, $username1, $password, $dbname);
@@ -46,9 +43,9 @@ if ($check->num_rows == 1) {
 }
 echo '
 {
-    "followers": [';
+    "following": [';
     $i = 0;
-foreach ($followersArray as $value) {
+foreach ($followingArray as $value) {
 	$sql = "SELECT * FROM users WHERE id='$value'";
 	$results = $conn->query($sql);
 	$row = $results->fetch_assoc();
@@ -75,7 +72,7 @@ foreach ($followersArray as $value) {
 	        continue;
 	    }
 	}
-	if($followersCount != 0){
+	if($followingCount != 0){
 		if($i == 0){
 			echo '
 			{
