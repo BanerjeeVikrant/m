@@ -1,5 +1,5 @@
 <?php
-include "http://www.bruincave.com/m/android/connect.php";
+    include "http://www.bruincave.com/m/android/connect.php";
 
     // Create connection
     $conn = new mysqli($servername, $username1, $password, $dbname);
@@ -23,8 +23,8 @@ include "http://www.bruincave.com/m/android/connect.php";
     }
 
     $response = array();
-    $user_login = strip_tags(@$_POST['usr']);
-    $password_login = strip_tags(@$_POST['psw']);
+    $user_login = strip_tags(@$_GET['usr']);
+    $password_login = strip_tags(@$_GET['psw']);
     $md5password_login = md5($password_login);
 
     $result = $conn->query("SELECT id FROM users WHERE username='$user_login' AND password='$md5password_login' AND activated='1' LIMIT 1");
