@@ -23,8 +23,8 @@
     }
 
     $response = array();
-    $user_login = strip_tags(@$_GET['usr']);
-    $password_login = strip_tags(@$_GET['psw']);
+    $user_login = strip_tags(@$_POST['usr']);
+    $password_login = strip_tags(@$_POST['psw']);
     $md5password_login = md5($password_login);
 
     $result = $conn->query("SELECT id FROM users WHERE username='$user_login' AND password='$md5password_login' AND activated='1' LIMIT 1");
