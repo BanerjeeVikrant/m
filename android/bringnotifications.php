@@ -2,6 +2,14 @@
 <?php 
 
 include "connect.php";
+
+// Create connection
+$conn = new mysqli($servername, $username1, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 include '../system/helpers.php';
 
 $offset = $_POST['o'];
@@ -44,9 +52,6 @@ $getposts = $conn->query($sql) or die(mysql_error());
             $getInfo = $getFrom->fetch_assoc();
 
             $comment = $getInfo['comment'];
-            $comment = str_replace("&apos;","'",$comment);
-            $comment = str_replace("&lt;","<",$comment);
-            $comment = str_replace("&gt;",">",$comment);
 
             $notifierTime = time_elapsed_string($time_added);
 
