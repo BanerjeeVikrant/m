@@ -30,13 +30,11 @@
     $password_login = strip_tags(@$_GET['psw']);
     $md5password_login = md5($password_login);
 
-    $result = $conn->query("SELECT id FROM users WHERE username='$user_login' AND activated='1' LIMIT 1");
+    $result = $conn->query("SELECT id FROM users WHERE username='$user_login' AND password='$md5password_login' AND activated='1' LIMIT 1");
 
     $userCount = $result->num_rows;
     if ($userCount == 1) {
         $response["success"] = true;  
-    } else{
-        echo "not true";
     }
     echo json_encode($response);
 ?>
