@@ -36,7 +36,7 @@
     if ($userCount == 1) {
         $response["success"] = true;  
     } else{
-        echo "not true"
+        echo "not true";
     }
     echo json_encode($response);
 ?>
