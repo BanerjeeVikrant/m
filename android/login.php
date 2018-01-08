@@ -1,12 +1,5 @@
 <?php
-    require "http://bruincave.com/m/android/connect.php";
-
-    // Create connection
-    $conn = new mysqli($servername, $username1, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    require "/connect.php";
 
     $ip = "";
 
