@@ -1,7 +1,7 @@
 <?php
     $servername = "localhost";
     $username1 = "root";
-    $password = "H@ll054321";
+    $password = "VB2002yoyo1D";
     $dbname = "test";
 
     // Create connection
@@ -35,6 +35,8 @@
     $userCount = $result->num_rows;
     if ($userCount == 1) {
         $response["success"] = true;  
-    } 
+    } else{
+        echo "not true"
+    }
     echo json_encode($response);
 ?>
