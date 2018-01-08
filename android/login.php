@@ -1,5 +1,5 @@
 <?php
-    require "http://www.bruincave.com/m/android/connect.php";
+    require "http://bruincave.com/m/android/connect.php";
 
     // Create connection
     $conn = new mysqli($servername, $username1, $password, $dbname);
