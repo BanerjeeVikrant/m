@@ -37,7 +37,7 @@ if(isset($_POST['image'])){
 	file_put_contents($path, $data);
 	
 	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' WHERE username='$username'";
-
+/*
 	$original_info = getimagesize($data);
 	$original_w = $original_info[0];
 	$original_h = $original_info[1];
@@ -53,7 +53,7 @@ if(isset($_POST['image'])){
 	imagejpeg($thumb_img, $thumb_filename);
 	imagedestroy($thumb_img);
 	imagedestroy($original_img);
-
+*/
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
 		echo json_encode($response);
