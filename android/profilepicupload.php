@@ -29,14 +29,30 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$usernameid/thumbnail");
 	}
 	$path = "../userdata/pictures/$usernameid/$id.jpg";
+	$thumb_filename = "../userdata/pictures/$usernameid/thumbnail/$id.jpg"
 	$image = $_POST['image'];
 
 	$ext='jpeg';
     $data = base64_decode( $image );
-
-    file_put_contents($path, $data );
+	file_put_contents($path, $data);
 	
 	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' WHERE username='$username'";
+
+	$original_info = getimagesize($data);
+	$original_w = $original_info[0];
+	$original_h = $original_info[1];
+	$original_img = imagecreatefromjpg($data);
+	$thumb_w = 50;
+	$thumb_h = 50;
+	$thumb_img = imagecreatetruecolor($thumb_w, $thumb_h);
+	imagecopyresampled($thumb_img, $original_img,
+	                   0, 0,
+	                   0, 0,
+	                   $thumb_w, $thumb_h,
+	                   $original_w, $original_h);
+	imagejpeg($thumb_img, $thumb_filename);
+	imagedestroy($thumb_img);
+	imagedestroy($original_img);
 
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
