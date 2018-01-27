@@ -38,7 +38,7 @@ if(isset($_POST['image'])){
 	
 	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' WHERE username='$username'";
 
-	$source_image = imagecreatefromjpeg($data);
+	$source_image = $data;
 	$src_w= imagesx($source_image);
 	$src_h= imagesy($source_image);
 	$dest_image = imagecreatetruecolor(100, 100); //targeted width and height
