@@ -29,7 +29,7 @@ if(isset($_POST['image'])){
 		mkdir("../userdata/pictures/$usernameid/thumbnail");
 	}
 	$path = "../userdata/pictures/$usernameid/$id.jpg";
-	$thumb_filename = "../userdata/pictures/$usernameid/thumbnail/$id.jpg"
+	$thumb_filename = "../userdata/pictures/$usernameid/thumbnail/$id.jpg";
 	$image = $_POST['image'];
 
 	$ext='jpeg';
