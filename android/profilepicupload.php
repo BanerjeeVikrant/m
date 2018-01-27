@@ -37,23 +37,15 @@ if(isset($_POST['image'])){
 	file_put_contents($path, $data);
 	
 	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' WHERE username='$username'";
-/*
-	$original_info = getimagesize($data);
-	$original_w = $original_info[0];
-	$original_h = $original_info[1];
-	$original_img = imagecreatefromjpg($data);
-	$thumb_w = 50;
-	$thumb_h = 50;
-	$thumb_img = imagecreatetruecolor($thumb_w, $thumb_h);
-	imagecopyresampled($thumb_img, $original_img,
-	                   0, 0,
-	                   0, 0,
-	                   $thumb_w, $thumb_h,
-	                   $original_w, $original_h);
-	imagejpeg($thumb_img, $thumb_filename);
-	imagedestroy($thumb_img);
-	imagedestroy($original_img);
-*/
+
+	$source_image = imagecreatefromjpeg($data);
+	$src_w= imagesx($source_image);
+	$src_h= imagesy($source_image);
+	$dest_image = imagecreatetruecolor(100, 100); //targeted width and height
+
+	imagecopyresampled($dest_image, $source_image, 0, 0, 0, 0, 100, 100, $source_w, $source_h);
+	imagejpeg($dest_image,$thumb_filename,80); 
+
 	if ($conn->query($sql) === TRUE) {
 		$response["success"] = true;  
 		echo json_encode($response);
