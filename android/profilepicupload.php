@@ -39,7 +39,7 @@ if(isset($_POST['image'])){
 	file_put_contents($path, $data);
 	file_put_contents($thumb_filename, $data_thumb);
 
-	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' && banner_pic='userdata/pictures/$usernameid/thumbnail/$id.jpg' WHERE username='$username'";
+	$sql = "UPDATE users SET profile_pic='userdata/pictures/$usernameid/$id.jpg' AND banner_pic='userdata/pictures/$usernameid/thumbnail/$id.jpg' WHERE username='$username'";
 
 
 	if ($conn->query($sql) === TRUE) {
