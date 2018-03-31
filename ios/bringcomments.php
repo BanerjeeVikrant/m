@@ -46,7 +46,7 @@ foreach ($commentsArray as $value) {
 	$row = $results->fetch_assoc();
 	$userid = $row["from"];
 	$comment = $row["comment"];
-	$sql = "SELECT * FROM users WHERE id='$from'";
+	$sql = "SELECT * FROM users WHERE id='$userid'";
 	$results = $conn->query($sql);
 	$row = $results->fetch_assoc();
 	$tid = $row["id"];
