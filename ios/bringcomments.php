@@ -53,7 +53,7 @@ foreach ($commentsArray as $value) {
 	$tfirstname = $row["first_name"];
 	$tlastname = $row["last_name"];
 	$tprofilepic = $row["profile_pic"];
-	if($likersCount != 0){
+	if($commentsCount != 0){
 		if($i == 0){
 			echo '
 			{
